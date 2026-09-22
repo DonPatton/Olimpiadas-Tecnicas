@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 20V4l16 16V4" stroke="#06251a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="brand-name">INVENTORY</span>
+    </div>
+
+    <nav class="nav-group">
+      <a class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+        Inventory
+      </a>
+      <a class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+        Marketplace
+      </a>
+      <a class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"/></svg>
+        Orders
+      </a>
+      <a class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="8" width="12" height="8" rx="1.2"/><path d="M14 11h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+        Shipping
+      </a>
+      <a class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+        Reports
+      </a>
+    </nav>
+
+    <nav class="nav-group">
+      <a class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        Settings
+      </a>
+      <a class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 8-6-16-3 8H2"/></svg>
+        Activity &amp; Inve...
+      </a>
+      <a class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V4"/><path d="M4 4h13l-2.5 4L17 12H4"/></svg>
+        What's New
+      </a>
+      <a class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 1 1 4.6 2.6c-1 .6-1.7 1.1-1.7 2.4"/><path d="M12 17.5h.01"/></svg>
+        Help &amp; Support
+      </a>
+      <a class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        Log Out
+      </a>
+    </nav>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+
+    <header class="topbar">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="text" placeholder="Search">
+      </div>
+
+      <div class="topbar-actions">
+        <div class="icon-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M9.5 20a2.5 2.5 0 0 0 5 0"/></svg>
+          <span class="badge">9</span>
+        </div>
+        <div class="avatar" style="display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#c9d6cf;">JD</div>
+      </div>
+    </header>
+
+    <section class="content">
+      <div class="content-header">
+        <h1 class="page-title">Dashboard</h1>
+
+        <button class="btn btn-ghost">
+          Action
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <button class="btn btn-ghost">
+          List on Marketplace
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <button class="btn btn-primary">
+          Add New
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><input type="checkbox"></th>
+              <th>SKU</th>
+              <th>Image</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>QTY</th>
+              <th>Warehouse</th>
+              <th>Price</th>
+              <th>Last Modified</th>
+              <th>Status</th>
+              <th class="col-filter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16l-6 8v6l-4-2v-4z"/></svg>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- filled by JS with sample data -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  // Datos de ejemplo — reemplazar por los datos reales de tu base de datos.
+  // "color" es solo para diferenciar visualmente el placeholder de la miniatura del producto.
+  const items = [
+    { sku:"MRP400", color:"#3d4a3f", title:"Winter Jacket Leather", sub:null, category:"Clothing", qty:22, warehouse:"multiple 22", warehouseAccent:true, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"ACCO" },
+    { sku:"MRP405", color:"#4a4038", title:"ABCD Western Boot lace up, op...", sub:"Various (6)", category:"Boots", qty:35, warehouse:"Location A: 5", warehouseAccent:false, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"11SE" },
+    { sku:"MRP620", color:"#e9e9e9", title:"XYZ White Socks", sub:null, category:"Socks", qty:23, warehouse:"multiple 22", warehouseAccent:true, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"ACCO" },
+    { sku:"MRP052", color:"#3a3d4a", title:"ABC Shoes & XYZ Footwear", sub:null, category:"Footwear", qty:12, warehouse:"Location C: 2", warehouseAccent:false, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"CACO" },
+    { sku:"MRP405", color:"#4a4038", title:"ABCD Western Boot lace up, op...", sub:"Various (6)", category:"Boots", qty:35, warehouse:"Location D: 5", warehouseAccent:false, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"11SE" },
+    { sku:"MRP052", color:"#3a3d4a", title:"ABC Shoes & XYZ Footwear", sub:null, category:"Footwear", qty:12, warehouse:"Location C: 2", warehouseAccent:false, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"CACO" },
+    { sku:"MRP400", color:"#3d4a3f", title:"Winter Jacket Leather", sub:null, category:"Clothing", qty:22, warehouse:"Location A: 5", warehouseAccent:false, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"ACCO" },
+  ];
+
+  const tbody = document.getElementById('table-body');
+
+  tbody.innerHTML = items.map(item => `
+    <tr>
+      <td><input type="checkbox"></td>
+      <td class="cell-muted">${item.sku}</td>
+      <td>
+        <div class="thumb" style="background:${item.color};">
+          <svg viewBox="0 0 24 24" fill="none" stroke="${item.color === '#e9e9e9' ? '#555' : '#c9d6cf'}" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        </div>
+      </td>
+      <td class="title-cell">
+        <div class="title-main">${item.title}</div>
+        ${item.sub ? `<div class="title-sub">${item.sub}</div>` : ''}
+      </td>
+      <td class="cell-muted">${item.category}</td>
+      <td class="cell-muted">${item.qty}</td>
+      <td class="${item.warehouseAccent ? 'cell-accent' : 'cell-muted'}">${item.warehouse}</td>
+      <td class="cell-muted">${item.price}</td>
+      <td class="modified-cell">
+        <div class="modified-time">${item.time}</div>
+        <div class="modified-date">${item.date}</div>
+      </td>
+      <td class="status-tag">${item.status}</td>
+      <td class="row-actions">
+        <button class="edit-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+</script>
+
+</body>
+</html>

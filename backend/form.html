@@ -1,0 +1,63 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear producto</title>
+</head>
+
+<body>
+
+    <h1>Crear producto</h1>
+
+    <form id="formProducto">
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre">
+
+        <br><br>
+
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion">
+
+        <br><br>
+
+        <button type="submit">Crear producto</button>
+
+    </form>
+
+    <script>
+
+        const form = document.getElementById("formProducto");
+
+        form.addEventListener("submit", async (e) => {
+
+            e.preventDefault();
+
+            const nombre = document.getElementById("nombre").value;
+            const descripcion = document.getElementById("descripcion").value;
+
+            const respuesta = await fetch("http://localhost:3000/categorias", {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    nombre: nombre,
+                    descripcion: descripcion
+                })
+            });
+
+            const datos = await respuesta.json();
+
+            console.log(datos);
+
+        });
+
+    </script>
+
+</body>
+</html>
+```
