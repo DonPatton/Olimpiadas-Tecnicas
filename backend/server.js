@@ -3,6 +3,7 @@ const con = require("./db")
 const app = express();
 const cors = require("cors")
 const categoriasRoutes = require("./routes/categoriasRoutes")
+const productosRoutes = require("./routes/productosRoutes")
 
 app.use(cors({
     origin: "http://127.0.0.1:5500"
@@ -14,6 +15,7 @@ app.use(express.json());
 //Rutas
 
 app.use("/categorias", categoriasRoutes)
+app.use("/productos", productosRoutes)
 
 
 /*app.get("/categorias", async (req, res) =>{
