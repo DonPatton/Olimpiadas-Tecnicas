@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base href="../">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity &amp; Inventory Log · Inventory Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="activity">
+  <div class="app">
+
+    <app-sidebar></app-sidebar>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main">
+
+      <app-topbar></app-topbar>
+
+      <section class="content">
+        <div class="content-header">
+          <h1 class="page-title">Activity &amp; Inventory Log</h1>
+
+        </div>
+
+        <div class="filter-row">
+          <div class="filter-chip active" data-filter="all">All Activity</div>
+          <div class="filter-chip" data-filter="stock">Stock</div>
+          <div class="filter-chip" data-filter="orders">Orders</div>
+          <div class="filter-chip" data-filter="marketplace">Marketplace</div>
+          <div class="filter-chip" data-filter="shipping">Shipping</div>
+        </div>
+        <div class="activity-feed" id="activity-feed"></div>
+      </section>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

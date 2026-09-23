@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base href="../">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders · Inventory Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="orders">
+  <div class="app">
+
+    <app-sidebar></app-sidebar>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main">
+
+      <app-topbar></app-topbar>
+
+      <section class="content">
+        <div class="content-header">
+          <h1 class="page-title">Orders</h1>
+          <button class="btn btn-ghost" data-export="#orders-table">
+            Export
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-label">New</div><div class="stat-value" id="stat-new">—</div></div>
+          <div class="stat-card"><div class="stat-label">Processing</div><div class="stat-value" id="stat-processing">—</div></div>
+          <div class="stat-card"><div class="stat-label">Shipped</div><div class="stat-value" id="stat-shipped">—</div></div>
+          <div class="stat-card"><div class="stat-label">Delivered</div><div class="stat-value" id="stat-delivered">—</div></div>
+          <div class="stat-card"><div class="stat-label">Cancelled</div><div class="stat-value" id="stat-cancelled">—</div></div>
+        </div>
+
+        <div class="table-wrap">
+          <table id="orders-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox"></th>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th class="col-filter">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16l-6 8v6l-4-2v-4z"/></svg>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
