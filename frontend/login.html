@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso · Panel de Control de Inventario</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="login-card">
+
+    <div class="brand" style="justify-content:center;padding-bottom:22px;">
+    <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none">
+        <path
+            d="M4 20V4l16 16V4"
+            stroke="#06251a"
+            stroke-width="2.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+        </svg>
+    </div>
+
+    <span class="brand-name">INVENTARIO</span>
+    </div>
+
+    <!-- =========================
+        LOGIN
+    ========================== -->
+
+    <div id="login-section">
+
+    <h1 class="login-title">Iniciar sesión</h1>
+
+    <p class="login-subtitle">
+        Ingresá con tu email y contraseña.
+    </p>
+
+    <form id="login-form" novalidate>
+
+        <div class="form-group">
+        <label for="login-email">Email</label>
+
+        <input
+            type="email"
+            id="login-email"
+            required
+            autocomplete="email"
+        >
+        </div>
+
+        <div class="form-group">
+        <label for="login-password">Contraseña</label>
+
+        <input
+            type="password"
+            id="login-password"
+            required
+            autocomplete="current-password"
+        >
+        </div>
+
+        <div class="form-error" id="login-error"></div>
+
+        <div id="login-success" class="form-success"></div>
+
+        <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        id="login-submit"
+        >
+        Iniciar sesión
+        </button>
+
+    </form>
+
+    <div style="text-align:center;margin-top:18px;">
+        <span>¿No tenés una cuenta?</span>
+
+        <button
+        type="button"
+        id="show-register"
+        style="
+            border:none;
+            background:none;
+            padding:0;
+            margin-left:5px;
+            cursor:pointer;
+            font:inherit;
+            font-weight:600;
+            text-decoration:underline;
+        "
+        >
+        Registrate
+        </button>
+    </div>
+
+    </div>
+
+
+    <!-- =========================
+        REGISTRO
+    ========================== -->
+
+    <div id="register-section" style="display:none;">
+
+    <h1 class="login-title">Crear cuenta</h1>
+
+    <p class="login-subtitle">
+        Completá tus datos para registrarte.
+    </p>
+
+    <form id="register-form" novalidate>
+
+        <div class="form-group">
+        <label for="register-name">Nombre</label>
+
+        <input
+            type="text"
+            id="register-name"
+            required
+            autocomplete="name"
+        >
+        </div>
+
+        <div class="form-group">
+        <label for="register-email">Email</label>
+
+        <input
+            type="email"
+            id="register-email"
+            required
+            autocomplete="email"
+        >
+        </div>
+
+        <div class="form-group">
+        <label for="register-password">Contraseña</label>
+
+        <input
+            type="password"
+            id="register-password"
+            required
+            minlength="8"
+            autocomplete="new-password"
+        >
+        </div>
+
+        <div class="form-group">
+        <label for="register-password-confirm">
+            Confirmar contraseña
+        </label>
+
+        <input
+            type="password"
+            id="register-password-confirm"
+            required
+            minlength="8"
+            autocomplete="new-password"
+        >
+        </div>
+
+        <div class="form-error" id="register-error"></div>
+
+        <div id="register-success" class="form-success"></div>
+
+        <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        id="register-submit"
+        >
+        Registrarse
+        </button>
+
+    </form>
+
+    <div style="text-align:center;margin-top:18px;">
+        <span>¿Ya tenés una cuenta?</span>
+
+        <button
+        type="button"
+        id="show-login"
+        style="
+            border:none;
+            background:none;
+            padding:0;
+            margin-left:5px;
+            cursor:pointer;
+            font:inherit;
+            font-weight:600;
+            text-decoration:underline;
+        "
+        >
+        Iniciá sesión
+        </button>
+    </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    const API_BASE = 'http://localhost:3000';
+
+    const loginSection = document.getElementById('login-section');
+    const registerSection = document.getElementById('register-section');
+
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+
+    const loginError = document.getElementById('login-error');
+    const loginSuccess = document.getElementById('login-success');
+
+    const registerError = document.getElementById('register-error');
+    const registerSuccess = document.getElementById('register-success');
+
+    const loginSubmit = document.getElementById('login-submit');
+    const registerSubmit = document.getElementById('register-submit');
+
+    const loginEmail = document.getElementById('login-email');
+    const registerEmail = document.getElementById('register-email');
+
+    const showRegister = document.getElementById('show-register');
+    const showLogin = document.getElementById('show-login');
+
+
+    // ==========================================
+    // SI YA HAY SESIÓN
+    // ==========================================
+
+    if (localStorage.getItem('token')) {
+      window.location.href = 'pages/1_dashboard.html';
+    }
+
+
+    // ==========================================
+    // CAMBIAR A REGISTRO
+    // ==========================================
+
+    showRegister.addEventListener('click', () => {
+
+      loginSection.style.display = 'none';
+      registerSection.style.display = 'block';
+
+      loginError.textContent = '';
+      loginSuccess.textContent = '';
+
+    });
+
+
+    // ==========================================
+    // CAMBIAR A LOGIN
+    // ==========================================
+
+    showLogin.addEventListener('click', () => {
+
+      registerSection.style.display = 'none';
+      loginSection.style.display = 'block';
+
+      registerError.textContent = '';
+      registerSuccess.textContent = '';
+
+    });
+
+
+    // ==========================================
+    // LOGIN
+    // ==========================================
+
+    loginForm.addEventListener('submit', async (e) => {
+
+      e.preventDefault();
+
+      loginError.textContent = '';
+      loginSuccess.textContent = '';
+
+      const email = loginEmail.value.trim().toLowerCase();
+      const password = document.getElementById('login-password').value;
+
+      if (!email || !password) {
+        loginError.textContent = 'Completá todos los campos.';
+        return;
+      }
+
+      loginSubmit.disabled = true;
+      loginSubmit.textContent = 'Ingresando...';
+
+      try {
+
+        const res = await fetch(`${API_BASE}/usuarios/login`, {
+
+          method: 'POST',
+
+          headers: {
+            'Content-Type': 'application/json'
+          },
+
+          body: JSON.stringify({
+            email,
+            password
+          })
+
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+
+          loginError.textContent =
+            data.mensaje || 'No se pudo iniciar sesión.';
+
+          return;
+
+        }
+
+        if (!data.token) {
+
+          loginError.textContent =
+            'El servidor no devolvió un token.';
+
+          return;
+
+        }
+
+        localStorage.setItem('token', data.token);
+
+        window.location.href = 'pages/1_dashboard.html';
+
+      } catch (error) {
+
+        console.error(error);
+
+        loginError.textContent =
+          'No se pudo conectar con el servidor. ¿Está corriendo el backend?';
+
+      } finally {
+
+        loginSubmit.disabled = false;
+        loginSubmit.textContent = 'Iniciar sesión';
+
+      }
+
+    });
+
+
+    // ==========================================
+    // REGISTRO
+    // ==========================================
+
+    registerForm.addEventListener('submit', async (e) => {
+
+      e.preventDefault();
+
+      registerError.textContent = '';
+      registerSuccess.textContent = '';
+
+      const nombre =
+        document.getElementById('register-name').value.trim();
+
+      const email =
+        document.getElementById('register-email').value.trim().toLowerCase();
+
+      const password =
+        document.getElementById('register-password').value;
+
+      const passwordConfirm =
+        document.getElementById('register-password-confirm').value;
+
+
+      // Validaciones del frontend
+
+      if (!nombre || !email || !password || !passwordConfirm) {
+
+        registerError.textContent =
+          'Completá todos los campos.';
+
+        return;
+
+      }
+
+      if (password.length < 8) {
+
+        registerError.textContent =
+          'La contraseña debe tener mínimo 8 caracteres.';
+
+        return;
+
+      }
+
+      if (password !== passwordConfirm) {
+
+        registerError.textContent =
+          'Las contraseñas no coinciden.';
+
+        return;
+
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+        registerError.textContent =
+          'Ingresá un email válido.';
+
+        return;
+
+      }
+
+
+      registerSubmit.disabled = true;
+      registerSubmit.textContent = 'Registrando...';
+
+
+      try {
+
+        const res = await fetch(`${API_BASE}/usuarios`, {
+
+          method: 'POST',
+
+          headers: {
+            'Content-Type': 'application/json'
+          },
+
+          body: JSON.stringify({
+            nombre,
+            email,
+            password
+          })
+
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+
+        if (!res.ok) {
+
+          registerError.textContent =
+            data.mensaje || 'No se pudo crear la cuenta.';
+
+          return;
+
+        }
+
+
+        // Registro exitoso
+
+        loginEmail.value = email;
+
+        registerForm.reset();
+
+        registerSection.style.display = 'none';
+        loginSection.style.display = 'block';
+
+        loginSuccess.textContent =
+          'Cuenta creada correctamente. Ahora podés iniciar sesión.';
+
+      } catch (error) {
+
+        console.error(error);
+
+        registerError.textContent =
+          'No se pudo conectar con el servidor. ¿Está corriendo el backend?';
+
+      } finally {
+
+        registerSubmit.disabled = false;
+        registerSubmit.textContent = 'Registrarse';
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>

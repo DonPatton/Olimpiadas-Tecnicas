@@ -23,7 +23,7 @@
       <section class="content">
         <div class="content-header">
           <h1 class="page-title">Inventario</h1>
-          <button class="btn btn-primary" data-needs-backend="Agregar producto nuevo">
+          <button class="btn btn-primary" id="btn-add-product">
             Agregar nuevo
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M6 9l6 6 6-6"/></svg>
           </button>
@@ -31,33 +31,13 @@
 
         <div class="stat-grid">
           <div class="stat-card">
-            <div class="stat-label">Total de SKUs</div>
+            <div class="stat-label">Total de productos</div>
             <div class="stat-value" id="stat-total-skus">—</div>
-            <div class="stat-delta up">+6 este mes</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Unidades en stock</div>
-            <div class="stat-value" id="stat-units-in-stock">—</div>
-            <div class="stat-delta up">+3.2%</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Artículos con bajo stock</div>
-            <div class="stat-value" id="stat-low-stock">—</div>
-            <div class="stat-delta down">requiere reabastecimiento</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Agotado</div>
-            <div class="stat-value" id="stat-out-of-stock">—</div>
-            <div class="stat-delta down">revisar depósito</div>
           </div>
         </div>
 
         <div class="filter-row">
           <div class="filter-chip active" data-filter="all">Todas las categorías</div>
-          <div class="filter-chip" data-filter="Clothing">Ropa</div>
-          <div class="filter-chip" data-filter="Footwear">Calzado</div>
-          <div class="filter-chip" data-filter="Boots">Botas</div>
-          <div class="filter-chip" data-filter="Socks">Medias</div>
         </div>
 
         <div class="table-wrap">
@@ -66,15 +46,12 @@
               <tr>
                 <th><input type="checkbox"></th>
                 <th>ID</th>
-                <th>Producto</th>
+                <th>Imagen</th>
+                <th>Nombre</th>
                 <th>Categoría</th>
-                <th>Ubicación</th>
-                <th>Cantidad</th>
-                <th>Punto de pedido</th>
-                <th>Estado</th>
-                <th class="col-filter">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16l-6 8v6l-4-2v-4z"/></svg>
-                </th>
+                <th>Precio unitario</th>
+                <th>Última modificación</th>
+                <th class="col-filter">Acciones</th>
               </tr>
             </thead>
             <tbody id="table-body"></tbody>
@@ -83,6 +60,53 @@
       </section>
     </main>
   </div>
+
+  <!-- ============ MODAL: Agregar / Editar producto ============ -->
+  <div class="modal-overlay" id="product-modal-overlay" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="product-modal-title">Agregar producto</h2>
+        <button type="button" class="modal-close" id="product-modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+
+      <form id="product-form" novalidate>
+        <input type="hidden" id="product-id">
+
+        <div class="form-group">
+          <label for="product-nombre">Nombre</label>
+          <input type="text" id="product-nombre" required>
+        </div>
+
+        <div class="form-group">
+          <label for="product-categoria">Categoría</label>
+          <select id="product-categoria" required></select>
+        </div>
+
+        <div class="form-group">
+          <label for="product-precio">Precio unitario</label>
+          <input type="number" id="product-precio" min="0" step="1" required>
+        </div>
+
+        <div class="form-group">
+          <label for="product-img">Imagen (URL)</label>
+          <input type="text" id="product-img" placeholder="https://...">
+        </div>
+
+        <div class="form-group">
+          <label for="product-descripcion">Descripción</label>
+          <textarea id="product-descripcion" rows="3" required></textarea>
+        </div>
+
+        <div class="form-error" id="product-form-error"></div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="product-modal-cancel">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="product-modal-submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

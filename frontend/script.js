@@ -23,7 +23,7 @@ class AppSidebar extends HTMLElement {
             <nav class="nav-group">
 
                 <a class="nav-item ${currentPage === "dashboard" ? "active" : ""}"
-                   href="1_dashboard.html">
+                   href="pages/1_dashboard.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <rect x="3" y="3" width="7" height="9" rx="1.5"/>
@@ -134,7 +134,7 @@ class AppSidebar extends HTMLElement {
                     Ayuda y soporte
                 </a>
 
-                <a class="nav-item" href="logout.html">
+                <a class="nav-item" id="logout-link" href="login.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -238,19 +238,6 @@ const MOCK_DATA = {
     ],
   },
 
-  inventory: {
-    stats: { totalSkus:248, unitsInStock:14320, lowStock:17, outOfStock:4 },
-    items: [
-      { sku:"MRP400", title:"Campera de cuero de invierno", category:"Ropa", location:"Depósito A", qty:22, reorder:10, status:"in-stock" },
-      { sku:"MRP405", title:"Bota vaquera con cordones", category:"Botas", location:"Depósito B", qty:35, reorder:15, status:"in-stock" },
-      { sku:"MRP620", title:"Pack de medias blancas x3", category:"Medias", location:"Depósito A", qty:8, reorder:20, status:"low-stock" },
-      { sku:"MRP052", title:"Zapatillas para correr ABC", category:"Calzado", location:"Depósito C", qty:0, reorder:12, status:"out-of-stock" },
-      { sku:"MRP710", title:"Zapatillas de lona", category:"Calzado", location:"Depósito A", qty:54, reorder:20, status:"in-stock" },
-      { sku:"MRP811", title:"Gorro de lana", category:"Ropa", location:"Depósito B", qty:6, reorder:15, status:"low-stock" },
-      { sku:"MRP902", title:"Bota de senderismo media", category:"Botas", location:"Depósito C", qty:41, reorder:18, status:"in-stock" },
-    ],
-  },
-
   marketplace: {
     channels: [
       { id:"mercadolibre", mark:"ML", name:"MercadoLibre", connected:true,  meta:"Sincronizado hace 12 min",     listed:186, sales:"$412k" },
@@ -332,12 +319,93 @@ const MOCK_DATA = {
    devuelven, no de si viene de acá o de un servidor.
    ===================================================================== */
 const fetchDashboardItems  = () => Promise.resolve(MOCK_DATA.dashboard.items);
-const fetchInventory       = () => Promise.resolve(MOCK_DATA.inventory);
 const fetchMarketplace     = () => Promise.resolve(MOCK_DATA.marketplace);
 const fetchOrders          = () => Promise.resolve(MOCK_DATA.orders);
 const fetchShipping        = () => Promise.resolve(MOCK_DATA.shipping);
 const fetchReports         = () => Promise.resolve(MOCK_DATA.reports);
 const fetchActivity        = () => Promise.resolve(MOCK_DATA.activity.events);
+
+/* =====================================================================
+   2b. API REAL — Productos / Categorías (Inventario)
+   -----------------------------------------------------------------
+   A diferencia del resto (todavía mock), Inventario ya habla con el
+   backend de verdad: GET/POST/PUT/DELETE contra /productos y
+   GET contra /categorias (requiere token).
+   ===================================================================== */
+const API_BASE = 'http://localhost:3000';
+
+function authHeaders(extra = {}) {
+  const token = localStorage.getItem('token');
+  return token ? { ...extra, Authorization: `Bearer ${token}` } : extra;
+}
+
+async function fetchProductos() {
+  const res = await fetch(`${API_BASE}/productos`);
+  if (!res.ok) throw new Error('No se pudieron obtener los productos.');
+  return res.json();
+}
+
+async function fetchCategorias() {
+  const res = await fetch(`${API_BASE}/categorias`, { headers: authHeaders() });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+async function crearProductoAPI(payload) {
+  const res = await fetch(`${API_BASE}/productos`, {
+    method: 'POST',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error('No se pudo crear el producto.');
+  return res.json();
+}
+
+async function actualizarProductoAPI(id, payload) {
+  const res = await fetch(`${API_BASE}/productos/${id}`, {
+    method: 'PUT',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error('No se pudo actualizar el producto.');
+  return res.json();
+}
+
+async function eliminarProductoAPI(id) {
+  const res = await fetch(`${API_BASE}/productos/${id}`, {
+    method: 'DELETE',
+    headers: authHeaders()
+  });
+  if (!res.ok) throw new Error('No se pudo eliminar el producto.');
+  return res.json();
+}
+
+// Id de categoría "real" — el backend no es 100% consistente con el
+// nombre de esa columna (id_cat / id_c), así que probamos varias.
+function idCategoria(cat) {
+  return cat.id_cat ?? cat.id_c ?? cat.id;
+}
+
+function nombreCategoria(fkId) {
+  const cat = CATEGORIAS_CACHE.find(c => String(idCategoria(c)) === String(fkId));
+  return cat ? cat.nombre : '—';
+}
+
+function formatFecha(value) {
+  if (!value) return '—';
+  const d = new Date(value);
+  if (isNaN(d)) return String(value);
+  return d.toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function escapeHtml(str) {
+  return String(str ?? '').replace(/[&<>"']/g, s => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[s]));
+}
+
+let CATEGORIAS_CACHE = [];
 
 
 /* =====================================================================
@@ -370,6 +438,17 @@ function editButton(needsBackendLabel) {
   return `
     <button class="edit-btn" data-needs-backend="${needsBackendLabel}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+    </button>`;
+}
+
+// ---- Editar/eliminar producto real (Inventario) ----
+function productActionButtons(id) {
+  return `
+    <button class="edit-btn" data-action="edit" data-id="${id}" title="Editar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+    </button>
+    <button class="edit-btn" data-action="delete" data-id="${id}" title="Eliminar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
     </button>`;
 }
 
@@ -465,30 +544,160 @@ async function renderDashboard() {
   wireSelectAll(tbody.closest('table'));
 }
 
+let PRODUCTOS_CACHE = [];
+
 async function renderInventory() {
-  const { stats, items } = await fetchInventory();
-
-  setText('stat-total-skus', stats.totalSkus.toLocaleString('es-AR'));
-  setText('stat-units-in-stock', stats.unitsInStock.toLocaleString('es-AR'));
-  setText('stat-low-stock', stats.lowStock);
-  setText('stat-out-of-stock', stats.outOfStock);
-
   const tbody = document.getElementById('table-body');
   if (!tbody) return;
-  tbody.innerHTML = items.map(item => `
-<tr data-category="${item.category}">
+
+  try {
+    [PRODUCTOS_CACHE, CATEGORIAS_CACHE] = await Promise.all([fetchProductos(), fetchCategorias()]);
+  } catch (err) {
+    tbody.innerHTML = `<tr class="no-results"><td colspan="8">No se pudieron cargar los productos. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
+    return;
+  }
+
+  setText('stat-total-skus', PRODUCTOS_CACHE.length);
+  renderCategoryFilters(CATEGORIAS_CACHE);
+
+  tbody.innerHTML = PRODUCTOS_CACHE.map(p => `
+<tr data-category="${p.fk_categoria}">
     <td><input type="checkbox"></td>
-    <td class="cell-muted">${item.sku}</td>
-    <td class="title-main">${item.title}</td>
-    <td class="cell-muted">${item.category}</td>
-    <td class="cell-muted">${item.location}</td>
-    <td class="cell-muted">${item.qty}</td>
-    <td class="cell-muted">${item.reorder}</td>
-    <td>${statusChip(item.status)}</td>
-    <td class="row-actions">${editButton('Editar ' + item.sku)}</td>
-</tr>`).join('');
+    <td class="cell-muted">${p.id}</td>
+    <td>
+      <div class="thumb" style="background:#18252e;">
+        ${p.img && p.img !== 'no hay'
+          ? `<img src="${p.img}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:7px;">`
+          : `<svg viewBox="0 0 24 24" fill="none" stroke="#6d8079" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>`}
+      </div>
+    </td>
+    <td class="title-cell"><div class="title-main">${escapeHtml(p.nombre)}</div></td>
+    <td class="cell-muted">${escapeHtml(nombreCategoria(p.fk_categoria))}</td>
+    <td class="cell-muted">$${Number(p.precio_unitario).toLocaleString('es-AR')}</td>
+    <td class="cell-muted">${formatFecha(p.ultima_modificacion)}</td>
+    <td class="row-actions">${productActionButtons(p.id)}</td>
+</tr>`).join('') || `<tr class="no-results"><td colspan="8">Todavía no hay productos cargados.</td></tr>`;
+
   wireSelectAll(tbody.closest('table'));
   initCategoryFilter(tbody);
+  wireProductRowActions(tbody);
+}
+
+function renderCategoryFilters(categorias) {
+  const row = document.querySelector('.filter-row');
+  if (!row) return;
+  row.innerHTML = [
+    '<div class="filter-chip active" data-filter="all">Todas las categorías</div>',
+    ...categorias.map(c => `<div class="filter-chip" data-filter="${idCategoria(c)}">${escapeHtml(c.nombre)}</div>`)
+  ].join('');
+}
+
+function wireProductRowActions(tbody) {
+  tbody.querySelectorAll('[data-action="edit"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const producto = PRODUCTOS_CACHE.find(p => String(p.id) === btn.dataset.id);
+      if (producto) window.openProductModal(producto);
+    });
+  });
+  tbody.querySelectorAll('[data-action="delete"]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('¿Eliminar este producto?')) return;
+      try {
+        await eliminarProductoAPI(btn.dataset.id);
+        showToast('Producto eliminado.');
+        renderInventory();
+      } catch (err) {
+        showToast(err.message || 'Error al eliminar el producto.');
+      }
+    });
+  });
+}
+
+// ---- Modal de Agregar/Editar producto (Inventario) ----
+function initProductModal() {
+  const overlay = document.getElementById('product-modal-overlay');
+  if (!overlay) return;
+
+  const form = document.getElementById('product-form');
+  const titleEl = document.getElementById('product-modal-title');
+  const idInput = document.getElementById('product-id');
+  const nombreInput = document.getElementById('product-nombre');
+  const categoriaSelect = document.getElementById('product-categoria');
+  const precioInput = document.getElementById('product-precio');
+  const imgInput = document.getElementById('product-img');
+  const descInput = document.getElementById('product-descripcion');
+  const errorEl = document.getElementById('product-form-error');
+
+  function fillCategorias(selectedId) {
+    categoriaSelect.innerHTML = CATEGORIAS_CACHE
+      .map(c => `<option value="${idCategoria(c)}">${escapeHtml(c.nombre)}</option>`)
+      .join('') || '<option value="">Sin categorías cargadas</option>';
+    if (selectedId !== undefined) categoriaSelect.value = selectedId;
+  }
+
+  window.openProductModal = (producto = null) => {
+    errorEl.textContent = '';
+    form.reset();
+
+    if (producto) {
+      titleEl.textContent = 'Editar producto';
+      idInput.value = producto.id;
+      nombreInput.value = producto.nombre;
+      precioInput.value = producto.precio_unitario;
+      imgInput.value = producto.img === 'no hay' ? '' : producto.img;
+      descInput.value = producto.descripcion;
+      fillCategorias(producto.fk_categoria);
+    } else {
+      titleEl.textContent = 'Agregar producto';
+      idInput.value = '';
+      fillCategorias();
+    }
+
+    overlay.hidden = false;
+    nombreInput.focus();
+  };
+
+  function closeModal() {
+    overlay.hidden = true;
+  }
+
+  document.getElementById('btn-add-product')?.addEventListener('click', () => window.openProductModal());
+  document.getElementById('product-modal-close').addEventListener('click', closeModal);
+  document.getElementById('product-modal-cancel').addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorEl.textContent = '';
+
+    const payload = {
+      nombre: nombreInput.value.trim(),
+      categoria: Number(categoriaSelect.value),
+      precio: Number(precioInput.value),
+      img: imgInput.value.trim() || 'no hay',
+      descripcion: descInput.value.trim()
+    };
+
+    const submitBtn = document.getElementById('product-modal-submit');
+    submitBtn.disabled = true;
+
+    try {
+      if (idInput.value) {
+        await actualizarProductoAPI(idInput.value, payload);
+        showToast('Producto actualizado.');
+      } else {
+        await crearProductoAPI(payload);
+        showToast('Producto creado.');
+      }
+      closeModal();
+      renderInventory();
+    } catch (err) {
+      errorEl.textContent = err.message || 'Ocurrió un error al guardar el producto.';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
 }
 
 async function renderMarketplace() {
@@ -749,10 +958,21 @@ const PAGE_RENDERERS = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Todas estas páginas requieren haber iniciado sesión antes.
+  if (!localStorage.getItem('token')) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  document.getElementById('logout-link')?.addEventListener('click', () => {
+    localStorage.removeItem('token');
+  });
+
   initTabs();
   initTopbarSearch();
   initHelpSearch();
   initExportButtons();
+  initProductModal();
 
   const page = document.body.dataset.page;
   const renderer = PAGE_RENDERERS[page];
