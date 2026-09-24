@@ -48,7 +48,7 @@ const iniciarSesion = async (req ,res) => {
             })
         }
 
-        const [usuarios] = await con.query("SELECT * FROM usuarios WHERE emai = ?", [email])
+        const [usuarios] = await con.query("SELECT * FROM usuarios WHERE email = ?", [email])
 
         if(usuarios.length === 0 ){
             return res.status(401).json({
@@ -62,17 +62,38 @@ const iniciarSesion = async (req ,res) => {
 
         if(!passwordCorrecta){
             return res.status(401).json({
-                mensaje: "Credenciales incorrecta"
+                mensaje: "Contraseña incorrecta"
             })
         }
+
+        const token = jwt.sign(
+            {
+                id: usuario.id,
+                rol: usuario.rol
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "1h"
+            }
+        )
+
+        res.json({
+            mensaje: "Incio Correcto",
+            token
+        })
 
         
 
     } catch (error) {
-        
+        console.log(error)
+
+        res.status(500).json({
+            mensaje: "Error al iniciar sesion"
+        })
     }
 }
 
 module.exports = {
-    registrarUsuario
+    registrarUsuario,
+    iniciarSesion
 }
