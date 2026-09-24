@@ -2,15 +2,17 @@ const express = require("express")
 require("dotenv").config()
 const app = express();
 const cors = require("cors")
+const helmet = require("helmet")
 const categoriasRoutes = require("./routes/categoriasRoutes")
 const productosRoutes = require("./routes/productosRoutes")
 const usuariosRoutes = require("./routes/usuariosRoutes")
+const errorMiddleware = require("./middleware/errorMiddleware")
 
+app.use(helmet())
 app.use(cors({
     origin: "http://127.0.0.1:5500"
 }))
 app.use(express.json());
-
 
 
 //Rutas
@@ -19,6 +21,7 @@ app.use("/categorias", categoriasRoutes)
 app.use("/productos", productosRoutes)
 app.use("/usuarios", usuariosRoutes)
 
+app.use(errorMiddleware)
 
 /*app.get("/categorias", async (req, res) =>{
     const [productos] = await con.query("SELECT * FROM categorias") 

@@ -13,7 +13,9 @@ const {
     verificarToken
 } = require("../middleware/authMiddleware.js")
 
-router.get("/", verificarToken, obtenerProductos),
+const { verificarRol } = require("../middleware/roleMiddleware.js")
+
+router.get("/", verificarToken, verificarRol("admin"), obtenerProductos), //Implementar qué hacemos cuando un usuario cambia de rol, es eliminado, desactivado, etc., mientras todavía tiene un JWT válido.
 router.get("/:id", verificarToken, obtenerProducto),
 router.post("/",  verificarToken, crearProducto),
 router.put("/:id", verificarToken, actualizarProducto),
