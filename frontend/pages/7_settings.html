@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base href="../">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuración · Panel de Control de Inventario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="settings">
+  <div class="app">
+
+    <app-sidebar></app-sidebar>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main">
+
+      <app-topbar></app-topbar>
+
+      <section class="content">
+        <div class="content-header">
+          <h1 class="page-title">Configuración</h1>
+
+        </div>
+
+        <div class="tabs">
+          <div class="tab active">Perfil</div>
+          <div class="tab">Notificaciones</div>
+          <div class="tab">Depósitos</div>
+          <div class="tab">Integraciones</div>
+        </div>
+
+        <div class="tab-panel active">
+          <div class="settings-card">
+            <div class="settings-row">
+              <div class="field"><label>Nombre completo</label><input type="text" value="John Doe"></div>
+              <div class="field"><label>Correo electrónico</label><input type="text" value="john@inventory.app"></div>
+            </div>
+            <div class="settings-row">
+              <div class="field"><label>Rol</label><input type="text" value="Administrador de inventario"></div>
+              <div class="field"><label>Zona horaria</label><input type="text" value="GMT-3 (Buenos Aires)"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel">
+          <div class="settings-card">
+            <div class="settings-row">
+              <div>
+                <div class="settings-row-label">Alertas de bajo stock</div>
+                <div class="settings-row-desc">Recibir notificaciones cuando un SKU caiga por debajo de su punto de pedido.</div>
+              </div>
+              <label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label>
+            </div>
+            <div class="settings-row">
+              <div>
+                <div class="settings-row-label">Notificaciones de pedidos</div>
+                <div class="settings-row-desc">Enviar un correo electrónico cuando ingrese un nuevo pedido.</div>
+              </div>
+              <label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label>
+            </div>
+            <div class="settings-row">
+              <div>
+                <div class="settings-row-label">Errores de sincronización del marketplace</div>
+                <div class="settings-row-desc">Alertar si un canal falla al sincronizar las publicaciones.</div>
+              </div>
+              <label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label>
+            </div>
+            <div class="settings-row">
+              <div>
+                <div class="settings-row-label">Resumen semanal</div>
+                <div class="settings-row-desc">Un extracto de las ventas e inventario cada lunes.</div>
+              </div>
+              <label class="toggle"><input type="checkbox"><span class="toggle-track"></span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Depósito</th><th>Ubicación</th><th>SKUs almacenados</th><th>Estado</th></tr></thead>
+              <tbody>
+                <tr><td class="title-main">Depósito A</td><td class="cell-muted">Morón, Buenos Aires</td><td class="cell-muted">142</td><td><span class="chip chip-success">Activo</span></td></tr>
+                <tr><td class="title-main">Depósito B</td><td class="cell-muted">Rosario</td><td class="cell-muted">61</td><td><span class="chip chip-success">Activo</span></td></tr>
+                <tr><td class="title-main">Depósito C</td><td class="cell-muted">Córdoba</td><td class="cell-muted">45</td><td><span class="chip chip-neutral">Inactivo</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-panel">
+          <div class="card-grid">
+            <div class="channel-card">
+              <div class="channel-top"><div class="channel-mark">ML</div><span class="chip chip-success">Conectado</span></div>
+              <div class="channel-name">MercadoLibre</div>
+              <div class="channel-meta">Clave API configurada</div>
+            </div>
+            <div class="channel-card">
+              <div class="channel-top"><div class="channel-mark">AZ</div><span class="chip chip-success">Conectado</span></div>
+              <div class="channel-name">Amazon</div>
+              <div class="channel-meta">Clave API configurada</div>
+            </div>
+            <div class="channel-card">
+              <div class="channel-top"><div class="channel-mark">ET</div><span class="chip chip-neutral">No conectado</span></div>
+              <div class="channel-name">Etsy</div>
+              <div class="channel-meta">Sin clave API</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

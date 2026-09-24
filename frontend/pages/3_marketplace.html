@@ -4,13 +4,13 @@
   <base href="../">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shipping · Inventory Dashboard</title>
+  <title>Marketplace · Panel de Control de Inventario</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="shipping">
+<body data-page="marketplace">
   <div class="app">
 
     <app-sidebar></app-sidebar>
@@ -22,31 +22,27 @@
 
       <section class="content">
         <div class="content-header">
-          <h1 class="page-title">Shipping</h1>
-          <button class="btn btn-ghost" data-needs-backend="Rastrear envío (API del carrier)">
-            Track Shipment
+          <h1 class="page-title">Marketplace</h1>
+          <button class="btn btn-ghost" data-needs-backend="Conectar nuevo canal (OAuth)">
+            Conectar canal
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>
           </button>
         </div>
 
-        <div class="stat-grid">
-          <div class="stat-card"><div class="stat-label">In Transit</div><div class="stat-value" id="stat-in-transit">—</div></div>
-          <div class="stat-card"><div class="stat-label">Delivered Today</div><div class="stat-value" id="stat-delivered-today">—</div></div>
-          <div class="stat-card"><div class="stat-label">Delayed</div><div class="stat-value" id="stat-delayed">—</div><div class="stat-delta down">check carrier</div></div>
-          <div class="stat-card"><div class="stat-label">Avg. Transit Time</div><div class="stat-value" id="stat-avg-transit">—</div></div>
-        </div>
+        <div class="section-title">Canales conectados</div>
+        <div class="card-grid" id="channel-grid"></div>
 
+        <div class="section-title">Publicaciones activas</div>
         <div class="table-wrap">
-          <table id="shipping-table">
+          <table id="marketplace-table">
             <thead>
               <tr>
                 <th><input type="checkbox"></th>
-                <th>Tracking #</th>
-                <th>Order</th>
-                <th>Carrier</th>
-                <th>Destination</th>
-                <th>ETA</th>
-                <th>Status</th>
+                <th>SKU</th>
+                <th>Título</th>
+                <th>Canal</th>
+                <th>Precio</th>
+                <th>Estado</th>
                 <th class="col-filter">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16l-6 8v6l-4-2v-4z"/></svg>
                 </th>

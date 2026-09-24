@@ -4,13 +4,13 @@
   <base href="../">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orders · Inventory Dashboard</title>
+  <title>Envíos · Panel de Control de Inventario</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="orders">
+<body data-page="shipping">
   <div class="app">
 
     <app-sidebar></app-sidebar>
@@ -22,32 +22,31 @@
 
       <section class="content">
         <div class="content-header">
-          <h1 class="page-title">Orders</h1>
-          <button class="btn btn-ghost" data-export="#orders-table">
-            Export
+          <h1 class="page-title">Envíos</h1>
+          <button class="btn btn-ghost" data-needs-backend="Rastrear envío (API del carrier)">
+            Rastrear envío
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>
           </button>
         </div>
 
         <div class="stat-grid">
-          <div class="stat-card"><div class="stat-label">New</div><div class="stat-value" id="stat-new">—</div></div>
-          <div class="stat-card"><div class="stat-label">Processing</div><div class="stat-value" id="stat-processing">—</div></div>
-          <div class="stat-card"><div class="stat-label">Shipped</div><div class="stat-value" id="stat-shipped">—</div></div>
-          <div class="stat-card"><div class="stat-label">Delivered</div><div class="stat-value" id="stat-delivered">—</div></div>
-          <div class="stat-card"><div class="stat-label">Cancelled</div><div class="stat-value" id="stat-cancelled">—</div></div>
+          <div class="stat-card"><div class="stat-label">En tránsito</div><div class="stat-value" id="stat-in-transit">—</div></div>
+          <div class="stat-card"><div class="stat-label">Entregados hoy</div><div class="stat-value" id="stat-delivered-today">—</div></div>
+          <div class="stat-card"><div class="stat-label">Demorados</div><div class="stat-value" id="stat-delayed">—</div><div class="stat-delta down">revisar transporte</div></div>
+          <div class="stat-card"><div class="stat-label">Tiempo promedio de tránsito</div><div class="stat-value" id="stat-avg-transit">—</div></div>
         </div>
 
         <div class="table-wrap">
-          <table id="orders-table">
+          <table id="shipping-table">
             <thead>
               <tr>
                 <th><input type="checkbox"></th>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Items</th>
-                <th>Total</th>
-                <th>Date</th>
-                <th>Status</th>
+                <th>Nº de seguimiento</th>
+                <th>Pedido</th>
+                <th>Empresa de transporte</th>
+                <th>Destino</th>
+                <th>Fecha est. de entrega</th>
+                <th>Estado</th>
                 <th class="col-filter">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16l-6 8v6l-4-2v-4z"/></svg>
                 </th>
