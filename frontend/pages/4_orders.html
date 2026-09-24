@@ -4,13 +4,13 @@
   <base href="../">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marketplace · Inventory Dashboard</title>
+  <title>Pedidos · Panel de Control de Inventario</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="marketplace">
+<body data-page="orders">
   <div class="app">
 
     <app-sidebar></app-sidebar>
@@ -22,27 +22,32 @@
 
       <section class="content">
         <div class="content-header">
-          <h1 class="page-title">Marketplace</h1>
-          <button class="btn btn-ghost" data-needs-backend="Conectar nuevo canal (OAuth)">
-            Connect Channel
+          <h1 class="page-title">Pedidos</h1>
+          <button class="btn btn-ghost" data-export="#orders-table">
+            Exportar
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>
           </button>
         </div>
 
-        <div class="section-title">Connected Channels</div>
-        <div class="card-grid" id="channel-grid"></div>
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-label">Nuevos</div><div class="stat-value" id="stat-new">—</div></div>
+          <div class="stat-card"><div class="stat-label">En proceso</div><div class="stat-value" id="stat-processing">—</div></div>
+          <div class="stat-card"><div class="stat-label">Enviados</div><div class="stat-value" id="stat-shipped">—</div></div>
+          <div class="stat-card"><div class="stat-label">Entregados</div><div class="stat-value" id="stat-delivered">—</div></div>
+          <div class="stat-card"><div class="stat-label">Cancelados</div><div class="stat-value" id="stat-cancelled">—</div></div>
+        </div>
 
-        <div class="section-title">Active Listings</div>
         <div class="table-wrap">
-          <table id="marketplace-table">
+          <table id="orders-table">
             <thead>
               <tr>
                 <th><input type="checkbox"></th>
-                <th>SKU</th>
-                <th>Title</th>
-                <th>Channel</th>
-                <th>Price</th>
-                <th>Status</th>
+                <th>ID del pedido</th>
+                <th>Cliente</th>
+                <th>Artículos</th>
+                <th>Total</th>
+                <th>Fecha</th>
+                <th>Estado</th>
                 <th class="col-filter">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16l-6 8v6l-4-2v-4z"/></svg>
                 </th>

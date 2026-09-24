@@ -17,13 +17,13 @@ class AppSidebar extends HTMLElement {
                     </svg>
                 </div>
 
-                <span class="brand-name">INVENTORY</span>
+                <span class="brand-name">INVENTARIO</span>
             </div>
 
             <nav class="nav-group">
 
                 <a class="nav-item ${currentPage === "dashboard" ? "active" : ""}"
-                   href="dashboard.html">
+                   href="1_dashboard.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <rect x="3" y="3" width="7" height="9" rx="1.5"/>
@@ -31,22 +31,22 @@ class AppSidebar extends HTMLElement {
                         <rect x="14" y="12" width="7" height="9" rx="1.5"/>
                         <rect x="3" y="16" width="7" height="5" rx="1.5"/>
                     </svg>
-                    Dashboard
+                    Panel de control
                 </a>
 
                 <a class="nav-item ${currentPage === "inventory" ? "active" : ""}"
-                   href="pages/inventory.html">
+                   href="pages/2_inventory.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <path d="M3 7l9-4 9 4-9 4-9-4z"/>
                         <path d="M3 7v10l9 4 9-4V7"/>
                         <path d="M12 11v10"/>
                     </svg>
-                    Inventory
+                    Inventario
                 </a>
 
                 <a class="nav-item ${currentPage === "marketplace" ? "active" : ""}"
-                   href="pages/marketplace.html">
+                   href="pages/3_marketplace.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <rect x="3" y="3" width="8" height="8" rx="1.5"/>
@@ -58,18 +58,18 @@ class AppSidebar extends HTMLElement {
                 </a>
 
                 <a class="nav-item ${currentPage === "orders" ? "active" : ""}"
-                   href="pages/orders.html">
+                   href="pages/4_orders.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <circle cx="9" cy="20" r="1.4"/>
                         <circle cx="18" cy="20" r="1.4"/>
                         <path d="M2 3h3l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"/>
                     </svg>
-                    Orders
+                    Pedidos
                 </a>
 
                 <a class="nav-item ${currentPage === "shipping" ? "active" : ""}"
-                   href="pages/shipping.html">
+                   href="pages/5_shipping.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <rect x="2" y="8" width="12" height="8" rx="1.2"/>
@@ -77,17 +77,17 @@ class AppSidebar extends HTMLElement {
                         <circle cx="7" cy="18" r="1.6"/>
                         <circle cx="17.5" cy="18" r="1.6"/>
                     </svg>
-                    Shipping
+                    Envíos
                 </a>
 
                 <a class="nav-item ${currentPage === "reports" ? "active" : ""}"
-                   href="pages/reports.html">
+                   href="pages/6_reports.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <circle cx="12" cy="12" r="9"/>
                         <path d="M12 7v5l3.2 2"/>
                     </svg>
-                    Reports
+                    Reportes
                 </a>
 
             </nav>
@@ -95,59 +95,58 @@ class AppSidebar extends HTMLElement {
             <nav class="nav-group">
 
                 <a class="nav-item ${currentPage === "settings" ? "active" : ""}"
-                   href="pages/settings.html">
+                   href="pages/7_settings.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <circle cx="12" cy="12" r="3"/>
                         <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>
                     </svg>
-                    Settings
+                    Configuración
                 </a>
 
                 <a class="nav-item ${currentPage === "activity" ? "active" : ""}"
-                   href="pages/activity.html">
+                   href="pages/8_activity.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <path d="M22 12h-4l-3 8-6-16-3 8H2"/>
                     </svg>
-                    Activity &amp; Inve...
+                    Historial de act...
                 </a>
 
                 <a class="nav-item ${currentPage === "whats-new" ? "active" : ""}"
-                   href="pages/whats-new.html">
+                   href="pages/9_whats-new.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <path d="M4 21V4"/>
                         <path d="M4 4h13l-2.5 4L17 12H4"/>
                     </svg>
-                    What's New
+                    Novedades
                 </a>
 
                 <a class="nav-item ${currentPage === "help" ? "active" : ""}"
-                   href="pages/help.html">
+                   href="pages/10_help.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <circle cx="12" cy="12" r="9"/>
                         <path d="M9.1 9a3 3 0 1 1 4.6 2.6c-1 .6-1.7 1.1-1.7 2.4"/>
                         <path d="M12 17.5h.01"/>
                     </svg>
-                    Help &amp; Support
+                    Ayuda y soporte
                 </a>
 
-                <a class="nav-item">
+                <a class="nav-item" href="logout.html">
                     <svg viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="1.8">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                         <path d="M16 17l5-5-5-5"/>
                         <path d="M21 12H9"/>
                     </svg>
-                    Log Out
+                    Cerrar sesión
                 </a>
 
             </nav>
         `;
 
-        // Reemplaza <app-sidebar> por el <aside> real
         this.replaceWith(sidebar);
     }
 }
@@ -168,7 +167,7 @@ class AppTopbar extends HTMLElement {
                     <path d="M21 21l-4.3-4.3"/>
                 </svg>
 
-                <input type="text" placeholder="Search">
+                <input type="text" placeholder="Buscar">
             </div>
 
             <div class="topbar-actions">
@@ -183,13 +182,9 @@ class AppTopbar extends HTMLElement {
                     <span class="badge">9</span>
                 </div>
 
-                <div
-                    class="avatar"
-                    style="display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#c9d6cf;"
-                >
-                    JD
+                <div class="avatar" style="display:flex;align-items:center;">
+                     <!-- El resto de la estructura del avatar va aquí -->
                 </div>
-
             </div>
         `;
 
@@ -198,6 +193,7 @@ class AppTopbar extends HTMLElement {
 }
 
 customElements.define("app-topbar", AppTopbar);
+
 
 
 /* =====================================================================
@@ -232,100 +228,99 @@ const MOCK_DATA = {
 
   dashboard: {
     items: [
-      { sku:"MRP400", color:"#3d4a3f", title:"Winter Jacket Leather", sub:null, category:"Clothing", qty:22, warehouse:"multiple 22", warehouseAccent:true, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"ACCO" },
-      { sku:"MRP405", color:"#4a4038", title:"ABCD Western Boot lace up, op...", sub:"Various (6)", category:"Boots", qty:35, warehouse:"Location A: 5", warehouseAccent:false, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"11SE" },
-      { sku:"MRP620", color:"#e9e9e9", title:"XYZ White Socks", sub:null, category:"Socks", qty:23, warehouse:"multiple 22", warehouseAccent:true, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"ACCO" },
-      { sku:"MRP052", color:"#3a3d4a", title:"ABC Shoes & XYZ Footwear", sub:null, category:"Footwear", qty:12, warehouse:"Location C: 2", warehouseAccent:false, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"CACO" },
-      { sku:"MRP405", color:"#4a4038", title:"ABCD Western Boot lace up, op...", sub:"Various (6)", category:"Boots", qty:35, warehouse:"Location D: 5", warehouseAccent:false, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"11SE" },
-      { sku:"MRP052", color:"#3a3d4a", title:"ABC Shoes & XYZ Footwear", sub:null, category:"Footwear", qty:12, warehouse:"Location C: 2", warehouseAccent:false, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"CACO" },
-      { sku:"aaaaaa", color:"#3d4a3f", title:"Winter Jacket Leather", sub:null, category:"Clothing", qty:22, warehouse:"Location A: 5", warehouseAccent:false, price:"$223.20", time:"1:00 Pm", date:"Aug 10, 2024", status:"ACCO" },
+      { sku:"MRP400", color:"#3d4a3f", title:"Campera de cuero de invierno", sub:null, category:"Ropa", qty:22, warehouse:"múltiples: 22", warehouseAccent:true, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"ACCO" },
+      { sku:"MRP405", color:"#4a4038", title:"Bota vaquera ABCD con cordones, op...", sub:"Varios (6)", category:"Botas", qty:35, warehouse:"Ubicación A: 5", warehouseAccent:false, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"11SE" },
+      { sku:"MRP620", color:"#e9e9e9", title:"Medias blancas XYZ", sub:null, category:"Medias", qty:23, warehouse:"múltiples: 22", warehouseAccent:true, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"ACCO" },
+      { sku:"MRP052", color:"#3a3d4a", title:"Zapatos ABC y Calzado XYZ", sub:null, category:"Calzado", qty:12, warehouse:"Ubicación C: 2", warehouseAccent:false, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"CACO" },
+      { sku:"MRP405", color:"#4a4038", title:"Bota vaquera ABCD con cordones, op...", sub:"Varios (6)", category:"Botas", qty:35, warehouse:"Ubicación D: 5", warehouseAccent:false, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"11SE" },
+      { sku:"MRP052", color:"#3a3d4a", title:"Zapatos ABC y Calzado XYZ", sub:null, category:"Calzado", qty:12, warehouse:"Ubicación C: 2", warehouseAccent:false, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"CACO" },
+      { sku:"aaaaaa", color:"#3d4a3f", title:"Campera de cuero de invierno", sub:null, category:"Ropa", qty:22, warehouse:"Ubicación A: 5", warehouseAccent:false, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"ACCO" },
     ],
   },
 
   inventory: {
     stats: { totalSkus:248, unitsInStock:14320, lowStock:17, outOfStock:4 },
     items: [
-      { sku:"MRP400", title:"Winter Jacket Leather", category:"Clothing", location:"Warehouse A", qty:22, reorder:10, status:"in-stock" },
-      { sku:"MRP405", title:"Western Boot lace up", category:"Boots", location:"Warehouse B", qty:35, reorder:15, status:"in-stock" },
-      { sku:"MRP620", title:"White Socks Pack x3", category:"Socks", location:"Warehouse A", qty:8, reorder:20, status:"low-stock" },
-      { sku:"MRP052", title:"ABC Running Shoes", category:"Footwear", location:"Warehouse C", qty:0, reorder:12, status:"out-of-stock" },
-      { sku:"MRP710", title:"Canvas Sneakers", category:"Footwear", location:"Warehouse A", qty:54, reorder:20, status:"in-stock" },
-      { sku:"MRP811", title:"Wool Beanie", category:"Clothing", location:"Warehouse B", qty:6, reorder:15, status:"low-stock" },
-      { sku:"MRP902", title:"Hiking Boot Mid", category:"Boots", location:"Warehouse C", qty:41, reorder:18, status:"in-stock" },
+      { sku:"MRP400", title:"Campera de cuero de invierno", category:"Ropa", location:"Depósito A", qty:22, reorder:10, status:"in-stock" },
+      { sku:"MRP405", title:"Bota vaquera con cordones", category:"Botas", location:"Depósito B", qty:35, reorder:15, status:"in-stock" },
+      { sku:"MRP620", title:"Pack de medias blancas x3", category:"Medias", location:"Depósito A", qty:8, reorder:20, status:"low-stock" },
+      { sku:"MRP052", title:"Zapatillas para correr ABC", category:"Calzado", location:"Depósito C", qty:0, reorder:12, status:"out-of-stock" },
+      { sku:"MRP710", title:"Zapatillas de lona", category:"Calzado", location:"Depósito A", qty:54, reorder:20, status:"in-stock" },
+      { sku:"MRP811", title:"Gorro de lana", category:"Ropa", location:"Depósito B", qty:6, reorder:15, status:"low-stock" },
+      { sku:"MRP902", title:"Bota de senderismo media", category:"Botas", location:"Depósito C", qty:41, reorder:18, status:"in-stock" },
     ],
   },
 
   marketplace: {
     channels: [
-      { id:"mercadolibre", mark:"ML", name:"MercadoLibre", connected:true,  meta:"Synced 12 min ago",     listed:186, sales:"$412k" },
-      { id:"amazon",       mark:"AZ", name:"Amazon",       connected:true,  meta:"Synced 1 hour ago",     listed:94,  sales:"$198k" },
-      { id:"shopify",      mark:"SH", name:"Shopify",      connected:true,  meta:"Last synced 2 days ago", listed:61, sales:"$54k", syncIssue:true },
-      { id:"etsy",         mark:"ET", name:"Etsy",         connected:false, meta:"Connect to start listing", listed:null, sales:null },
+      { id:"mercadolibre", mark:"ML", name:"MercadoLibre", connected:true,  meta:"Sincronizado hace 12 min",     listed:186, sales:"$412k" },
+      { id:"amazon",       mark:"AZ", name:"Amazon",       connected:true,  meta:"Sincronizado hace 1 hora",    listed:94,  sales:"$198k" },
+      { id:"shopify",      mark:"SH", name:"Shopify",      connected:true,  meta:"Última sincronización hace 2 días", listed:61, sales:"$54k", syncIssue:true },
+      { id:"etsy",         mark:"ET", name:"Etsy",         connected:false, meta:"Conectar para empezar a publicar", listed:null, sales:null },
     ],
     listings: [
-      { sku:"MRP400", title:"Winter Jacket Leather", channel:"MercadoLibre", price:"$223.20", status:"live" },
-      { sku:"MRP405", title:"Western Boot lace up", channel:"Amazon", price:"$189.00", status:"live" },
-      { sku:"MRP620", title:"White Socks Pack x3", channel:"MercadoLibre", price:"$18.50", status:"paused" },
-      { sku:"MRP052", title:"ABC Running Shoes", channel:"Shopify", price:"$96.00", status:"error" },
-      { sku:"MRP710", title:"Canvas Sneakers", channel:"Amazon", price:"$74.90", status:"live" },
+      { sku:"MRP400", title:"Campera de cuero de invierno", channel:"MercadoLibre", price:"$223.20", status:"live" },
+      { sku:"MRP405", title:"Bota vaquera con cordones", channel:"Amazon", price:"$189.00", status:"live" },
+      { sku:"MRP620", title:"Pack de medias blancas x3", channel:"MercadoLibre", price:"$18.50", status:"paused" },
+      { sku:"MRP052", title:"Zapatillas para correr ABC", channel:"Shopify", price:"$96.00", status:"error" },
+      { sku:"MRP710", title:"Zapatillas de lona", channel:"Amazon", price:"$74.90", status:"live" },
     ],
   },
 
   orders: {
     stats: { new:14, processing:32, shipped:58, delivered:210, cancelled:6 },
     items: [
-      { id:"#10482", customer:"L. Fernandez", items:3, total:"$412.00", date:"Sep 20, 2026", status:"new" },
-      { id:"#10481", customer:"M. Duarte", items:1, total:"$96.00", date:"Sep 20, 2026", status:"processing" },
-      { id:"#10480", customer:"J. Rossi", items:2, total:"$189.90", date:"Sep 19, 2026", status:"shipped" },
-      { id:"#10479", customer:"C. Beltran", items:5, total:"$740.00", date:"Sep 18, 2026", status:"delivered" },
-      { id:"#10478", customer:"A. Nunez", items:1, total:"$74.90", date:"Sep 17, 2026", status:"cancelled" },
-      { id:"#10477", customer:"P. Iglesias", items:2, total:"$212.00", date:"Sep 17, 2026", status:"delivered" },
+      { id:"#10482", customer:"L. Fernandez", items:3, total:"$412.00", date:"20 Sep, 2026", status:"new" },
+      { id:"#10481", customer:"M. Duarte", items:1, total:"$96.00", date:"20 Sep, 2026", status:"processing" },
+      { id:"#10480", customer:"J. Rossi", items:2, total:"$189.90", date:"19 Sep, 2026", status:"shipped" },
+      { id:"#10479", customer:"C. Beltran", items:5, total:"$740.00", date:"18 Sep, 2026", status:"delivered" },
+      { id:"#10478", customer:"A. Nunez", items:1, total:"$74.90", date:"17 Sep, 2026", status:"cancelled" },
+      { id:"#10477", customer:"P. Iglesias", items:2, total:"$212.00", date:"17 Sep, 2026", status:"delivered" },
     ],
   },
 
   shipping: {
     stats: { inTransit:41, deliveredToday:19, delayed:3, avgTransitDays:"2.4d" },
     items: [
-      { tracking:"AR93820SD", order:"#10480", carrier:"Correo Argentino", dest:"Cordoba, AR", eta:"Sep 23", status:"in-transit" },
-      { tracking:"AR93801SD", order:"#10479", carrier:"OCA", dest:"Rosario, AR", eta:"Sep 22", status:"delivered" },
-      { tracking:"AR93777SD", order:"#10475", carrier:"Andreani", dest:"Moron, AR", eta:"Sep 21", status:"delayed" },
-      { tracking:"AR93650SD", order:"#10471", carrier:"Correo Argentino", dest:"Mendoza, AR", eta:"Sep 24", status:"in-transit" },
-      { tracking:"AR93602SD", order:"#10468", carrier:"OCA", dest:"La Plata, AR", eta:"Sep 20", status:"delivered" },
+      { tracking:"AR93820SD", order:"#10480", carrier:"Correo Argentino", dest:"Córdoba, AR", eta:"23 Sep", status:"in-transit" },
+      { tracking:"AR93801SD", order:"#10479", carrier:"OCA", dest:"Rosario, AR", eta:"22 Sep", status:"delivered" },
+      { tracking:"AR93777SD", order:"#10475", carrier:"Andreani", dest:"Morón, AR", eta:"21 Sep", status:"delayed" },
+      { tracking:"AR93650SD", order:"#10471", carrier:"Correo Argentino", dest:"Mendoza, AR", eta:"24 Sep", status:"in-transit" },
+      { tracking:"AR93602SD", order:"#10468", carrier:"OCA", dest:"La Plata, AR", eta:"20 Sep", status:"delivered" },
     ],
   },
 
   reports: {
     stats: { revenue:"$412,940", orders:1208, unitsSold:3940, avgOrderValue:"$341.85" },
     revenue: {
-      months:  ["Oct","Nov","Dec","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep"],
+      months:  ["Oct","Nov","Dic","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep"],
       values:  [38,52,47,61,58,70,66,74,69,82,78,91],
     },
     topProducts: [
-      { name:"Winter Jacket Leather", units:412, revenue:"$92,140" },
-      { name:"Western Boot lace up", units:380, revenue:"$71,820" },
-      { name:"Canvas Sneakers", units:298, revenue:"$40,470" },
-      { name:"Hiking Boot Mid", units:211, revenue:"$38,090" },
+      { name:"Campera de cuero de invierno", units:412, revenue:"$92,140" },
+      { name:"Bota vaquera con cordones", units:380, revenue:"$71,820" },
+      { name:"Zapatillas de lona", units:298, revenue:"$40,470" },
+      { name:"Bota de senderismo media", units:211, revenue:"$38,090" },
     ],
     salesByCategory: [
-      { category:"Footwear", share:38 },
-      { category:"Boots", share:27 },
-      { category:"Clothing", share:21 },
-      { category:"Socks", share:14 },
+      { category:"Calzado", share:38 },
+      { category:"Botas", share:27 },
+      { category:"Ropa", share:21 },
+      { category:"Medias", share:14 },
     ],
   },
 
   activity: {
     events: [
-      { type:"stock",       icon:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/>', text:'<b>J. Doe</b> restocked <b>MRP620 · White Socks</b> — +40 units', time:'10 minutes ago' },
-      { type:"orders",      icon:'<circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"/>', text:'Nuevo pedido <b>#10482</b> de L. Fernandez — $412.00', time:'32 minutes ago' },
-      { type:"marketplace", icon:'<rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/>', text:'Sincronización con MercadoLibre completa — 186 publicaciones actualizadas', time:'1 hour ago' },
-      { type:"stock",       icon:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/>', text:'<b>MRP052 · ABC Running Shoes</b> llegó a 0 unidades — marcado sin stock', time:'2 hours ago' },
-      { type:"shipping",    icon:'<rect x="2" y="8" width="12" height="8" rx="1.2"/><path d="M14 11h4l3 3v2h-7z"/>', text:'Envío <b>AR93777SD</b> marcado como demorado por Andreani', time:'3 hours ago' },
-      { type:"stock",       icon:'<circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 1 1 4.6 2.6c-1 .6-1.7 1.1-1.7 2.4"/><path d="M12 17.5h.01"/>', text:'<b>M. Duarte</b> actualizó el punto de reorden de <b>MRP811 · Wool Beanie</b> a 15', time:'Yesterday' },
+      { type:"stock",       icon:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/>', text:'<b>J. Doe</b> reabasteció <b>MRP620 · Medias blancas</b> — +40 unidades', time:'Hace 10 minutos' },
+      { type:"orders",      icon:'<circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"/>', text:'Nuevo pedido <b>#10482</b> de L. Fernandez — $412.00', time:'Hace 32 minutos' },
+      { type:"marketplace", icon:'<rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/>', text:'Sincronización con MercadoLibre completa — 186 publicaciones actualizadas', time:'Hace 1 hora' },
+      { type:"stock",       icon:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/>', text:'<b>MRP052 · Zapatillas para correr ABC</b> llegó a 0 unidades — marcado sin stock', time:'Hace 2 horas' },
+      { type:"shipping",    icon:'<rect x="2" y="8" width="12" height="8" rx="1.2"/><path d="M14 11h4l3 3v2h-7z"/>', text:'Envío <b>AR93777SD</b> marcado como demorado por Andreani', time:'Hace 3 horas' },
+      { type:"stock",       icon:'<circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 1 1 4.6 2.6c-1 .6-1.7 1.1-1.7 2.4"/><path d="M12 17.5h.01"/>', text:'<b>M. Duarte</b> actualizó el punto de reorden de <b>MRP811 · Gorro de lana</b> a 15', time:'Ayer' },
     ],
   },
 };
-
 
 /* =====================================================================
    2. CAPA DE DATOS (fetchX)
