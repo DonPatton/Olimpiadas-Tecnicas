@@ -55,7 +55,7 @@ const crearProducto = async (req, res) => {
     try {
         let {
             nombre,
-            img,
+            cantidad,
             categoria,
             precio,
             descripcion
@@ -65,7 +65,7 @@ const crearProducto = async (req, res) => {
         // Validar tipos
         if (
             typeof nombre !== "string" ||
-            typeof img !== "string" ||
+            typeof cantidad !== "string" ||
             typeof categoria !== "number" ||
             typeof precio !== "number" ||
             typeof descripcion !== "string"
@@ -78,12 +78,12 @@ const crearProducto = async (req, res) => {
 
         // Quitar espacios
         nombre = nombre.trim()
-        img = img.trim()
+        cantidad = cantidad.trim()
         descripcion = descripcion.trim()
 
 
         // Campos vacíos
-        if (!nombre || !img || !descripcion) {
+        if (!nombre || !cantidad || !descripcion) {
             return res.status(400).json({
                 mensaje: "No se permiten campos vacíos"
             })
@@ -99,9 +99,9 @@ const crearProducto = async (req, res) => {
 
 
         // Longitud imagen
-        if (img.length > 255) {
+        if (cantidad.length > 10000) {
             return res.status(400).json({
-                mensaje: "La imagen no puede superar los 255 caracteres"
+                mensaje: "La cantidad no puede superar las 10000 unidades"
             })
         }
 
@@ -129,7 +129,7 @@ const crearProducto = async (req, res) => {
             })
         }
 
-        const [categoriaExiste] = await con.query("SELECT id_c FROM categorias WHERE id_c = ?"[categoria])
+        const [categoriaExiste] = await con.query("SELECT id_c FROM categorias WHERE id_c = ?", [categoria])
 
         if(categoriaExiste.length === 0){
             return res.status(400).json({
@@ -140,9 +140,9 @@ const crearProducto = async (req, res) => {
 
         const [producto] = await con.query(
             `INSERT INTO productos
-            (nombre, img, fk_categoria, precio_unitario, descripcion)
-            VALUES (?, ?, ?, ?, ?)`,
-            [nombre, img, categoria, precio, descripcion]
+            (nombre, cantidad, fk_categoria, precio_unitario, ultima_modificacion, descripcion)
+            VALUES (?, ?, ?, ?, NOW(), ?)`,
+            [nombre, cantidad, categoria, precio, descripcion]
         )
 
 
@@ -167,7 +167,7 @@ const actualizarProducto = async (req, res) => {
 
         let {
             nombre,
-            img,
+            cantidad,
             categoria,
             precio,
             descripcion
@@ -185,7 +185,7 @@ const actualizarProducto = async (req, res) => {
         // Validar tipos
         if (
             typeof nombre !== "string" ||
-            typeof img !== "string" ||
+            typeof cantidad !== "string" ||
             typeof categoria !== "number" ||
             typeof precio !== "number" ||
             typeof descripcion !== "string"
@@ -198,12 +198,12 @@ const actualizarProducto = async (req, res) => {
 
         // Quitar espacios
         nombre = nombre.trim()
-        img = img.trim()
+        cantidad = cantidad.trim()
         descripcion = descripcion.trim()
 
 
         // Campos vacíos
-        if (!nombre || !img || !descripcion) {
+        if (!nombre || !cantidad || !descripcion) {
             return res.status(400).json({
                 mensaje: "No se permiten campos vacíos"
             })
@@ -219,9 +219,9 @@ const actualizarProducto = async (req, res) => {
 
 
         // Longitud imagen
-        if (img.length > 255) {
+        if (cantidad.length > 10000) {
             return res.status(400).json({
-                mensaje: "La imagen no puede superar los 255 caracteres"
+                mensaje: "La cantidad no puede superar 10000 unidades"
             })
         }
 
@@ -249,7 +249,7 @@ const actualizarProducto = async (req, res) => {
             })
         }
 
-        const [categoriaExiste] = await con.query("SELECT id_c FROM categorias WHERE id_c = ?"[categoria])
+        const [categoriaExiste] = await con.query("SELECT id_c FROM categorias WHERE id_c = ?", [categoria])
 
         if(categoriaExiste.length === 0){
             return res.status(400).json({
@@ -260,12 +260,13 @@ const actualizarProducto = async (req, res) => {
         const [producto] = await con.query(
             `UPDATE productos
             SET nombre = ?,
-                img = ?,
+                cantidad = ?,
                 fk_categoria = ?,
                 precio_unitario = ?,
+                ultima_modificacion = NOW(),
                 descripcion = ?
             WHERE id = ?`,
-            [nombre, img, categoria, precio, descripcion, id]
+            [nombre, cantidad, categoria, precio, descripcion, id]
         )
 
 
@@ -331,11 +332,93 @@ const eliminarProducto = async (req, res) => {
     }
 }
 
+const modificarCantidad = async (req, res) => {
+    try {
+        const { id } = req.params
+        const { cantidad, operacion } = req.body
+
+        // Validar ID
+        if (!/^\d+$/.test(id) || Number(id) <= 0) {
+            return res.status(400).json({
+                mensaje: "El ID debe ser un número entero positivo"
+            })
+        }
+
+        if(!cantidad || !operacion){
+            return res.status(400).json({
+                mensaje: "No se permiten campos vacios"
+            })
+        }
+
+        // Validar cantidad
+        if (!Number.isInteger(cantidad) || cantidad <= 0) {
+            return res.status(400).json({
+                mensaje: "La cantidad debe ser un número entero positivo"
+            })
+        }
+
+        // Validar operación
+        if (operacion !== "sumar" && operacion !== "restar") {
+            return res.status(400).json({
+                mensaje: "La operación debe ser 'sumar' o 'restar'"
+            })
+        }
+
+        // Buscar producto
+        const [productos] = await con.query(
+            "SELECT id, cantidad FROM productos WHERE id = ?",
+            [id]
+        )
+
+        if (productos.length === 0) {
+            return res.status(404).json({
+                mensaje: "Producto no encontrado"
+            })
+        }
+
+        const producto = productos[0] //Chekear porque se hace esto
+
+        // Calcular nueva cantidad
+        let nuevaCantidad
+
+        if (operacion === "sumar") {
+            nuevaCantidad = producto.cantidad + cantidad
+        } else {
+            nuevaCantidad = producto.cantidad - cantidad
+        }
+
+        // Evitar stock negativo
+        if (nuevaCantidad < 0) {
+            return res.status(400).json({
+                mensaje: "No hay suficiente cantidad disponible"
+            })
+        }
+
+        // Actualizar cantidad
+        await con.query(
+            "UPDATE productos SET cantidad = ? WHERE id = ?",
+            [nuevaCantidad, id]
+        )
+
+        res.json({
+            mensaje: "Cantidad actualizada",
+            cantidad: nuevaCantidad
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            mensaje: "Error al modificar la cantidad"
+        })
+    }
+}
+
 
 module.exports = {
     obtenerProductos,
     obtenerProducto,
     crearProducto,
     actualizarProducto,
-    eliminarProducto
+    eliminarProducto,
+    modificarCantidad
 }

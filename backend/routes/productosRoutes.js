@@ -6,13 +6,18 @@ const {
     obtenerProducto,
     crearProducto,
     actualizarProducto,
-    eliminarProducto
+    eliminarProducto,
+    modificarCantidad
 } = require("../controllers/productoController.js")
 
-router.get("/", obtenerProductos),
-router.get("/:id", obtenerProducto),
-router.post("/",  crearProducto),
-router.put("/:id",  actualizarProducto),
-router.delete("/:id", eliminarProducto)
+const { verificarToken } = require("../middleware/authMiddleware.js")
+const { verificarRol } = require("../middleware/roleMiddleware.js")
+
+router.get("/", verificarToken, obtenerProductos),
+router.get("/:id", verificarToken, obtenerProducto),
+router.post("/", verificarToken, verificarRol("admin"), crearProducto),
+router.put("/:id", verificarToken, verificarRol("admin"), actualizarProducto),
+router.delete("/:id", verificarToken, verificarRol("admin"), eliminarProducto),
+router.patch("/:id/stock", verificarToken, modificarCantidad)
 
 module.exports = router;

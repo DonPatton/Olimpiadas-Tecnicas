@@ -6,7 +6,7 @@ const obtenerProductos = async (req, res) => {
     try {
         const [productos] = await con.query("SELECT * FROM categorias")
 
-        console.log(req.usuario)
+        //console.log(req.usuario)
 
         res.json(productos)
     } catch (error) {

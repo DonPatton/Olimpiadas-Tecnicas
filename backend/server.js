@@ -9,9 +9,7 @@ const usuariosRoutes = require("./routes/usuariosRoutes")
 const errorMiddleware = require("./middleware/errorMiddleware")
 
 app.use(helmet())
-app.use(cors({
-    origin: "http://127.0.0.1:5500"
-}))
+app.use(cors())
 app.use(express.json());
 
 
@@ -71,6 +69,8 @@ app.delete("/categorias/:id", async (req, res) => {
     })
 })*/
 
-app.listen(3000, () => {
-    console.log("Servidor run")
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en puerto ${PORT}`)
 })

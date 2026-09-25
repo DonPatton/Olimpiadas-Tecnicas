@@ -2,8 +2,8 @@ const verificarRol = (rolPermitido) => {
     return (req, res, next) => {
 
         
-        console.log("Rol del usuario:", req.usuario.rol);
-        console.log("Rol permitido:", rolPermitido);
+        /*console.log("Rol del usuario:", req.usuario.rol);
+        console.log("Rol permitido:", rolPermitido);0*/
         
         if(req.usuario.rol !== rolPermitido){
             return res.status(403).json({
