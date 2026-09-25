@@ -601,7 +601,6 @@ async function renderDashboard() {
   if (!tbody) return;
   tbody.innerHTML = items.map(item => `
 <tr>
-    <td><input type="checkbox"></td>
     <td class="cell-muted">${item.sku}</td>
     <td>
     <div class="thumb" style="background:${item.color};">
@@ -635,7 +634,7 @@ async function renderInventory() {
   try {
     [PRODUCTOS_CACHE, CATEGORIAS_CACHE] = await Promise.all([fetchProductos(), fetchCategorias()]);
   } catch (err) {
-    tbody.innerHTML = `<tr class="no-results"><td colspan="9">No se pudieron cargar los productos. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
+    tbody.innerHTML = `<tr class="no-results"><td colspan="8">No se pudieron cargar los productos. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
     return;
   }
 
@@ -644,7 +643,6 @@ async function renderInventory() {
 
   tbody.innerHTML = PRODUCTOS_CACHE.map(p => `
 <tr data-category="${p.fk_categoria}">
-    <td><input type="checkbox"></td>
     <td class="cell-muted">${p.id}</td>
     <td class="title-cell"><div class="title-main">${escapeHtml(p.nombre)}</div></td>
     <td class="cell-muted">${escapeHtml(nombreCategoria(p.fk_categoria))}</td>
@@ -653,7 +651,7 @@ async function renderInventory() {
     <td class="cell-muted">${escapeHtml(p.descripcion || '')}</td>
     <td class="cell-muted">${formatFecha(p.ultima_modificacion)}</td>
     <td class="row-actions">${productActionButtons(p.id)}</td>
-</tr>`).join('') || `<tr class="no-results"><td colspan="9">Todavía no hay productos cargados.</td></tr>`;
+</tr>`).join('') || `<tr class="no-results"><td colspan="8">Todavía no hay productos cargados.</td></tr>`;
 
   wireSelectAll(tbody.closest('table'));
   initCategoryFilter(tbody);
@@ -698,7 +696,7 @@ async function renderCategorias() {
   try {
     [CATEGORIAS_CACHE, PRODUCTOS_CACHE] = await Promise.all([fetchCategorias(), fetchProductos()]);
   } catch (err) {
-    tbody.innerHTML = `<tr class="no-results"><td colspan="6">No se pudieron cargar las categorías. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
+    tbody.innerHTML = `<tr class="no-results"><td colspan="5">No se pudieron cargar las categorías. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
     return;
   }
 
@@ -707,14 +705,13 @@ async function renderCategorias() {
     const cantidadProductos = PRODUCTOS_CACHE.filter(p => String(p.fk_categoria) === String(id)).length;
     return `
 <tr>
-    <td><input type="checkbox"></td>
     <td class="cell-muted">${id}</td>
     <td class="title-cell"><div class="title-main">${escapeHtml(c.nombre)}</div></td>
     <td class="cell-muted">${escapeHtml(c.descripcion)}</td>
     <td class="cell-muted">${cantidadProductos}</td>
     <td class="row-actions">${categoryActionButtons(id)}</td>
 </tr>`;
-  }).join('') || `<tr class="no-results"><td colspan="6">Todavía no hay categorías cargadas.</td></tr>`;
+  }).join('') || `<tr class="no-results"><td colspan="5">Todavía no hay categorías cargadas.</td></tr>`;
 
   wireSelectAll(tbody.closest('table'));
   wireCategoryRowActions(tbody);
@@ -1024,7 +1021,6 @@ async function renderMarketplace() {
   if (!tbody) return;
   tbody.innerHTML = listings.map(item => `
 <tr>
-    <td><input type="checkbox"></td>
     <td class="cell-muted">${item.sku}</td>
     <td class="title-main">${item.title}</td>
     <td class="cell-muted">${item.channel}</td>
@@ -1048,7 +1044,6 @@ async function renderOrders() {
   if (!tbody) return;
   tbody.innerHTML = items.map(o => `
 <tr>
-    <td><input type="checkbox"></td>
     <td class="title-main">${o.id}</td>
     <td class="cell-muted">${o.customer}</td>
     <td class="cell-muted">${o.items}</td>
@@ -1072,7 +1067,6 @@ async function renderShipping() {
   if (!tbody) return;
   tbody.innerHTML = items.map(s => `
 <tr>
-    <td><input type="checkbox"></td>
     <td class="title-main">${s.tracking}</td>
     <td class="cell-muted">${s.order}</td>
     <td class="cell-muted">${s.carrier}</td>
