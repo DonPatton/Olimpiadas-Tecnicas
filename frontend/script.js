@@ -1,27 +1,4 @@
-class AppSidebar extends HTMLElement {
-    connectedCallback() {
-        const currentPage = document.body.dataset.page;
-
-        const sidebar = document.createElement("aside");
-        sidebar.className = "sidebar";
-
-        sidebar.innerHTML = `
-            <div class="brand">
-                <div class="brand-mark">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path d="M4 20V4l16 16V4"
-                            stroke="#06251a"
-                            stroke-width="2.6"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"/>
-                    </svg>
-                </div>
-
-                <span class="brand-name">INVENTARIO</span>
-            </div>
-
-            <nav class="nav-group">
-
+/* SIN USAR
                 <a class="nav-item ${currentPage === "dashboard" ? "active" : ""}"
                    href="pages/1_dashboard.html">
                     <svg viewBox="0 0 24 24" fill="none"
@@ -32,29 +9,6 @@ class AppSidebar extends HTMLElement {
                         <rect x="3" y="16" width="7" height="5" rx="1.5"/>
                     </svg>
                     Panel de control
-                </a>
-
-                <a class="nav-item ${currentPage === "inventory" ? "active" : ""}"
-                   href="pages/2_inventory.html">
-                    <svg viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="1.8">
-                        <path d="M3 7l9-4 9 4-9 4-9-4z"/>
-                        <path d="M3 7v10l9 4 9-4V7"/>
-                        <path d="M12 11v10"/>
-                    </svg>
-                    Inventario
-                </a>
-
-                <a class="nav-item ${currentPage === "marketplace" ? "active" : ""}"
-                   href="pages/3_marketplace.html">
-                    <svg viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="1.8">
-                        <rect x="3" y="3" width="8" height="8" rx="1.5"/>
-                        <rect x="13" y="3" width="8" height="8" rx="1.5"/>
-                        <rect x="3" y="13" width="8" height="8" rx="1.5"/>
-                        <rect x="13" y="13" width="8" height="8" rx="1.5"/>
-                    </svg>
-                    Marketplace
                 </a>
 
                 <a class="nav-item ${currentPage === "orders" ? "active" : ""}"
@@ -68,18 +22,6 @@ class AppSidebar extends HTMLElement {
                     Pedidos
                 </a>
 
-                <a class="nav-item ${currentPage === "shipping" ? "active" : ""}"
-                   href="pages/5_shipping.html">
-                    <svg viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="1.8">
-                        <rect x="2" y="8" width="12" height="8" rx="1.2"/>
-                        <path d="M14 11h4l3 3v2h-7z"/>
-                        <circle cx="7" cy="18" r="1.6"/>
-                        <circle cx="17.5" cy="18" r="1.6"/>
-                    </svg>
-                    Envíos
-                </a>
-
                 <a class="nav-item ${currentPage === "reports" ? "active" : ""}"
                    href="pages/6_reports.html">
                     <svg viewBox="0 0 24 24" fill="none"
@@ -89,10 +31,6 @@ class AppSidebar extends HTMLElement {
                     </svg>
                     Reportes
                 </a>
-
-            </nav>
-
-            <nav class="nav-group">
 
                 <a class="nav-item ${currentPage === "settings" ? "active" : ""}"
                    href="pages/7_settings.html">
@@ -113,42 +51,122 @@ class AppSidebar extends HTMLElement {
                     Historial de act...
                 </a>
 
-                <a class="nav-item ${currentPage === "whats-new" ? "active" : ""}"
-                   href="pages/9_whats-new.html">
-                    <svg viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="1.8">
-                        <path d="M4 21V4"/>
-                        <path d="M4 4h13l-2.5 4L17 12H4"/>
-                    </svg>
-                    Novedades
-                </a>
+*/
 
-                <a class="nav-item ${currentPage === "help" ? "active" : ""}"
-                   href="pages/10_help.html">
-                    <svg viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="1.8">
-                        <circle cx="12" cy="12" r="9"/>
-                        <path d="M9.1 9a3 3 0 1 1 4.6 2.6c-1 .6-1.7 1.1-1.7 2.4"/>
-                        <path d="M12 17.5h.01"/>
-                    </svg>
-                    Ayuda y soporte
-                </a>
 
-                <a class="nav-item" id="logout-link" href="login.html">
-                    <svg viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="1.8">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                        <path d="M16 17l5-5-5-5"/>
-                        <path d="M21 12H9"/>
-                    </svg>
-                    Cerrar sesión
-                </a>
+class AppSidebar extends HTMLElement {
+  connectedCallback() {
+      const currentPage = document.body.dataset.page;
 
-            </nav>
-        `;
+      const sidebar = document.createElement("aside");
+      sidebar.className = "sidebar";
 
-        this.replaceWith(sidebar);
-    }
+      sidebar.innerHTML = `
+          <div class="brand">
+              <div class="brand-mark">
+                  <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M4 20V4l16 16V4"
+                          stroke="#06251a"
+                          stroke-width="2.6"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                  </svg>
+              </div>
+
+              <span class="brand-name">INVENTARIO</span>
+          </div>
+
+          <nav class="nav-group">
+
+              <a class="nav-item ${currentPage === "inventory" ? "active" : ""}"
+                 href="pages/2_inventory.html">
+                  <svg viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.8">
+                      <path d="M3 7l9-4 9 4-9 4-9-4z"/>
+                      <path d="M3 7v10l9 4 9-4V7"/>
+                      <path d="M12 11v10"/>
+                  </svg>
+                  Inventario
+              </a>
+
+          </nav>
+
+          <!-- PRÓXIMOS MÓDULOS -->
+          <div class="nav-section-title">PRÓXIMOS MÓDULOS</div>
+
+          <nav class="nav-group upcoming-modules">
+
+              <div class="nav-item upcoming">
+                  <svg viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.8">
+                      <rect x="3" y="3" width="7" height="7" rx="1"/>
+                      <rect x="14" y="3" width="7" height="7" rx="1"/>
+                      <rect x="3" y="14" width="7" height="7" rx="1"/>
+                      <rect x="14" y="14" width="7" height="7" rx="1"/>
+                  </svg>
+                  Panel de control
+              </div>
+
+              <div class="nav-item upcoming">
+                  <svg viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.8">
+                      <path d="M4 5h16v14H4z"/>
+                      <path d="M8 9h8"/>
+                      <path d="M8 13h5"/>
+                  </svg>
+                  Pedidos
+              </div>
+
+              <div class="nav-item upcoming">
+                  <svg viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.8">
+                      <path d="M12 3v18"/>
+                      <path d="M5 8l7-5 7 5"/>
+                      <path d="M5 16l7 5 7-5"/>
+                  </svg>
+                  Movimientos de stock
+              </div>
+
+          </nav>
+
+          <nav class="nav-group">
+
+              <a class="nav-item ${currentPage === "whats-new" ? "active" : ""}"
+                 href="pages/9_whats-new.html">
+                  <svg viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.8">
+                      <path d="M4 21V4"/>
+                      <path d="M4 4h13l-2.5 4L17 12H4"/>
+                  </svg>
+                  Novedades
+              </a>
+
+              <a class="nav-item ${currentPage === "help" ? "active" : ""}"
+                 href="pages/10_help.html">
+                  <svg viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.8">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M9.1 9a3 3 0 1 1 4.6 2.6c-1 .6-1.7 1.1-1.7 2.4"/>
+                      <path d="M12 17.5h.01"/>
+                  </svg>
+                  Ayuda y soporte
+              </a>
+
+              <a class="nav-item" id="logout-link" href="login.html">
+                  <svg viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.8">
+                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                      <path d="M16 17l5-5-5-5"/>
+                      <path d="M21 12H9"/>
+                  </svg>
+                  Cerrar sesión
+              </a>
+
+          </nav>
+      `;
+
+      this.replaceWith(sidebar);
+  }
 }
 
 customElements.define("app-sidebar", AppSidebar);
@@ -959,10 +977,10 @@ const PAGE_RENDERERS = {
 
 document.addEventListener('DOMContentLoaded', () => {
   // Todas estas páginas requieren haber iniciado sesión antes.
-  if (!localStorage.getItem('token')) {
-    window.location.href = 'login.html';
-    return;
-  }
+  //if (!localStorage.getItem('token')) {
+  //  window.location.href = 'login.html';
+  //  return;
+  //}
 
   document.getElementById('logout-link')?.addEventListener('click', () => {
     localStorage.removeItem('token');
