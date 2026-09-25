@@ -93,8 +93,9 @@ class AppSidebar extends HTMLElement {
                  href="pages/3_categories.html">
                   <svg viewBox="0 0 24 24" fill="none"
                        stroke="currentColor" stroke-width="1.8">
-                      <path d="M20.6 12.4L12.6 20.4a2 2 0 0 1-2.8 0l-7.2-7.2a2 2 0 0 1 0-2.8L10.6 2.4a2 2 0 0 1 1.4-.6H19a2 2 0 0 1 2 2v6.9a2 2 0 0 1-.4 1.7z"/>
-                      <circle cx="16" cy="7" r="1.4" fill="currentColor" stroke="none"/>
+                      <path d="M3 7l9-4 9 4-9 4-9-4z"/>
+                      <path d="M3 7v10l9 4 9-4V7"/>
+                      <path d="M12 11v10"/>
                   </svg>
                   Categorias
               </a>
