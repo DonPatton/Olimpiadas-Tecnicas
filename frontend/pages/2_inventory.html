@@ -9,24 +9,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    .content-header-actions { display:flex; align-items:center; gap:10px; }
+    .stock-current { margin-top:7px; font-size:13px; opacity:.7; }
+    .stock-current strong { opacity:1; }
+    .stock-change-hint { margin-top:6px; font-size:12px; opacity:.6; }
+  </style>
 </head>
 <body data-page="inventory">
   <div class="app">
-
     <app-sidebar></app-sidebar>
-
-    <!-- ============ MAIN ============ -->
     <main class="main">
-
       <app-topbar></app-topbar>
-
       <section class="content">
         <div class="content-header">
           <h1 class="page-title">Inventario</h1>
-          <button class="btn btn-primary" id="btn-add-product">
-            Agregar nuevo
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
+          <div class="content-header-actions">
+            <button class="btn btn-ghost" id="btn-change-stock" type="button">Cambiar stock</button>
+            <button class="btn btn-primary" id="btn-add-product" type="button">
+              Agregar nuevo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+          </div>
         </div>
 
         <div class="stat-grid">
@@ -44,12 +48,12 @@
           <table id="inventory-table">
             <thead>
               <tr>
-                <th><input type="checkbox"></th>
                 <th>ID</th>
-                <th>Imagen</th>
-                <th>Nombre</th>
+                <th>Producto</th>
                 <th>Categoría</th>
+                <th>Stock</th>
                 <th>Precio unitario</th>
+                <th>Descripción</th>
                 <th>Última modificación</th>
                 <th class="col-filter">Acciones</th>
               </tr>
@@ -61,47 +65,68 @@
     </main>
   </div>
 
-  <!-- ============ MODAL: Agregar / Editar producto ============ -->
   <div class="modal-overlay" id="product-modal-overlay" hidden>
     <div class="modal">
       <div class="modal-header">
         <h2 id="product-modal-title">Agregar producto</h2>
         <button type="button" class="modal-close" id="product-modal-close" aria-label="Cerrar">&times;</button>
       </div>
-
       <form id="product-form" novalidate>
         <input type="hidden" id="product-id">
-
         <div class="form-group">
           <label for="product-nombre">Nombre</label>
           <input type="text" id="product-nombre" required>
         </div>
-
         <div class="form-group">
           <label for="product-categoria">Categoría</label>
           <select id="product-categoria" required></select>
         </div>
-
+        <div class="form-group">
+          <label for="product-cantidad">Cantidad</label>
+          <input type="number" id="product-cantidad" min="0" step="1" required>
+        </div>
         <div class="form-group">
           <label for="product-precio">Precio unitario</label>
           <input type="number" id="product-precio" min="0" step="1" required>
         </div>
-
-        <div class="form-group">
-          <label for="product-img">Imagen (URL)</label>
-          <input type="text" id="product-img" placeholder="https://...">
-        </div>
-
         <div class="form-group">
           <label for="product-descripcion">Descripción</label>
           <textarea id="product-descripcion" rows="3" required></textarea>
         </div>
-
         <div class="form-error" id="product-form-error"></div>
-
         <div class="modal-actions">
           <button type="button" class="btn btn-ghost" id="product-modal-cancel">Cancelar</button>
           <button type="submit" class="btn btn-primary" id="product-modal-submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="stock-modal-overlay" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Cambiar stock</h2>
+        <button type="button" class="modal-close" id="stock-modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <form id="stock-form" novalidate>
+        <div class="form-group">
+          <label for="stock-producto">Producto</label>
+          <select id="stock-producto" required></select>
+          <div class="stock-current">Stock actual: <strong id="stock-current-value">—</strong></div>
+        </div>
+        <div class="form-group">
+          <label for="stock-cambio">Cantidad a cambiar</label>
+          <input type="number" id="stock-cambio" step="1" required placeholder="Ej.: 20 o -5">
+          <div class="stock-change-hint">Positivo = aumenta stock. Negativo = disminuye stock.</div>
+        </div>
+        <div class="form-group">
+          <label for="stock-descripcion">Descripción</label>
+          <textarea id="stock-descripcion" rows="3" required placeholder="Ej.: Vino el proveedor"></textarea>
+        </div>
+        <div class="form-error" id="stock-form-error"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="stock-modal-cancel">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="stock-modal-submit">Aplicar cambio</button>
         </div>
       </form>
     </div>

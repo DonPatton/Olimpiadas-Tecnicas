@@ -52,8 +52,8 @@ INSERT INTO `categorias` (`id_c`, `nombre`, `descripcion`) VALUES
 CREATE TABLE `productos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
-  `img` varchar(255) NOT NULL,
   `fk_categoria` int(50) NOT NULL,
+  `cantidad` int(11) NOT NULL,
   `precio_unitario` int(11) NOT NULL,
   `ultima_modificacion` datetime NOT NULL,
   `descripcion` varchar(255) NOT NULL
@@ -63,10 +63,10 @@ CREATE TABLE `productos` (
 -- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `productos` (`id`, `nombre`, `img`, `fk_categoria`, `precio_unitario`, `ultima_modificacion`, `descripcion`) VALUES
-(2, 'Lisa', 'Es una burra que pierde siempre', 1, 20, '2026-09-23 00:55:15', 'Es un gordo'),
-(4, 'Lisa', 'Es una burra que pierde siempre', 1, 20, '0000-00-00 00:00:00', 'Es un gordo'),
-(5, 'Lisa', 'Es una burra que pierde siempre', 1, 20, '0000-00-00 00:00:00', 'Es un gordo');
+INSERT INTO `productos` (`id`, `nombre`, `fk_categoria`, `cantidad`, `precio_unitario`, `ultima_modificacion`, `descripcion`) VALUES
+(2, 'Lisa', 1, 2, 20, '2026-09-23 00:55:15', 'Es un gordo'),
+(4, 'Lisa', 1, 2, 20, '0000-00-00 00:00:00', 'Es un gordo'),
+(5, 'Lisa', 1, 3, 20, '0000-00-00 00:00:00', 'Es un gordo');
 
 -- --------------------------------------------------------
 
