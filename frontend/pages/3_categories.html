@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base href="../">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categorías · Panel de Control de Inventario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="categories">
+  <div class="app">
+    <app-sidebar></app-sidebar>
+
+    <main class="main">
+      <app-topbar></app-topbar>
+
+      <section class="content">
+        <div class="content-header">
+          <h1 class="page-title">Categorías</h1>
+          <button class="btn btn-primary" id="btn-add-category" type="button">
+            Agregar categoría
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+              <path d="M12 5v14"/>
+              <path d="M5 12h14"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="table-wrap">
+          <table id="categories-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox"></th>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Productos en los que esta</th>
+                <th class="col-filter">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="categories-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="category-modal-overlay" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="category-modal-title">Agregar categoría</h2>
+        <button type="button" class="modal-close" id="category-modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+
+      <form id="category-form" novalidate>
+        <input type="hidden" id="category-id">
+
+        <div class="form-group">
+          <label for="category-nombre">Nombre</label>
+          <input type="text" id="category-nombre" maxlength="50" required>
+        </div>
+
+        <div class="form-group">
+          <label for="category-descripcion">Descripción</label>
+          <textarea id="category-descripcion" rows="3" maxlength="255" required></textarea>
+        </div>
+
+        <div class="form-error" id="category-form-error"></div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="category-modal-cancel">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="category-modal-submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

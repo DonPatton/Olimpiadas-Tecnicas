@@ -89,6 +89,17 @@ class AppSidebar extends HTMLElement {
                   Inventario
               </a>
 
+              <a class="nav-item ${currentPage === "categories" ? "active" : ""}"
+                 href="pages/3_categories.html">
+                  <svg viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.8">
+                      <path d="M3 7l9-4 9 4-9 4-9-4z"/>
+                      <path d="M3 7v10l9 4 9-4V7"/>
+                      <path d="M12 11v10"/>
+                  </svg>
+                  Categorias
+              </a>
+
           </nav>
 
           <!-- PRÓXIMOS MÓDULOS -->
@@ -189,16 +200,6 @@ class AppTopbar extends HTMLElement {
             </div>
 
             <div class="topbar-actions">
-
-                <div class="icon-btn">
-                    <svg viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="1.8">
-                        <path d="M6 8a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/>
-                        <path d="M9.5 20a2.5 2.5 0 0 0 5 0"/>
-                    </svg>
-
-                    <span class="badge">9</span>
-                </div>
 
                 <div class="avatar" style="display:flex;align-items:center;">
                      <!-- El resto de la estructura del avatar va aquí -->
@@ -350,16 +351,21 @@ const fetchActivity        = () => Promise.resolve(MOCK_DATA.activity.events);
    backend de verdad: GET/POST/PUT/DELETE contra /productos y
    GET contra /categorias (requiere token).
    ===================================================================== */
-const API_BASE = 'http://localhost:3000';
+const API_BASE = 'https://olimpiadas-tecnicas.onrender.com';
 
 function authHeaders(extra = {}) {
   const token = localStorage.getItem('token');
   return token ? { ...extra, Authorization: `Bearer ${token}` } : extra;
 }
 
+async function apiError(res, fallback) {
+  const data = await res.json().catch(() => null);
+  return new Error(data?.mensaje || fallback);
+}
+
 async function fetchProductos() {
-  const res = await fetch(`${API_BASE}/productos`);
-  if (!res.ok) throw new Error('No se pudieron obtener los productos.');
+  const res = await fetch(`${API_BASE}/productos`, { headers: authHeaders() });
+  if (!res.ok) throw await apiError(res, 'No se pudieron obtener los productos.');
   return res.json();
 }
 
@@ -376,7 +382,7 @@ async function crearProductoAPI(payload) {
     headers: authHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify(payload)
   });
-  if (!res.ok) throw new Error('No se pudo crear el producto.');
+  if (!res.ok) throw await apiError(res, 'No se pudo crear el producto.');
   return res.json();
 }
 
@@ -386,7 +392,7 @@ async function actualizarProductoAPI(id, payload) {
     headers: authHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify(payload)
   });
-  if (!res.ok) throw new Error('No se pudo actualizar el producto.');
+  if (!res.ok) throw await apiError(res, 'No se pudo actualizar el producto.');
   return res.json();
 }
 
@@ -395,7 +401,46 @@ async function eliminarProductoAPI(id) {
     method: 'DELETE',
     headers: authHeaders()
   });
-  if (!res.ok) throw new Error('No se pudo eliminar el producto.');
+  if (!res.ok) throw await apiError(res, 'No se pudo eliminar el producto.');
+  return res.json();
+}
+
+async function modificarStockAPI(id, payload) {
+  const res = await fetch(`${API_BASE}/productos/${id}/stock`, {
+    method: 'PATCH',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo cambiar el stock.');
+  return res.json();
+}
+
+async function crearCategoriaAPI(payload) {
+  const res = await fetch(`${API_BASE}/categorias`, {
+    method: 'POST',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo crear la categoría.');
+  return res.json();
+}
+
+async function actualizarCategoriaAPI(id, payload) {
+  const res = await fetch(`${API_BASE}/categorias/${id}`, {
+    method: 'PUT',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo actualizar la categoría.');
+  return res.json();
+}
+
+async function eliminarCategoriaAPI(id) {
+  const res = await fetch(`${API_BASE}/categorias/${id}`, {
+    method: 'DELETE',
+    headers: authHeaders()
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo eliminar la categoría.');
   return res.json();
 }
 
@@ -421,6 +466,14 @@ function escapeHtml(str) {
   return String(str ?? '').replace(/[&<>"']/g, s => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[s]));
+}
+
+// El backend a veces devuelve/espera `cantidad` como string (ver nota en
+// initProductModal), así que en el frontend siempre la normalizamos a
+// entero antes de mostrarla o de hacer cuentas con ella.
+function cantidadInt(value) {
+  const n = parseInt(value, 10);
+  return Number.isFinite(n) ? n : 0;
 }
 
 let CATEGORIAS_CACHE = [];
@@ -466,6 +519,17 @@ function productActionButtons(id) {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
     </button>
     <button class="edit-btn" data-action="delete" data-id="${id}" title="Eliminar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+    </button>`;
+}
+
+// ---- Editar/eliminar categoría real (Categorías) ----
+function categoryActionButtons(id) {
+  return `
+    <button class="edit-btn" data-action="edit-cat" data-id="${id}" title="Editar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+    </button>
+    <button class="edit-btn" data-action="delete-cat" data-id="${id}" title="Eliminar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
     </button>`;
 }
@@ -571,7 +635,7 @@ async function renderInventory() {
   try {
     [PRODUCTOS_CACHE, CATEGORIAS_CACHE] = await Promise.all([fetchProductos(), fetchCategorias()]);
   } catch (err) {
-    tbody.innerHTML = `<tr class="no-results"><td colspan="8">No se pudieron cargar los productos. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
+    tbody.innerHTML = `<tr class="no-results"><td colspan="9">No se pudieron cargar los productos. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
     return;
   }
 
@@ -582,19 +646,14 @@ async function renderInventory() {
 <tr data-category="${p.fk_categoria}">
     <td><input type="checkbox"></td>
     <td class="cell-muted">${p.id}</td>
-    <td>
-      <div class="thumb" style="background:#18252e;">
-        ${p.img && p.img !== 'no hay'
-          ? `<img src="${p.img}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:7px;">`
-          : `<svg viewBox="0 0 24 24" fill="none" stroke="#6d8079" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>`}
-      </div>
-    </td>
     <td class="title-cell"><div class="title-main">${escapeHtml(p.nombre)}</div></td>
     <td class="cell-muted">${escapeHtml(nombreCategoria(p.fk_categoria))}</td>
+    <td class="cell-muted">${cantidadInt(p.cantidad)}</td>
     <td class="cell-muted">$${Number(p.precio_unitario).toLocaleString('es-AR')}</td>
+    <td class="cell-muted">${escapeHtml(p.descripcion || '')}</td>
     <td class="cell-muted">${formatFecha(p.ultima_modificacion)}</td>
     <td class="row-actions">${productActionButtons(p.id)}</td>
-</tr>`).join('') || `<tr class="no-results"><td colspan="8">Todavía no hay productos cargados.</td></tr>`;
+</tr>`).join('') || `<tr class="no-results"><td colspan="9">Todavía no hay productos cargados.</td></tr>`;
 
   wireSelectAll(tbody.closest('table'));
   initCategoryFilter(tbody);
@@ -631,6 +690,127 @@ function wireProductRowActions(tbody) {
   });
 }
 
+// ---- Vista de Categorías (tabla + conteo de productos) ----
+async function renderCategorias() {
+  const tbody = document.getElementById('categories-table-body');
+  if (!tbody) return;
+
+  try {
+    [CATEGORIAS_CACHE, PRODUCTOS_CACHE] = await Promise.all([fetchCategorias(), fetchProductos()]);
+  } catch (err) {
+    tbody.innerHTML = `<tr class="no-results"><td colspan="6">No se pudieron cargar las categorías. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = CATEGORIAS_CACHE.map(c => {
+    const id = idCategoria(c);
+    const cantidadProductos = PRODUCTOS_CACHE.filter(p => String(p.fk_categoria) === String(id)).length;
+    return `
+<tr>
+    <td><input type="checkbox"></td>
+    <td class="cell-muted">${id}</td>
+    <td class="title-cell"><div class="title-main">${escapeHtml(c.nombre)}</div></td>
+    <td class="cell-muted">${escapeHtml(c.descripcion)}</td>
+    <td class="cell-muted">${cantidadProductos}</td>
+    <td class="row-actions">${categoryActionButtons(id)}</td>
+</tr>`;
+  }).join('') || `<tr class="no-results"><td colspan="6">Todavía no hay categorías cargadas.</td></tr>`;
+
+  wireSelectAll(tbody.closest('table'));
+  wireCategoryRowActions(tbody);
+}
+
+function wireCategoryRowActions(tbody) {
+  tbody.querySelectorAll('[data-action="edit-cat"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const categoria = CATEGORIAS_CACHE.find(c => String(idCategoria(c)) === btn.dataset.id);
+      if (categoria) window.openCategoryModal(categoria);
+    });
+  });
+  tbody.querySelectorAll('[data-action="delete-cat"]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('¿Eliminar esta categoría?')) return;
+      try {
+        await eliminarCategoriaAPI(btn.dataset.id);
+        showToast('Categoría eliminada.');
+        renderCategorias();
+      } catch (err) {
+        showToast(err.message || 'Error al eliminar la categoría.');
+      }
+    });
+  });
+}
+
+// ---- Modal de Agregar/Editar categoría ----
+function initCategoryModal() {
+  const overlay = document.getElementById('category-modal-overlay');
+  if (!overlay) return;
+
+  const form = document.getElementById('category-form');
+  const titleEl = document.getElementById('category-modal-title');
+  const idInput = document.getElementById('category-id');
+  const nombreInput = document.getElementById('category-nombre');
+  const descInput = document.getElementById('category-descripcion');
+  const errorEl = document.getElementById('category-form-error');
+
+  window.openCategoryModal = (categoria = null) => {
+    errorEl.textContent = '';
+    form.reset();
+
+    if (categoria) {
+      titleEl.textContent = 'Editar categoría';
+      idInput.value = idCategoria(categoria);
+      nombreInput.value = categoria.nombre;
+      descInput.value = categoria.descripcion;
+    } else {
+      titleEl.textContent = 'Agregar categoría';
+      idInput.value = '';
+    }
+
+    overlay.hidden = false;
+    nombreInput.focus();
+  };
+
+  function closeModal() {
+    overlay.hidden = true;
+  }
+
+  document.getElementById('btn-add-category')?.addEventListener('click', () => window.openCategoryModal());
+  document.getElementById('category-modal-close').addEventListener('click', closeModal);
+  document.getElementById('category-modal-cancel').addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorEl.textContent = '';
+
+    const payload = {
+      nombre: nombreInput.value.trim(),
+      descripcion: descInput.value.trim()
+    };
+
+    const submitBtn = document.getElementById('category-modal-submit');
+    submitBtn.disabled = true;
+
+    try {
+      if (idInput.value) {
+        await actualizarCategoriaAPI(idInput.value, payload);
+        showToast('Categoría actualizada.');
+      } else {
+        await crearCategoriaAPI(payload);
+        showToast('Categoría creada.');
+      }
+      closeModal();
+      renderCategorias();
+    } catch (err) {
+      errorEl.textContent = err.message || 'Ocurrió un error al guardar la categoría.';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+}
+
 // ---- Modal de Agregar/Editar producto (Inventario) ----
 function initProductModal() {
   const overlay = document.getElementById('product-modal-overlay');
@@ -641,8 +821,8 @@ function initProductModal() {
   const idInput = document.getElementById('product-id');
   const nombreInput = document.getElementById('product-nombre');
   const categoriaSelect = document.getElementById('product-categoria');
+  const cantidadInput = document.getElementById('product-cantidad');
   const precioInput = document.getElementById('product-precio');
-  const imgInput = document.getElementById('product-img');
   const descInput = document.getElementById('product-descripcion');
   const errorEl = document.getElementById('product-form-error');
 
@@ -661,8 +841,8 @@ function initProductModal() {
       titleEl.textContent = 'Editar producto';
       idInput.value = producto.id;
       nombreInput.value = producto.nombre;
+      cantidadInput.value = cantidadInt(producto.cantidad);
       precioInput.value = producto.precio_unitario;
-      imgInput.value = producto.img === 'no hay' ? '' : producto.img;
       descInput.value = producto.descripcion;
       fillCategorias(producto.fk_categoria);
     } else {
@@ -692,8 +872,8 @@ function initProductModal() {
     const payload = {
       nombre: nombreInput.value.trim(),
       categoria: Number(categoriaSelect.value),
+      cantidad: String(cantidadInput.value).trim(),
       precio: Number(precioInput.value),
-      img: imgInput.value.trim() || 'no hay',
       descripcion: descInput.value.trim()
     };
 
@@ -712,6 +892,108 @@ function initProductModal() {
       renderInventory();
     } catch (err) {
       errorEl.textContent = err.message || 'Ocurrió un error al guardar el producto.';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+}
+
+// ---- Modal de Cambiar stock (Inventario) ----
+// Nota: por ahora esto NO registra un historial de movimientos, solo
+// reutiliza el endpoint de actualizar producto para ajustar la cantidad.
+function initStockModal() {
+  const overlay = document.getElementById('stock-modal-overlay');
+  if (!overlay) return;
+
+  const form = document.getElementById('stock-form');
+  const productoSelect = document.getElementById('stock-producto');
+  const currentValueEl = document.getElementById('stock-current-value');
+  const cambioInput = document.getElementById('stock-cambio');
+  const descInput = document.getElementById('stock-descripcion');
+  const errorEl = document.getElementById('stock-form-error');
+
+  function fillProductos() {
+    productoSelect.innerHTML = PRODUCTOS_CACHE
+      .map(p => `<option value="${p.id}">${escapeHtml(p.nombre)}</option>`)
+      .join('') || '<option value="">Sin productos cargados</option>';
+  }
+
+  function updateCurrentValue() {
+    const producto = PRODUCTOS_CACHE.find(p => String(p.id) === productoSelect.value);
+    currentValueEl.textContent = producto ? cantidadInt(producto.cantidad) : '—';
+  }
+
+  function openModal() {
+    errorEl.textContent = '';
+    form.reset();
+    fillProductos();
+    updateCurrentValue();
+    overlay.hidden = false;
+    productoSelect.focus();
+  }
+
+  function closeModal() {
+    overlay.hidden = true;
+  }
+
+  document.getElementById('btn-change-stock')?.addEventListener('click', openModal);
+  document.getElementById('stock-modal-close').addEventListener('click', closeModal);
+  document.getElementById('stock-modal-cancel').addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
+  productoSelect.addEventListener('change', updateCurrentValue);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorEl.textContent = '';
+
+    const producto = PRODUCTOS_CACHE.find(p => String(p.id) === productoSelect.value);
+    const cambio = Number(cambioInput.value);
+
+    if (!producto) {
+      errorEl.textContent = 'Elegí un producto.';
+      return;
+    }
+    if (!Number.isInteger(cambio) || cambio === 0) {
+      errorEl.textContent = 'La cantidad a cambiar debe ser un número entero distinto de 0.';
+      return;
+    }
+
+    // producto.cantidad viene del backend como string, así que la
+    // pasamos a número con cantidadInt() para poder operar con ella.
+    const nuevaCantidad = cantidadInt(producto.cantidad) + cambio;
+    if (nuevaCantidad < 0) {
+      errorEl.textContent = 'El stock no puede quedar en negativo.';
+      return;
+    }
+
+    // La descripción del cambio (motivo) todavía no se guarda en ningún
+    // lado porque no hay tabla de movimientos de stock — queda pendiente
+    // para cuando se agregue esa parte al backend.
+    void descInput.value.trim();
+
+    // El endpoint de stock (modificarStockAPI) funciona mal, así que
+    // reutilizamos el mismo método normal de actualizar producto que
+    // usa el modal de Editar producto, mandando el producto completo
+    // con la cantidad ya recalculada y devuelta a string para el backend.
+    const payload = {
+      nombre: producto.nombre,
+      categoria: Number(producto.fk_categoria),
+      cantidad: String(nuevaCantidad),
+      precio: Number(producto.precio_unitario),
+      descripcion: producto.descripcion
+    };
+
+    const submitBtn = document.getElementById('stock-modal-submit');
+    submitBtn.disabled = true;
+
+    try {
+      await actualizarProductoAPI(producto.id, payload);
+      showToast('Stock actualizado.');
+      closeModal();
+      renderInventory();
+    } catch (err) {
+      errorEl.textContent = err.message || 'Ocurrió un error al cambiar el stock.';
     } finally {
       submitBtn.disabled = false;
     }
@@ -925,7 +1207,10 @@ function initTopbarSearch() {
 
   input.addEventListener('input', () => {
     const q = input.value.trim().toLowerCase();
-    const tbody = document.getElementById('table-body');
+    // En vez de buscar siempre el id "table-body" (que solo existe en
+    // Inventario), agarramos el <tbody> de la tabla principal de la
+    // página actual, sea cual sea su id (ej. "categories-table-body").
+    const tbody = document.querySelector('.table-wrap table tbody');
     if (!tbody) return;
     tbody.querySelectorAll('tr').forEach(row => {
       row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
@@ -967,6 +1252,7 @@ function initExportButtons() {
 const PAGE_RENDERERS = {
   dashboard:   renderDashboard,
   inventory:   renderInventory,
+  categories:  renderCategorias,
   marketplace: renderMarketplace,
   orders:      renderOrders,
   shipping:    renderShipping,
@@ -977,10 +1263,10 @@ const PAGE_RENDERERS = {
 
 document.addEventListener('DOMContentLoaded', () => {
   // Todas estas páginas requieren haber iniciado sesión antes.
-  //if (!localStorage.getItem('token')) {
-  //  window.location.href = 'login.html';
-  //  return;
-  //}
+  if (!localStorage.getItem('token')) {
+    window.location.href = 'login.html';
+    return;
+  }
 
   document.getElementById('logout-link')?.addEventListener('click', () => {
     localStorage.removeItem('token');
@@ -991,6 +1277,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initHelpSearch();
   initExportButtons();
   initProductModal();
+  initStockModal();
+  initCategoryModal();
 
   const page = document.body.dataset.page;
   const renderer = PAGE_RENDERERS[page];
