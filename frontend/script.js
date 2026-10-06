@@ -1,59 +1,3 @@
-/* SIN USAR
-                <a class="nav-item ${currentPage === "dashboard" ? "active" : ""}"
-                   href="pages/1_dashboard.html">
-                    <svg viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="1.8">
-                        <rect x="3" y="3" width="7" height="9" rx="1.5"/>
-                        <rect x="14" y="3" width="7" height="5" rx="1.5"/>
-                        <rect x="14" y="12" width="7" height="9" rx="1.5"/>
-                        <rect x="3" y="16" width="7" height="5" rx="1.5"/>
-                    </svg>
-                    Panel de control
-                </a>
-
-                <a class="nav-item ${currentPage === "orders" ? "active" : ""}"
-                   href="pages/4_orders.html">
-                    <svg viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="1.8">
-                        <circle cx="9" cy="20" r="1.4"/>
-                        <circle cx="18" cy="20" r="1.4"/>
-                        <path d="M2 3h3l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"/>
-                    </svg>
-                    Pedidos
-                </a>
-
-                <a class="nav-item ${currentPage === "reports" ? "active" : ""}"
-                   href="pages/6_reports.html">
-                    <svg viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="1.8">
-                        <circle cx="12" cy="12" r="9"/>
-                        <path d="M12 7v5l3.2 2"/>
-                    </svg>
-                    Reportes
-                </a>
-
-                <a class="nav-item ${currentPage === "settings" ? "active" : ""}"
-                   href="pages/7_settings.html">
-                    <svg viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="1.8">
-                        <circle cx="12" cy="12" r="3"/>
-                        <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>
-                    </svg>
-                    Configuración
-                </a>
-
-                <a class="nav-item ${currentPage === "activity" ? "active" : ""}"
-                   href="pages/8_activity.html">
-                    <svg viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="1.8">
-                        <path d="M22 12h-4l-3 8-6-16-3 8H2"/>
-                    </svg>
-                    Historial de act...
-                </a>
-
-*/
-
-
 class AppSidebar extends HTMLElement {
   connectedCallback() {
       const currentPage = document.body.dataset.page;
@@ -100,6 +44,17 @@ class AppSidebar extends HTMLElement {
                   Categorias
               </a>
 
+              <a class="nav-item ${currentPage === "stock-movement" ? "active" : ""}"
+                 href="pages/4_stock-movement.html">
+                  <svg viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.8">
+                      <path d="M12 3v18"/>
+                      <path d="M5 8l7-5 7 5"/>
+                      <path d="M5 16l7 5 7-5"/>
+                  </svg>
+                  Movimientos de stock
+              </a>
+
           </nav>
 
           <!-- PRÓXIMOS MÓDULOS -->
@@ -126,16 +81,6 @@ class AppSidebar extends HTMLElement {
                       <path d="M8 13h5"/>
                   </svg>
                   Pedidos
-              </div>
-
-              <div class="nav-item upcoming">
-                  <svg viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="1.8">
-                      <path d="M12 3v18"/>
-                      <path d="M5 8l7-5 7 5"/>
-                      <path d="M5 16l7 5 7-5"/>
-                  </svg>
-                  Movimientos de stock
               </div>
 
           </nav>
@@ -218,166 +163,62 @@ customElements.define("app-topbar", AppTopbar);
 /* =====================================================================
    SCRIPT.JS — Lógica compartida de TODAS las vistas del Inventory Dashboard
    =====================================================================
-   Un solo archivo para las 10 páginas. Cada HTML define
+   Un solo archivo para las páginas. Cada HTML define
    <body data-page="nombre-de-vista"> y, al cargar, este script busca
    ese nombre en PAGE_RENDERERS (ver abajo del todo) y corre solo la
    función correspondiente a esa vista.
 
    INDICE RAPIDO (Ctrl+F):
-     1. MOCK_DATA           -> datos de ejemplo, todo centralizado acá
-     2. fetchX()            -> "capa de datos". HOY devuelven MOCK_DATA,
-                                MAÑANA hacen fetch('/api/...') real.
-                                El resto del código no debería cambiar.
-     3. Helpers de UI       -> chips de estado, toasts, exportar CSV
-     4. renderX()           -> arma el HTML de cada vista
-     5. Interacciones       -> filtros, buscador, seleccionar todo, tabs
-     6. Init                -> arranca todo según data-page
+     1. API REAL            -> capa de datos (fetch a productos/categorías/stock)
+     2. Helpers de UI       -> chips de estado, toasts, exportar CSV
+     3. renderX()           -> arma el HTML de cada vista + modales
+     4. Interacciones       -> filtros, buscador, acciones de filas
+     5. Init                -> arranca todo según data-page
    ===================================================================== */
 
 
 /* =====================================================================
-   1. MOCK_DATA
-   -----------------------------------------------------------------
-   Reemplazar esto (o las funciones fetchX de la sección 2) es TODO lo
-   que hace falta para conectar el backend real. Los ids/nombres de
-   campos ya están pensados para mapear 1 a 1 con lo que devolvería una
-   API (sku, status, category, etc.).
+   1. API REAL — Productos / Categorías / Movimientos de stock
    ===================================================================== */
-const MOCK_DATA = {
-
-  dashboard: {
-    items: [
-      { sku:"MRP400", color:"#3d4a3f", title:"Campera de cuero de invierno", sub:null, category:"Ropa", qty:22, warehouse:"múltiples: 22", warehouseAccent:true, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"ACCO" },
-      { sku:"MRP405", color:"#4a4038", title:"Bota vaquera ABCD con cordones, op...", sub:"Varios (6)", category:"Botas", qty:35, warehouse:"Ubicación A: 5", warehouseAccent:false, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"11SE" },
-      { sku:"MRP620", color:"#e9e9e9", title:"Medias blancas XYZ", sub:null, category:"Medias", qty:23, warehouse:"múltiples: 22", warehouseAccent:true, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"ACCO" },
-      { sku:"MRP052", color:"#3a3d4a", title:"Zapatos ABC y Calzado XYZ", sub:null, category:"Calzado", qty:12, warehouse:"Ubicación C: 2", warehouseAccent:false, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"CACO" },
-      { sku:"MRP405", color:"#4a4038", title:"Bota vaquera ABCD con cordones, op...", sub:"Varios (6)", category:"Botas", qty:35, warehouse:"Ubicación D: 5", warehouseAccent:false, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"11SE" },
-      { sku:"MRP052", color:"#3a3d4a", title:"Zapatos ABC y Calzado XYZ", sub:null, category:"Calzado", qty:12, warehouse:"Ubicación C: 2", warehouseAccent:false, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"CACO" },
-      { sku:"aaaaaa", color:"#3d4a3f", title:"Campera de cuero de invierno", sub:null, category:"Ropa", qty:22, warehouse:"Ubicación A: 5", warehouseAccent:false, price:"$223.20", time:"1:00 PM", date:"10 Ago, 2024", status:"ACCO" },
-    ],
-  },
-
-  marketplace: {
-    channels: [
-      { id:"mercadolibre", mark:"ML", name:"MercadoLibre", connected:true,  meta:"Sincronizado hace 12 min",     listed:186, sales:"$412k" },
-      { id:"amazon",       mark:"AZ", name:"Amazon",       connected:true,  meta:"Sincronizado hace 1 hora",    listed:94,  sales:"$198k" },
-      { id:"shopify",      mark:"SH", name:"Shopify",      connected:true,  meta:"Última sincronización hace 2 días", listed:61, sales:"$54k", syncIssue:true },
-      { id:"etsy",         mark:"ET", name:"Etsy",         connected:false, meta:"Conectar para empezar a publicar", listed:null, sales:null },
-    ],
-    listings: [
-      { sku:"MRP400", title:"Campera de cuero de invierno", channel:"MercadoLibre", price:"$223.20", status:"live" },
-      { sku:"MRP405", title:"Bota vaquera con cordones", channel:"Amazon", price:"$189.00", status:"live" },
-      { sku:"MRP620", title:"Pack de medias blancas x3", channel:"MercadoLibre", price:"$18.50", status:"paused" },
-      { sku:"MRP052", title:"Zapatillas para correr ABC", channel:"Shopify", price:"$96.00", status:"error" },
-      { sku:"MRP710", title:"Zapatillas de lona", channel:"Amazon", price:"$74.90", status:"live" },
-    ],
-  },
-
-  orders: {
-    stats: { new:14, processing:32, shipped:58, delivered:210, cancelled:6 },
-    items: [
-      { id:"#10482", customer:"L. Fernandez", items:3, total:"$412.00", date:"20 Sep, 2026", status:"new" },
-      { id:"#10481", customer:"M. Duarte", items:1, total:"$96.00", date:"20 Sep, 2026", status:"processing" },
-      { id:"#10480", customer:"J. Rossi", items:2, total:"$189.90", date:"19 Sep, 2026", status:"shipped" },
-      { id:"#10479", customer:"C. Beltran", items:5, total:"$740.00", date:"18 Sep, 2026", status:"delivered" },
-      { id:"#10478", customer:"A. Nunez", items:1, total:"$74.90", date:"17 Sep, 2026", status:"cancelled" },
-      { id:"#10477", customer:"P. Iglesias", items:2, total:"$212.00", date:"17 Sep, 2026", status:"delivered" },
-    ],
-  },
-
-  shipping: {
-    stats: { inTransit:41, deliveredToday:19, delayed:3, avgTransitDays:"2.4d" },
-    items: [
-      { tracking:"AR93820SD", order:"#10480", carrier:"Correo Argentino", dest:"Córdoba, AR", eta:"23 Sep", status:"in-transit" },
-      { tracking:"AR93801SD", order:"#10479", carrier:"OCA", dest:"Rosario, AR", eta:"22 Sep", status:"delivered" },
-      { tracking:"AR93777SD", order:"#10475", carrier:"Andreani", dest:"Morón, AR", eta:"21 Sep", status:"delayed" },
-      { tracking:"AR93650SD", order:"#10471", carrier:"Correo Argentino", dest:"Mendoza, AR", eta:"24 Sep", status:"in-transit" },
-      { tracking:"AR93602SD", order:"#10468", carrier:"OCA", dest:"La Plata, AR", eta:"20 Sep", status:"delivered" },
-    ],
-  },
-
-  reports: {
-    stats: { revenue:"$412,940", orders:1208, unitsSold:3940, avgOrderValue:"$341.85" },
-    revenue: {
-      months:  ["Oct","Nov","Dic","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep"],
-      values:  [38,52,47,61,58,70,66,74,69,82,78,91],
-    },
-    topProducts: [
-      { name:"Campera de cuero de invierno", units:412, revenue:"$92,140" },
-      { name:"Bota vaquera con cordones", units:380, revenue:"$71,820" },
-      { name:"Zapatillas de lona", units:298, revenue:"$40,470" },
-      { name:"Bota de senderismo media", units:211, revenue:"$38,090" },
-    ],
-    salesByCategory: [
-      { category:"Calzado", share:38 },
-      { category:"Botas", share:27 },
-      { category:"Ropa", share:21 },
-      { category:"Medias", share:14 },
-    ],
-  },
-
-  activity: {
-    events: [
-      { type:"stock",       icon:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/>', text:'<b>J. Doe</b> reabasteció <b>MRP620 · Medias blancas</b> — +40 unidades', time:'Hace 10 minutos' },
-      { type:"orders",      icon:'<circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"/>', text:'Nuevo pedido <b>#10482</b> de L. Fernandez — $412.00', time:'Hace 32 minutos' },
-      { type:"marketplace", icon:'<rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/>', text:'Sincronización con MercadoLibre completa — 186 publicaciones actualizadas', time:'Hace 1 hora' },
-      { type:"stock",       icon:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/>', text:'<b>MRP052 · Zapatillas para correr ABC</b> llegó a 0 unidades — marcado sin stock', time:'Hace 2 horas' },
-      { type:"shipping",    icon:'<rect x="2" y="8" width="12" height="8" rx="1.2"/><path d="M14 11h4l3 3v2h-7z"/>', text:'Envío <b>AR93777SD</b> marcado como demorado por Andreani', time:'Hace 3 horas' },
-      { type:"stock",       icon:'<circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 1 1 4.6 2.6c-1 .6-1.7 1.1-1.7 2.4"/><path d="M12 17.5h.01"/>', text:'<b>M. Duarte</b> actualizó el punto de reorden de <b>MRP811 · Gorro de lana</b> a 15', time:'Ayer' },
-    ],
-  },
-};
-
-/* =====================================================================
-   2. CAPA DE DATOS (fetchX)
-   -----------------------------------------------------------------
-   Hoy son funciones sincrónicas envueltas en una Promise que devuelven
-   MOCK_DATA. El día que esté el backend, cada una de estas pasa a ser
-   un `fetch('/api/...')`. Ninguna otra parte del archivo necesita
-   cambiar porque los renders solo dependen de la forma del objeto que
-   devuelven, no de si viene de acá o de un servidor.
-   ===================================================================== */
-const fetchDashboardItems  = () => Promise.resolve(MOCK_DATA.dashboard.items);
-const fetchMarketplace     = () => Promise.resolve(MOCK_DATA.marketplace);
-const fetchOrders          = () => Promise.resolve(MOCK_DATA.orders);
-const fetchShipping        = () => Promise.resolve(MOCK_DATA.shipping);
-const fetchReports         = () => Promise.resolve(MOCK_DATA.reports);
-const fetchActivity        = () => Promise.resolve(MOCK_DATA.activity.events);
-
-/* =====================================================================
-   2b. API REAL — Productos / Categorías (Inventario)
-   -----------------------------------------------------------------
-   A diferencia del resto (todavía mock), Inventario ya habla con el
-   backend de verdad: GET/POST/PUT/DELETE contra /productos y
-   GET contra /categorias (requiere token).
-   ===================================================================== */
-const API_BASE = 'https://olimpiadas-tecnicas.onrender.com';
+const API_BASE = 'http://localhost:3000';
 
 function authHeaders(extra = {}) {
   const token = localStorage.getItem('token');
   return token ? { ...extra, Authorization: `Bearer ${token}` } : extra;
 }
 
+// Wrapper de fetch para las rutas protegidas: si el backend devuelve 401
+// (token vencido o inválido) limpia el token y manda al login.
+async function fetchAPI(url, options = {}) {
+  const res = await fetch(url, options);
+  if (res.status === 401) {
+    localStorage.removeItem('token');
+    window.location.href = 'login.html';
+    throw new Error('Sesión expirada.');
+  }
+  return res;
+}
+
 async function apiError(res, fallback) {
   const data = await res.json().catch(() => null);
-  return new Error(data?.mensaje || fallback);
+  return new Error(data?.mensaje || `${fallback} (HTTP ${res.status})`);
 }
 
 async function fetchProductos() {
-  const res = await fetch(`${API_BASE}/productos`, { headers: authHeaders() });
+  const res = await fetchAPI(`${API_BASE}/productos`, { headers: authHeaders() });
   if (!res.ok) throw await apiError(res, 'No se pudieron obtener los productos.');
   return res.json();
 }
 
 async function fetchCategorias() {
-  const res = await fetch(`${API_BASE}/categorias`, { headers: authHeaders() });
+  const res = await fetchAPI(`${API_BASE}/categorias`, { headers: authHeaders() });
   if (!res.ok) return [];
   const data = await res.json();
   return Array.isArray(data) ? data : [];
 }
 
 async function crearProductoAPI(payload) {
-  const res = await fetch(`${API_BASE}/productos`, {
+  const res = await fetchAPI(`${API_BASE}/productos`, {
     method: 'POST',
     headers: authHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify(payload)
@@ -387,7 +228,7 @@ async function crearProductoAPI(payload) {
 }
 
 async function actualizarProductoAPI(id, payload) {
-  const res = await fetch(`${API_BASE}/productos/${id}`, {
+  const res = await fetchAPI(`${API_BASE}/productos/${id}`, {
     method: 'PUT',
     headers: authHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify(payload)
@@ -397,7 +238,7 @@ async function actualizarProductoAPI(id, payload) {
 }
 
 async function eliminarProductoAPI(id) {
-  const res = await fetch(`${API_BASE}/productos/${id}`, {
+  const res = await fetchAPI(`${API_BASE}/productos/${id}`, {
     method: 'DELETE',
     headers: authHeaders()
   });
@@ -406,7 +247,7 @@ async function eliminarProductoAPI(id) {
 }
 
 async function modificarStockAPI(id, payload) {
-  const res = await fetch(`${API_BASE}/productos/${id}/stock`, {
+  const res = await fetchAPI(`${API_BASE}/productos/${id}/stock`, {
     method: 'PATCH',
     headers: authHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify(payload)
@@ -416,7 +257,7 @@ async function modificarStockAPI(id, payload) {
 }
 
 async function crearCategoriaAPI(payload) {
-  const res = await fetch(`${API_BASE}/categorias`, {
+  const res = await fetchAPI(`${API_BASE}/categorias`, {
     method: 'POST',
     headers: authHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify(payload)
@@ -426,7 +267,7 @@ async function crearCategoriaAPI(payload) {
 }
 
 async function actualizarCategoriaAPI(id, payload) {
-  const res = await fetch(`${API_BASE}/categorias/${id}`, {
+  const res = await fetchAPI(`${API_BASE}/categorias/${id}`, {
     method: 'PUT',
     headers: authHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify(payload)
@@ -436,12 +277,25 @@ async function actualizarCategoriaAPI(id, payload) {
 }
 
 async function eliminarCategoriaAPI(id) {
-  const res = await fetch(`${API_BASE}/categorias/${id}`, {
+  const res = await fetchAPI(`${API_BASE}/categorias/${id}`, {
     method: 'DELETE',
     headers: authHeaders()
   });
   if (!res.ok) throw await apiError(res, 'No se pudo eliminar la categoría.');
   return res.json();
+}
+
+async function fetchMovimientosStock() {
+  const res = await fetchAPI(`${API_BASE}/movimientos-stock`, {
+    headers: authHeaders()
+  });
+
+  if (!res.ok) {
+    throw await apiError(res, 'No se pudieron obtener los movimientos de stock.');
+  }
+
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
 }
 
 // Id de categoría "real" — el backend no es 100% consistente con el
@@ -468,9 +322,8 @@ function escapeHtml(str) {
   }[s]));
 }
 
-// El backend a veces devuelve/espera `cantidad` como string (ver nota en
-// initProductModal), así que en el frontend siempre la normalizamos a
-// entero antes de mostrarla o de hacer cuentas con ella.
+// Normaliza `cantidad` a entero antes de mostrarla o de hacer cuentas.
+// Sirve tanto si el backend la devuelve como number como si es string.
 function cantidadInt(value) {
   const n = parseInt(value, 10);
   return Number.isFinite(n) ? n : 0;
@@ -478,39 +331,51 @@ function cantidadInt(value) {
 
 let CATEGORIAS_CACHE = [];
 
+// ---------------------------------------------------------------------
+// Movimientos de stock
+// ---------------------------------------------------------------------
+// Cambiar a true cuando el backend pase a esperar `cantidad` como number
+// en POST /productos y PUT /productos/:id (hoy espera string).
+const CANTIDAD_COMO_NUMERO = false;
+const cantidadParaAPI = (n) => CANTIDAD_COMO_NUMERO ? n : String(n);
 
-/* =====================================================================
-   3. HELPERS DE UI
-   ===================================================================== */
+const STOCK_ICON = '<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/>';
 
-// ---- Chips de estado: un solo lugar para agregar/editar estados nuevos ----
-const STATUS_CHIPS = {
-  "in-stock":     ["chip-success", "In Stock"],
-  "low-stock":    ["chip-warning", "Low Stock"],
-  "out-of-stock": ["chip-danger",  "Out of Stock"],
-  "live":         ["chip-success", "Live"],
-  "paused":       ["chip-neutral", "Paused"],
-  "error":        ["chip-danger",  "Sync Error"],
-  "new":          ["chip-info",    "New"],
-  "processing":   ["chip-warning", "Processing"],
-  "shipped":      ["chip-info",    "Shipped"],
-  "delivered":    ["chip-success", "Delivered"],
-  "cancelled":    ["chip-danger",  "Cancelled"],
-  "in-transit":   ["chip-info",    "In Transit"],
-  "delayed":      ["chip-danger",  "Delayed"],
+const ORIGEN_LABEL = {
+  creacion_producto: 'Stock inicial',
+  cambio_stock: 'Cambio de stock',
+  edicion_producto: 'Edición de producto',
+  venta: 'Venta',
 };
 
-function statusChip(statusKey) {
-  const [cls, label] = STATUS_CHIPS[statusKey] || ["chip-neutral", statusKey];
-  return `<span class="chip ${cls}">${label}</span>`;
+function describirMovimiento(m) {
+  const anterior = Number(m.cantidad_anterior ?? 0);
+  const nueva = Number(m.cantidad_nueva ?? 0);
+  const dif = nueva - anterior;
+  const cambio = dif >= 0 ? `+${dif}` : `${dif}`;
+  const origen = ORIGEN_LABEL[m.origen] || m.origen;
+  const quien = m.usuario ? `<b>${escapeHtml(m.usuario)}</b>` : 'Alguien';
+  const motivo = m.motivo ? ` — ${escapeHtml(m.motivo)}` : '';
+
+  return `${quien} · ${escapeHtml(origen)}: ` +
+         `<b>${escapeHtml(m.fk_producto)} · ${escapeHtml(m.producto)}</b> ` +
+         `— ${cambio} unidades (${anterior} → ${nueva})${motivo}`;
 }
 
-function editButton(needsBackendLabel) {
-  return `
-    <button class="edit-btn" data-needs-backend="${needsBackendLabel}">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
-    </button>`;
+function formatTiempoRelativo(timestamp) {
+  const diffMin = Math.round((Date.now() - timestamp) / 60000);
+  if (diffMin < 1) return 'Recién';
+  if (diffMin < 60) return `Hace ${diffMin} minuto${diffMin === 1 ? '' : 's'}`;
+  const diffHoras = Math.round(diffMin / 60);
+  if (diffHoras < 24) return `Hace ${diffHoras} hora${diffHoras === 1 ? '' : 's'}`;
+  const diffDias = Math.round(diffHoras / 24);
+  return diffDias === 1 ? 'Ayer' : `Hace ${diffDias} días`;
 }
+
+
+/* =====================================================================
+   2. HELPERS DE UI
+   ===================================================================== */
 
 // ---- Editar/eliminar producto real (Inventario) ----
 function productActionButtons(id) {
@@ -534,7 +399,7 @@ function categoryActionButtons(id) {
     </button>`;
 }
 
-// ---- Toast: aviso visual de "esto necesita backend" ----
+// ---- Toast ----
 function ensureToastStack() {
   let stack = document.querySelector('.toast-stack');
   if (!stack) {
@@ -554,10 +419,8 @@ function showToast(message) {
   setTimeout(() => toast.remove(), 3200);
 }
 
-// Delegación global: cualquier elemento (estático o generado por JS) con
-// data-needs-backend="Texto" muestra el aviso en vez de hacer nada.
-// Para agregar un botón nuevo que dependa del backend, solo hay que
-// ponerle este atributo en el HTML — no hace falta tocar este archivo.
+// Delegación global: cualquier elemento con data-needs-backend="Texto"
+// muestra el aviso en vez de hacer nada.
 document.addEventListener('click', (e) => {
   const trigger = e.target.closest('[data-needs-backend]');
   if (!trigger) return;
@@ -567,7 +430,7 @@ document.addEventListener('click', (e) => {
   console.warn(`[Inventory Dashboard] Acción pendiente de backend: ${label}`);
 });
 
-// ---- Exportar una tabla visible a CSV (funciona 100% en el frontend) ----
+// ---- Exportar una tabla visible a CSV ----
 function exportTableToCSV(table, filename) {
   const rows = [...table.querySelectorAll('tr')].map(tr =>
     [...tr.children]
@@ -588,42 +451,8 @@ function exportTableToCSV(table, filename) {
 
 
 /* =====================================================================
-   4. RENDER POR VISTA
-   -----------------------------------------------------------------
-   Cada función arma el HTML de su vista a partir de fetchX() y lo
-   mete en el elemento con el id correspondiente. Si mañana fetchX
-   devuelve datos reales, esto no cambia.
+   3. RENDER POR VISTA
    ===================================================================== */
-
-async function renderDashboard() {
-  const items = await fetchDashboardItems();
-  const tbody = document.getElementById('table-body');
-  if (!tbody) return;
-  tbody.innerHTML = items.map(item => `
-<tr>
-    <td class="cell-muted">${item.sku}</td>
-    <td>
-    <div class="thumb" style="background:${item.color};">
-        <svg viewBox="0 0 24 24" fill="none" stroke="${item.color === '#e9e9e9' ? '#555' : '#c9d6cf'}" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-    </div>
-    </td>
-    <td class="title-cell">
-    <div class="title-main">${item.title}</div>
-    ${item.sub ? `<div class="title-sub">${item.sub}</div>` : ''}
-    </td>
-    <td class="cell-muted">${item.category}</td>
-    <td class="cell-muted">${item.qty}</td>
-    <td class="${item.warehouseAccent ? 'cell-accent' : 'cell-muted'}">${item.warehouse}</td>
-    <td class="cell-muted">${item.price}</td>
-    <td class="modified-cell">
-    <div class="modified-time">${item.time}</div>
-    <div class="modified-date">${item.date}</div>
-    </td>
-    <td class="status-tag">${item.status}</td>
-    <td class="row-actions">${editButton('Editar ' + item.sku)}</td>
-</tr>`).join('');
-  wireSelectAll(tbody.closest('table'));
-}
 
 let PRODUCTOS_CACHE = [];
 
@@ -647,15 +476,13 @@ async function renderInventory() {
     <td class="title-cell"><div class="title-main">${escapeHtml(p.nombre)}</div></td>
     <td class="cell-muted">${escapeHtml(nombreCategoria(p.fk_categoria))}</td>
     <td class="cell-muted">${cantidadInt(p.cantidad)}</td>
-    <td class="cell-muted">$${Number(p.precio_unitario).toLocaleString('es-AR')}</td>
+    <td class="cell-muted">$${Math.round(Number(p.precio_unitario)).toLocaleString('es-AR')}</td>
     <td class="cell-muted">${escapeHtml(p.descripcion || '')}</td>
     <td class="cell-muted">${formatFecha(p.ultima_modificacion)}</td>
     <td class="row-actions">${productActionButtons(p.id)}</td>
 </tr>`).join('') || `<tr class="no-results"><td colspan="8">Todavía no hay productos cargados.</td></tr>`;
 
-  wireSelectAll(tbody.closest('table'));
   initCategoryFilter(tbody);
-  wireProductRowActions(tbody);
 }
 
 function renderCategoryFilters(categorias) {
@@ -667,26 +494,6 @@ function renderCategoryFilters(categorias) {
   ].join('');
 }
 
-function wireProductRowActions(tbody) {
-  tbody.querySelectorAll('[data-action="edit"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const producto = PRODUCTOS_CACHE.find(p => String(p.id) === btn.dataset.id);
-      if (producto) window.openProductModal(producto);
-    });
-  });
-  tbody.querySelectorAll('[data-action="delete"]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      if (!confirm('¿Eliminar este producto?')) return;
-      try {
-        await eliminarProductoAPI(btn.dataset.id);
-        showToast('Producto eliminado.');
-        renderInventory();
-      } catch (err) {
-        showToast(err.message || 'Error al eliminar el producto.');
-      }
-    });
-  });
-}
 
 // ---- Vista de Categorías (tabla + conteo de productos) ----
 async function renderCategorias() {
@@ -712,30 +519,6 @@ async function renderCategorias() {
     <td class="row-actions">${categoryActionButtons(id)}</td>
 </tr>`;
   }).join('') || `<tr class="no-results"><td colspan="5">Todavía no hay categorías cargadas.</td></tr>`;
-
-  wireSelectAll(tbody.closest('table'));
-  wireCategoryRowActions(tbody);
-}
-
-function wireCategoryRowActions(tbody) {
-  tbody.querySelectorAll('[data-action="edit-cat"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const categoria = CATEGORIAS_CACHE.find(c => String(idCategoria(c)) === btn.dataset.id);
-      if (categoria) window.openCategoryModal(categoria);
-    });
-  });
-  tbody.querySelectorAll('[data-action="delete-cat"]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      if (!confirm('¿Eliminar esta categoría?')) return;
-      try {
-        await eliminarCategoriaAPI(btn.dataset.id);
-        showToast('Categoría eliminada.');
-        renderCategorias();
-      } catch (err) {
-        showToast(err.message || 'Error al eliminar la categoría.');
-      }
-    });
-  });
 }
 
 // ---- Modal de Agregar/Editar categoría ----
@@ -822,6 +605,8 @@ function initProductModal() {
   const precioInput = document.getElementById('product-precio');
   const descInput = document.getElementById('product-descripcion');
   const errorEl = document.getElementById('product-form-error');
+  const motivoInput = document.getElementById('product-motivo');
+  const motivoField = document.getElementById('product-motivo-field');
 
   function fillCategorias(selectedId) {
     categoriaSelect.innerHTML = CATEGORIAS_CACHE
@@ -834,12 +619,15 @@ function initProductModal() {
     errorEl.textContent = '';
     form.reset();
 
+    // El motivo solo se muestra al editar (el backend lo usa si cambia la cantidad).
+    if (motivoField) motivoField.style.display = producto ? '' : 'none';
+
     if (producto) {
       titleEl.textContent = 'Editar producto';
       idInput.value = producto.id;
       nombreInput.value = producto.nombre;
       cantidadInput.value = cantidadInt(producto.cantidad);
-      precioInput.value = producto.precio_unitario;
+      precioInput.value = Math.round(Number(producto.precio_unitario));
       descInput.value = producto.descripcion;
       fillCategorias(producto.fk_categoria);
     } else {
@@ -866,13 +654,29 @@ function initProductModal() {
     e.preventDefault();
     errorEl.textContent = '';
 
+    const cantidadTxt = String(cantidadInput.value).trim();
+    const cantidad = Number(cantidadTxt);
+    if (cantidadTxt === '' || !Number.isInteger(cantidad) || cantidad < 0) {
+      errorEl.textContent = 'La cantidad debe ser un número entero de 0 o más.';
+      return;
+    }
+
+    const precio = Number(precioInput.value);
+    if (!Number.isInteger(precio) || precio <= 0) {
+      errorEl.textContent = 'El precio debe ser un número entero mayor a 0.';
+      return;
+    }
+
     const payload = {
       nombre: nombreInput.value.trim(),
       categoria: Number(categoriaSelect.value),
-      cantidad: String(cantidadInput.value).trim(),
-      precio: Number(precioInput.value),
+      cantidad: cantidadParaAPI(cantidad),
+      precio,
       descripcion: descInput.value.trim()
     };
+
+    // Solo al editar: motivo del cambio (se registra si la cantidad cambió)
+    if (idInput.value && motivoInput) payload.motivo = motivoInput.value.trim();
 
     const submitBtn = document.getElementById('product-modal-submit');
     submitBtn.disabled = true;
@@ -895,9 +699,7 @@ function initProductModal() {
   });
 }
 
-// ---- Modal de Cambiar stock (Inventario) ----
-// Nota: por ahora esto NO registra un historial de movimientos, solo
-// reutiliza el endpoint de actualizar producto para ajustar la cantidad.
+// ---- Modal de Cambiar stock: usa PATCH /productos/:id/stock, que registra el movimiento ----
 function initStockModal() {
   const overlay = document.getElementById('stock-modal-overlay');
   if (!overlay) return;
@@ -956,36 +758,25 @@ function initStockModal() {
       return;
     }
 
-    // producto.cantidad viene del backend como string, así que la
-    // pasamos a número con cantidadInt() para poder operar con ella.
     const nuevaCantidad = cantidadInt(producto.cantidad) + cambio;
     if (nuevaCantidad < 0) {
       errorEl.textContent = 'El stock no puede quedar en negativo.';
       return;
     }
 
-    // La descripción del cambio (motivo) todavía no se guarda en ningún
-    // lado porque no hay tabla de movimientos de stock — queda pendiente
-    // para cuando se agregue esa parte al backend.
-    void descInput.value.trim();
-
-    // El endpoint de stock (modificarStockAPI) funciona mal, así que
-    // reutilizamos el mismo método normal de actualizar producto que
-    // usa el modal de Editar producto, mandando el producto completo
-    // con la cantidad ya recalculada y devuelta a string para el backend.
+    // El controller valida que `cantidad` sea un entero positivo
+    // (el signo va aparte, en `operacion`).
     const payload = {
-      nombre: producto.nombre,
-      categoria: Number(producto.fk_categoria),
-      cantidad: String(nuevaCantidad),
-      precio: Number(producto.precio_unitario),
-      descripcion: producto.descripcion
+      cantidad: Math.abs(cambio),
+      operacion: cambio > 0 ? 'sumar' : 'restar',
+      motivo: descInput.value.trim()
     };
 
     const submitBtn = document.getElementById('stock-modal-submit');
     submitBtn.disabled = true;
 
     try {
-      await actualizarProductoAPI(producto.id, payload);
+      await modificarStockAPI(producto.id, payload);
       showToast('Stock actualizado.');
       closeModal();
       renderInventory();
@@ -997,131 +788,36 @@ function initStockModal() {
   });
 }
 
-async function renderMarketplace() {
-  const { channels, listings } = await fetchMarketplace();
-
-  const grid = document.getElementById('channel-grid');
-  if (grid) {
-    grid.innerHTML = channels.map(c => `
-<div class="channel-card">
-  <div class="channel-top">
-    <div class="channel-mark">${c.mark}</div>
-    <span class="chip ${c.connected ? (c.syncIssue ? 'chip-warning' : 'chip-success') : 'chip-neutral'}">${c.connected ? (c.syncIssue ? 'Sync Issue' : 'Connected') : 'Not Connected'}</span>
-  </div>
-  <div class="channel-name">${c.name}</div>
-  <div class="channel-meta">${c.meta}</div>
-  <div class="channel-stats">
-    <div><b>${c.listed ?? '—'}</b>Listed</div>
-    <div><b>${c.sales ?? '—'}</b>30-day sales</div>
-  </div>
-</div>`).join('');
-  }
-
-  const tbody = document.getElementById('table-body');
-  if (!tbody) return;
-  tbody.innerHTML = listings.map(item => `
-<tr>
-    <td class="cell-muted">${item.sku}</td>
-    <td class="title-main">${item.title}</td>
-    <td class="cell-muted">${item.channel}</td>
-    <td class="cell-muted">${item.price}</td>
-    <td>${statusChip(item.status)}</td>
-    <td class="row-actions">${editButton('Editar publicación ' + item.sku)}</td>
-</tr>`).join('');
-  wireSelectAll(tbody.closest('table'));
-}
-
-async function renderOrders() {
-  const { stats, items } = await fetchOrders();
-
-  setText('stat-new', stats.new);
-  setText('stat-processing', stats.processing);
-  setText('stat-shipped', stats.shipped);
-  setText('stat-delivered', stats.delivered);
-  setText('stat-cancelled', stats.cancelled);
-
-  const tbody = document.getElementById('table-body');
-  if (!tbody) return;
-  tbody.innerHTML = items.map(o => `
-<tr>
-    <td class="title-main">${o.id}</td>
-    <td class="cell-muted">${o.customer}</td>
-    <td class="cell-muted">${o.items}</td>
-    <td class="cell-muted">${o.total}</td>
-    <td class="cell-muted">${o.date}</td>
-    <td>${statusChip(o.status)}</td>
-    <td class="row-actions">${editButton('Cambiar estado de ' + o.id)}</td>
-</tr>`).join('');
-  wireSelectAll(tbody.closest('table'));
-}
-
-async function renderShipping() {
-  const { stats, items } = await fetchShipping();
-
-  setText('stat-in-transit', stats.inTransit);
-  setText('stat-delivered-today', stats.deliveredToday);
-  setText('stat-delayed', stats.delayed);
-  setText('stat-avg-transit', stats.avgTransitDays);
-
-  const tbody = document.getElementById('table-body');
-  if (!tbody) return;
-  tbody.innerHTML = items.map(s => `
-<tr>
-    <td class="title-main">${s.tracking}</td>
-    <td class="cell-muted">${s.order}</td>
-    <td class="cell-muted">${s.carrier}</td>
-    <td class="cell-muted">${s.dest}</td>
-    <td class="cell-muted">${s.eta}</td>
-    <td>${statusChip(s.status)}</td>
-    <td class="row-actions">${editButton('Editar envío ' + s.tracking)}</td>
-</tr>`).join('');
-  wireSelectAll(tbody.closest('table'));
-}
-
-async function renderReports() {
-  const { stats, revenue, topProducts, salesByCategory } = await fetchReports();
-
-  setText('stat-revenue', stats.revenue);
-  setText('stat-orders', stats.orders.toLocaleString('es-AR'));
-  setText('stat-units-sold', stats.unitsSold.toLocaleString('es-AR'));
-  setText('stat-aov', stats.avgOrderValue);
-
-  const chart = document.getElementById('revenue-chart');
-  if (chart) {
-    const max = Math.max(...revenue.values);
-    chart.innerHTML = revenue.values.map((v, i) => `
-      <div class="bar-col">
-        <div class="bar" style="height:${Math.round((v / max) * 100)}%;"></div>
-        <div class="bar-label">${revenue.months[i]}</div>
-      </div>`).join('');
-  }
-
-  const topBody = document.getElementById('top-products-body');
-  if (topBody) {
-    topBody.innerHTML = topProducts.map(p => `
-      <tr><td class="title-main">${p.name}</td><td class="cell-muted">${p.units}</td><td class="cell-muted">${p.revenue}</td></tr>`).join('');
-  }
-
-  const catBody = document.getElementById('sales-by-category-body');
-  if (catBody) {
-    catBody.innerHTML = salesByCategory.map(c => `
-      <tr><td class="cell-muted">${c.category}</td><td class="cell-accent">${c.share}%</td></tr>`).join('');
-  }
-}
-
-async function renderActivity() {
-  const events = await fetchActivity();
-  const feed = document.getElementById('activity-feed');
+// ---- Página dedicada de Movimientos de stock -------------------------
+async function renderStockMovements() {
+  const feed = document.getElementById('stock-movements-feed');
   if (!feed) return;
-  feed.innerHTML = events.map(e => `
-<div class="activity-item" data-type="${e.type}">
-  <div class="activity-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${e.icon}</svg></div>
-  <div>
-    <div class="activity-text">${e.text}</div>
-    <div class="activity-time">${e.time}</div>
-  </div>
-</div>`).join('');
-  initActivityFilter(feed);
+
+  try {
+    const movimientos = await fetchMovimientosStock();
+    setText('stat-total-movimientos', movimientos.length);
+
+    if (!movimientos.length) {
+      feed.innerHTML = `<div class="feed-empty">Todavía no hay movimientos de stock registrados.</div>`;
+      return;
+    }
+
+    feed.innerHTML = movimientos.map(m => `
+      <div class="activity-item" data-type="stock" data-origen="${escapeHtml(m.origen)}">
+        <div class="activity-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${STOCK_ICON}</svg>
+        </div>
+        <div>
+          <div class="activity-text">${describirMovimiento(m)}</div>
+          <div class="activity-time">${formatTiempoRelativo(new Date(m.fecha).getTime())}</div>
+        </div>
+      </div>`).join('');
+
+  } catch (err) {
+    console.error(err);
+    setText('stat-total-movimientos', '—');
+    feed.innerHTML = `<div class="feed-empty">No se pudieron cargar los movimientos de stock.</div>`;
+  }
 }
 
 function setText(id, value) {
@@ -1131,35 +827,48 @@ function setText(id, value) {
 
 
 /* =====================================================================
-   5. INTERACCIONES DE UI (funcionan sin backend)
+   4. INTERACCIONES DE UI
    ===================================================================== */
 
-// ---- Tabs (usado en Settings) ----
-function initTabs() {
-  document.querySelectorAll('.tabs').forEach(tabGroup => {
-    const panels = tabGroup.parentElement.querySelectorAll('.tab-panel');
-    tabGroup.querySelectorAll('.tab').forEach((tab, i) => {
-      tab.addEventListener('click', () => {
-        tabGroup.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        panels.forEach(p => p.classList.remove('active'));
-        tab.classList.add('active');
-        panels[i].classList.add('active');
-      });
-    });
-  });
-}
+// ---- Acciones de filas (editar/eliminar producto y categoría) ----
+// Un solo listener delegado en document: sigue funcionando aunque las
+// tablas se vuelvan a dibujar, sin tener que re-conectar botones.
+function initRowActions() {
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
 
-// ---- Checkbox "seleccionar todo" en el header de cada tabla ----
-function wireSelectAll(table) {
-  if (!table) return;
-  const headCheckbox = table.querySelector('thead input[type="checkbox"]');
-  if (!headCheckbox) return;
-  headCheckbox.checked = false;
-  headCheckbox.onchange = () => {
-    table.querySelectorAll('tbody input[type="checkbox"]').forEach(cb => {
-      cb.checked = headCheckbox.checked;
-    });
-  };
+    const { action, id } = btn.dataset;
+
+    if (action === 'edit') {
+      const producto = PRODUCTOS_CACHE.find(p => String(p.id) === id);
+      if (producto) window.openProductModal(producto);
+
+    } else if (action === 'delete') {
+      if (!confirm('¿Eliminar este producto?')) return;
+      try {
+        await eliminarProductoAPI(id);
+        showToast('Producto eliminado.');
+        renderInventory();
+      } catch (err) {
+        showToast(err.message || 'Error al eliminar el producto.');
+      }
+
+    } else if (action === 'edit-cat') {
+      const categoria = CATEGORIAS_CACHE.find(c => String(idCategoria(c)) === id);
+      if (categoria) window.openCategoryModal(categoria);
+
+    } else if (action === 'delete-cat') {
+      if (!confirm('¿Eliminar esta categoría?')) return;
+      try {
+        await eliminarCategoriaAPI(id);
+        showToast('Categoría eliminada.');
+        renderCategorias();
+      } catch (err) {
+        showToast(err.message || 'Error al eliminar la categoría.');
+      }
+    }
+  });
 }
 
 // ---- Filtro de categoría (Inventory) ----
@@ -1178,22 +887,6 @@ function initCategoryFilter(tbody) {
   });
 }
 
-// ---- Filtro de tipo (Activity) ----
-function initActivityFilter(feed) {
-  const chips = document.querySelectorAll('.filter-chip[data-filter]');
-  if (!chips.length) return;
-  chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      chips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      const filter = chip.dataset.filter;
-      feed.querySelectorAll('.activity-item').forEach(item => {
-        item.style.display = (filter === 'all' || item.dataset.type === filter) ? '' : 'none';
-      });
-    });
-  });
-}
-
 // ---- Buscador del topbar: filtra filas de la tabla visible de la página actual ----
 function initTopbarSearch() {
   const input = document.querySelector('.topbar .search input');
@@ -1201,9 +894,6 @@ function initTopbarSearch() {
 
   input.addEventListener('input', () => {
     const q = input.value.trim().toLowerCase();
-    // En vez de buscar siempre el id "table-body" (que solo existe en
-    // Inventario), agarramos el <tbody> de la tabla principal de la
-    // página actual, sea cual sea su id (ej. "categories-table-body").
     const tbody = document.querySelector('.table-wrap table tbody');
     if (!tbody) return;
     tbody.querySelectorAll('tr').forEach(row => {
@@ -1224,7 +914,7 @@ function initHelpSearch() {
   });
 }
 
-// ---- Exportar CSV (Orders, Reports) ----
+// ---- Exportar CSV (Orders) ----
 function initExportButtons() {
   document.querySelectorAll('[data-export]').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1236,22 +926,13 @@ function initExportButtons() {
 
 
 /* =====================================================================
-   6. INIT
-   -----------------------------------------------------------------
-   Corre en TODAS las páginas. Primero las interacciones genéricas
-   (tabs, buscador, export, avisos de backend), después la función de
-   render que corresponde a la vista actual según data-page en <body>.
+   5. INIT
    ===================================================================== */
 
 const PAGE_RENDERERS = {
-  dashboard:   renderDashboard,
   inventory:   renderInventory,
   categories:  renderCategorias,
-  marketplace: renderMarketplace,
-  orders:      renderOrders,
-  shipping:    renderShipping,
-  reports:     renderReports,
-  activity:    renderActivity,
+  "stock-movement": renderStockMovements,
   // settings, whats-new y help son estáticos: no necesitan render de datos.
 };
 
@@ -1266,10 +947,10 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.removeItem('token');
   });
 
-  initTabs();
   initTopbarSearch();
   initHelpSearch();
   initExportButtons();
+  initRowActions();
   initProductModal();
   initStockModal();
   initCategoryModal();

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base href="../">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movimientos de stock · Panel de Control de Inventario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .content-header-actions { display:flex; align-items:center; gap:10px; }
+    .feed-empty { padding:28px 16px; text-align:center; font-size:13px; color:var(--text-muted); }
+  </style>
+</head>
+<body data-page="stock-movement">
+  <div class="app">
+    <app-sidebar></app-sidebar>
+    <main class="main">
+      <app-topbar></app-topbar>
+      <section class="content">
+        <div class="content-header">
+          <h1 class="page-title">Movimientos de stock</h1>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-label">Movimientos registrados</div>
+            <div class="stat-value" id="stat-total-movimientos">—</div>
+          </div>
+        </div>
+
+        <div class="activity-feed" id="stock-movements-feed"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
