@@ -6,6 +6,7 @@ const helmet = require("helmet")
 const categoriasRoutes = require("./routes/categoriasRoutes")
 const productosRoutes = require("./routes/productosRoutes")
 const usuariosRoutes = require("./routes/usuariosRoutes")
+const combosRouter = require("./routes/combosRoutes")
 const errorMiddleware = require("./middleware/errorMiddleware")
 
 app.use(helmet())
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use("/categorias", categoriasRoutes)
 app.use("/productos", productosRoutes)
 app.use("/usuarios", usuariosRoutes)
+app.use("/combos", combosRouter)
 
 app.use(errorMiddleware)
 

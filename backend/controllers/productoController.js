@@ -269,6 +269,8 @@ const actualizarProducto = async (req, res) => {
             [nombre, cantidad, categoria, precio, descripcion, id]
         )
 
+        await con.query("INSERT INTO movimientos_stock (fk_producto, cantidad_anterior, cantidad_nueva, motivo, origen, fk_usuario) VALUES (?, ?, ?, ?, ?, ?)")
+
 
         if (producto.affectedRows === 0) {
             return res.status(404).json({
