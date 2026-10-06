@@ -162,134 +162,101 @@ const crearProducto = async (req, res) => {
 
 
 const actualizarProducto = async (req, res) => {
+    const { id } = req.params
+    let { nombre, cantidad, categoria, precio, descripcion, motivo } = req.body
+
+    if (!/^\d+$/.test(id) || Number(id) <= 0) {
+        return res.status(400).json({ mensaje: "El ID debe ser un número entero positivo" })
+    }
+
+    if (
+        typeof nombre !== "string" ||
+        typeof cantidad !== "string" ||
+        typeof categoria !== "number" ||
+        typeof precio !== "number" ||
+        typeof descripcion !== "string"
+    ) {
+        return res.status(400).json({ mensaje: "Los datos tienen un formato incorrecto" })
+    }
+
+    nombre = nombre.trim()
+    cantidad = cantidad.trim()
+    descripcion = descripcion.trim()
+
+    if (!nombre || !cantidad || !descripcion) {
+        return res.status(400).json({ mensaje: "No se permiten campos vacíos" })
+    }
+    if (nombre.length > 100) {
+        return res.status(400).json({ mensaje: "El nombre no puede superar los 100 caracteres" })
+    }
+    if (descripcion.length > 255) {
+        return res.status(400).json({ mensaje: "La descripción no puede superar los 255 caracteres" })
+    }
+
+    const cantidadNum = Number(cantidad)
+    if (!Number.isInteger(cantidadNum) || cantidadNum < 0 || cantidadNum > 10000) {
+        return res.status(400).json({ mensaje: "La cantidad debe ser un entero entre 0 y 10.000" })
+    }
+    if (!Number.isInteger(precio) || precio <= 0) {
+        return res.status(400).json({ mensaje: "El precio debe ser un número entero mayor a 0" })
+    }
+    if (!Number.isInteger(categoria) || categoria <= 0) {
+        return res.status(400).json({ mensaje: "La categoría debe ser un número entero positivo" })
+    }
+    if (motivo != null && (typeof motivo !== "string" || motivo.length > 255)) {
+        return res.status(400).json({ mensaje: "El motivo debe ser texto de hasta 255 caracteres" })
+    }
+    const motivoLimpio = typeof motivo === "string" ? motivo.trim() || null : null
+
+    const conn = await con.getConnection()
     try {
-        const { id } = req.params
+        await conn.beginTransaction()
 
-        let {
-            nombre,
-            cantidad,
-            categoria,
-            precio,
-            descripcion
-        } = req.body
-
-
-        // Validar ID
-        if (!/^\d+$/.test(id) || Number(id) <= 0) {
-            return res.status(400).json({
-                mensaje: "El ID debe ser un número entero positivo"
-            })
+        const [categoriaExiste] = await conn.query(
+            "SELECT id_c FROM categorias WHERE id_c = ?", [categoria]
+        )
+        if (categoriaExiste.length === 0) {
+            await conn.rollback()
+            return res.status(400).json({ mensaje: "La categoria no existe" })
         }
 
-
-        // Validar tipos
-        if (
-            typeof nombre !== "string" ||
-            typeof cantidad !== "string" ||
-            typeof categoria !== "number" ||
-            typeof precio !== "number" ||
-            typeof descripcion !== "string"
-        ) {
-            return res.status(400).json({
-                mensaje: "Los datos tienen un formato incorrecto"
-            })
+        const [actual] = await conn.query(
+            "SELECT cantidad FROM productos WHERE id = ? FOR UPDATE", [id]
+        )
+        if (actual.length === 0) {
+            await conn.rollback()
+            return res.status(404).json({ mensaje: "Producto no encontrado" })
         }
 
-
-        // Quitar espacios
-        nombre = nombre.trim()
-        cantidad = cantidad.trim()
-        descripcion = descripcion.trim()
-
-
-        // Campos vacíos
-        if (!nombre || !cantidad || !descripcion) {
-            return res.status(400).json({
-                mensaje: "No se permiten campos vacíos"
-            })
-        }
-
-
-        // Longitud nombre
-        if (nombre.length > 100) {
-            return res.status(400).json({
-                mensaje: "El nombre no puede superar los 100 caracteres"
-            })
-        }
-
-
-        // Longitud imagen
-        if (cantidad.length > 10000) {
-            return res.status(400).json({
-                mensaje: "La cantidad no puede superar 10000 unidades"
-            })
-        }
-
-
-        // Longitud descripción
-        if (descripcion.length > 255) {
-            return res.status(400).json({
-                mensaje: "La descripción no puede superar los 255 caracteres"
-            })
-        }
-
-
-        // Precio
-        if (!Number.isFinite(precio) || precio <= 0) {
-            return res.status(400).json({
-                mensaje: "El precio debe ser un número mayor a 0"
-            })
-        }
-
-
-        // Categoría
-        if (!Number.isInteger(categoria) || categoria <= 0) {
-            return res.status(400).json({
-                mensaje: "La categoría debe ser un número entero positivo"
-            })
-        }
-
-        const [categoriaExiste] = await con.query("SELECT id_c FROM categorias WHERE id_c = ?", [categoria])
-
-        if(categoriaExiste.length === 0){
-            return res.status(400).json({
-                mensaje: "La categoria no existe"
-            })
-        }
-
-        const [producto] = await con.query(
+        const [producto] = await conn.query(
             `UPDATE productos
-            SET nombre = ?,
-                cantidad = ?,
-                fk_categoria = ?,
-                precio_unitario = ?,
-                ultima_modificacion = NOW(),
-                descripcion = ?
-            WHERE id = ?`,
-            [nombre, cantidad, categoria, precio, descripcion, id]
+             SET nombre = ?, cantidad = ?, fk_categoria = ?, precio_unitario = ?,
+                 ultima_modificacion = NOW(), descripcion = ?
+             WHERE id = ?`,
+            [nombre, cantidadNum, categoria, precio, descripcion, id]
         )
 
-        await con.query("INSERT INTO movimientos_stock (fk_producto, cantidad_anterior, cantidad_nueva, motivo, origen, fk_usuario) VALUES (?, ?, ?, ?, ?, ?)")
-
-
-        if (producto.affectedRows === 0) {
-            return res.status(404).json({
-                mensaje: "Producto no encontrado"
-            })
+        if (actual[0].cantidad !== cantidadNum) {
+            await conn.query(
+                `INSERT INTO movimientos_stock
+                 (fk_producto, cantidad_anterior, cantidad_nueva, motivo, origen, fk_usuario)
+                 VALUES (?, ?, ?, ?, 'edicion_producto', ?)`,
+                [id, actual[0].cantidad, cantidadNum, motivoLimpio || "Edición del producto", req.usuario.id]
+            )
         }
 
-
+        await conn.commit()
         res.json({
             mensaje: "Producto actualizado",
             filas: producto.affectedRows
         })
 
     } catch (error) {
+        await conn.rollback()
         console.log(error)
-
-        res.status(500).json({
-            mensaje: "Error al actualizar producto"
-        })
+        res.status(500).json({ mensaje: "Error al actualizar producto" })
+    } finally {
+        conn.release()
     }
 }
 
@@ -337,7 +304,7 @@ const eliminarProducto = async (req, res) => {
 const modificarCantidad = async (req, res) => {
     try {
         const { id } = req.params
-        const { cantidad, operacion } = req.body
+        const { cantidad, operacion, motivo } = req.body
 
         // Validar ID
         if (!/^\d+$/.test(id) || Number(id) <= 0) {
@@ -379,6 +346,7 @@ const modificarCantidad = async (req, res) => {
         }
 
         const producto = productos[0] //Chekear porque se hace esto
+        const cantidadAnterior = producto.cantidad
 
         // Calcular nueva cantidad
         let nuevaCantidad
@@ -400,6 +368,13 @@ const modificarCantidad = async (req, res) => {
         await con.query(
             "UPDATE productos SET cantidad = ? WHERE id = ?",
             [nuevaCantidad, id]
+        )
+
+        await con.query(
+            `INSERT INTO movimientos_stock
+            (fk_producto, cantidad_anterior, cantidad_nueva, motivo, origen, fk_usuario)
+            VALUES (?, ?, ?, ?, 'cambio_stock', ?)`,
+            [id, cantidadAnterior, nuevaCantidad, motivo || null, req.usuario.id]
         )
 
         res.json({
