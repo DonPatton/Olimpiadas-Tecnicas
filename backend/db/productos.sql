@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-10-2026 a las 18:32:23
+-- Tiempo de generación: 06-10-2026 a las 21:45:23
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -46,6 +46,49 @@ INSERT INTO `categorias` (`id_c`, `nombre`, `descripcion`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `combos`
+--
+
+CREATE TABLE `combos` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `precio` int(11) NOT NULL,
+  `descripcion` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `combos`
+--
+
+INSERT INTO `combos` (`id`, `nombre`, `precio`, `descripcion`) VALUES
+(1, 'keke', 1000, '2 lisas y 3 lisas'),
+(2, 'gggg', 666, 'ggygyu');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `combo_producto`
+--
+
+CREATE TABLE `combo_producto` (
+  `id_combo` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `combo_producto`
+--
+
+INSERT INTO `combo_producto` (`id_combo`, `id_producto`, `cantidad`) VALUES
+(1, 2, 2),
+(1, 4, 3),
+(2, 2, 65),
+(2, 5, 7);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `movimientos_stock`
 --
 
@@ -82,7 +125,7 @@ CREATE TABLE `productos` (
   `nombre` varchar(100) NOT NULL,
   `fk_categoria` int(50) NOT NULL,
   `cantidad` int(11) NOT NULL,
-  `precio_unitario` int(11) NOT NULL,
+  `precio_unitario` int(11) DEFAULT NULL,
   `ultima_modificacion` datetime NOT NULL,
   `descripcion` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -128,6 +171,19 @@ ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id_c`);
 
 --
+-- Indices de la tabla `combos`
+--
+ALTER TABLE `combos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `combo_producto`
+--
+ALTER TABLE `combo_producto`
+  ADD PRIMARY KEY (`id_combo`,`id_producto`),
+  ADD KEY `idx_combo_producto_producto` (`id_producto`);
+
+--
 -- Indices de la tabla `movimientos_stock`
 --
 ALTER TABLE `movimientos_stock`
@@ -161,6 +217,12 @@ ALTER TABLE `categorias`
   MODIFY `id_c` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT de la tabla `combos`
+--
+ALTER TABLE `combos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `movimientos_stock`
 --
 ALTER TABLE `movimientos_stock`
@@ -181,6 +243,13 @@ ALTER TABLE `usuarios`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `combo_producto`
+--
+ALTER TABLE `combo_producto`
+  ADD CONSTRAINT `fk_combo_producto_combo` FOREIGN KEY (`id_combo`) REFERENCES `combos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_combo_producto_producto` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id`);
 
 --
 -- Filtros para la tabla `movimientos_stock`

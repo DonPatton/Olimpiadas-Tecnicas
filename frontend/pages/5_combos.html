@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base href="../">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combos · Panel de Control de Inventario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .combo-items { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+    .combo-item-row { display:flex; align-items:center; gap:8px; }
+    .combo-item-row select { flex:1; min-width:0; }
+    .combo-item-row input { width:90px; flex:none; }
+    .combo-item-row .combo-item-remove { flex:none; padding:6px 12px; }
+    .combo-items-hint { margin-top:6px; font-size:12px; opacity:.6; }
+  </style>
+</head>
+<body data-page="combos">
+  <div class="app">
+    <app-sidebar></app-sidebar>
+    <main class="main">
+      <app-topbar></app-topbar>
+      <section class="content">
+        <div class="content-header">
+          <h1 class="page-title">Combos</h1>
+          <button class="btn btn-primary" id="btn-add-combo" type="button">Agregar combo</button>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total de combos</div>
+            <div class="stat-value" id="stat-total-combos">—</div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table id="combos-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Combo</th>
+                <th>Precio</th>
+                <th>Descripción</th>
+                <th>Productos</th>
+                <th class="col-filter">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="combos-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="combo-modal-overlay" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="combo-modal-title">Agregar combo</h2>
+        <button type="button" class="modal-close" id="combo-modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <form id="combo-form" novalidate>
+        <input type="hidden" id="combo-id">
+        <div class="form-group">
+          <label for="combo-nombre">Nombre</label>
+          <input type="text" id="combo-nombre" required>
+        </div>
+        <div class="form-group">
+          <label for="combo-precio">Precio</label>
+          <input type="number" id="combo-precio" min="0" step="1" required>
+        </div>
+        <div class="form-group">
+          <label for="combo-descripcion">Descripción</label>
+          <textarea id="combo-descripcion" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Productos del combo</label>
+          <div class="combo-items" id="combo-items"></div>
+          <button type="button" class="btn btn-ghost" id="btn-add-combo-item">Agregar producto</button>
+          <div class="combo-items-hint">Elegí el producto y cuántas unidades lleva el combo.</div>
+        </div>
+        <div class="form-error" id="combo-form-error"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="combo-modal-cancel">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="combo-modal-submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

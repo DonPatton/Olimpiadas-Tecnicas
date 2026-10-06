@@ -44,6 +44,17 @@ class AppSidebar extends HTMLElement {
                   Categorias
               </a>
 
+              <a class="nav-item ${currentPage === "combos" ? "active" : ""}"
+                 href="pages/5_combos.html">
+                  <svg viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.8">
+                      <path d="M3 7l9-4 9 4-9 4-9-4z"/>
+                      <path d="M3 7v10l9 4 9-4V7"/>
+                      <path d="M12 11v10"/>
+                  </svg>
+                  Combos
+              </a>
+
               <a class="nav-item ${currentPage === "stock-movement" ? "active" : ""}"
                  href="pages/4_stock-movement.html">
                   <svg viewBox="0 0 24 24" fill="none"
@@ -296,6 +307,53 @@ async function fetchMovimientosStock() {
 
   const data = await res.json();
   return Array.isArray(data) ? data : [];
+}
+
+// ---------------------------------------------------------------------
+// Combos
+// ---------------------------------------------------------------------
+let COMBOS_CACHE = [];
+
+async function fetchCombos() {
+  const res = await fetchAPI(`${API_BASE}/combos`, { headers: authHeaders() });
+  if (!res.ok) throw await apiError(res, 'No se pudieron obtener los combos.');
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+async function fetchCombo(id) {
+  const res = await fetchAPI(`${API_BASE}/combos/${id}`, { headers: authHeaders() });
+  if (!res.ok) throw await apiError(res, 'No se pudo obtener el combo.');
+  return res.json();
+}
+
+async function crearComboAPI(payload) {
+  const res = await fetchAPI(`${API_BASE}/combos`, {
+    method: 'POST',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo crear el combo.');
+  return res.json();
+}
+
+async function actualizarComboAPI(id, payload) {
+  const res = await fetchAPI(`${API_BASE}/combos/${id}`, {
+    method: 'PUT',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo actualizar el combo.');
+  return res.json();
+}
+
+async function eliminarComboAPI(id) {
+  const res = await fetchAPI(`${API_BASE}/combos/${id}`, {
+    method: 'DELETE',
+    headers: authHeaders()
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo eliminar el combo.');
+  return res.json();
 }
 
 // Id de categoría "real" — el backend no es 100% consistente con el
@@ -788,6 +846,200 @@ function initStockModal() {
   });
 }
 
+
+// ---- Combos: botones de fila ----
+function comboActionButtons(id) {
+  return `
+    <button class="edit-btn" data-action="edit-combo" data-id="${id}" title="Editar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+    </button>
+    <button class="edit-btn" data-action="delete-combo" data-id="${id}" title="Eliminar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+    </button>`;
+}
+
+
+function resumenProductosCombo(combo) {
+  const items = Array.isArray(combo.productos) ? combo.productos : [];
+  if (!items.length) return '—';
+  return items
+    .map(i => `${cantidadInt(i.cantidad)}× ${escapeHtml(i.nombre)}`)
+    .join('<br>');
+}
+
+// ---- Vista de Combos ----
+async function renderCombos() {
+  const tbody = document.getElementById('combos-table-body');
+  if (!tbody) return;
+
+  try {
+    let combos;
+    [combos, PRODUCTOS_CACHE] = await Promise.all([fetchCombos(), fetchProductos()]);
+
+    // La lista básica no trae los productos: se piden al detalle de cada combo.
+    COMBOS_CACHE = await Promise.all(combos.map(c => fetchCombo(c.id)));
+  } catch (err) {
+    tbody.innerHTML = `<tr class="no-results"><td colspan="6">No se pudieron cargar los combos. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
+    return;
+  }
+
+  setText('stat-total-combos', COMBOS_CACHE.length);
+
+  tbody.innerHTML = COMBOS_CACHE.map(c => `
+<tr>
+    <td class="cell-muted">${c.id}</td>
+    <td class="title-cell"><div class="title-main">${escapeHtml(c.nombre)}</div></td>
+    <td class="cell-muted">$${Math.round(Number(c.precio)).toLocaleString('es-AR')}</td>
+    <td class="cell-muted">${escapeHtml(c.descripcion || '')}</td>
+    <td class="cell-muted">${resumenProductosCombo(c)}</td>
+    <td class="row-actions">${comboActionButtons(c.id)}</td>
+</tr>`).join('') || `<tr class="no-results"><td colspan="6">Todavía no hay combos cargados.</td></tr>`;
+}
+
+// ---- Modal de Agregar/Editar combo ----
+function initComboModal() {
+  const overlay = document.getElementById('combo-modal-overlay');
+  if (!overlay) return;
+
+  const form = document.getElementById('combo-form');
+  const titleEl = document.getElementById('combo-modal-title');
+  const idInput = document.getElementById('combo-id');
+  const nombreInput = document.getElementById('combo-nombre');
+  const precioInput = document.getElementById('combo-precio');
+  const descInput = document.getElementById('combo-descripcion');
+  const itemsEl = document.getElementById('combo-items');
+  const errorEl = document.getElementById('combo-form-error');
+
+  function opcionesProductos(selectedId) {
+    return PRODUCTOS_CACHE
+      .map(p => `<option value="${p.id}"${String(p.id) === String(selectedId) ? ' selected' : ''}>${escapeHtml(p.nombre)} (ID ${p.id})</option>`)
+      .join('');
+  }
+
+  function addItemRow(productoId, cantidad = 1) {
+    const row = document.createElement('div');
+    row.className = 'combo-item-row';
+    row.innerHTML = `
+      <select class="combo-item-producto" required>${opcionesProductos(productoId)}</select>
+      <input type="number" class="combo-item-cantidad" min="1" step="1" value="${cantidad}" aria-label="Cantidad">
+      <button type="button" class="btn btn-ghost combo-item-remove" title="Quitar">&times;</button>`;
+    itemsEl.appendChild(row);
+  }
+
+  window.openComboModal = (combo = null) => {
+    errorEl.textContent = '';
+    form.reset();
+    itemsEl.innerHTML = '';
+
+    if (combo) {
+      titleEl.textContent = 'Editar combo';
+      idInput.value = combo.id;
+      nombreInput.value = combo.nombre;
+      precioInput.value = Math.round(Number(combo.precio));
+      descInput.value = combo.descripcion || '';
+      (combo.productos || []).forEach(i => addItemRow(i.id ?? i.id_producto, cantidadInt(i.cantidad) || 1));
+    } else {
+      titleEl.textContent = 'Agregar combo';
+      idInput.value = '';
+      if (PRODUCTOS_CACHE.length) addItemRow(PRODUCTOS_CACHE[0].id);
+    }
+
+    overlay.hidden = false;
+    nombreInput.focus();
+  };
+
+  function closeModal() {
+    overlay.hidden = true;
+  }
+
+  document.getElementById('btn-add-combo')?.addEventListener('click', () => window.openComboModal());
+  document.getElementById('combo-modal-close').addEventListener('click', closeModal);
+  document.getElementById('combo-modal-cancel').addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
+
+  document.getElementById('btn-add-combo-item').addEventListener('click', () => {
+    if (!PRODUCTOS_CACHE.length) {
+      errorEl.textContent = 'Primero cargá productos en el inventario.';
+      return;
+    }
+    errorEl.textContent = '';
+    addItemRow(PRODUCTOS_CACHE[0].id);
+  });
+
+  itemsEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('.combo-item-remove');
+    if (btn) btn.closest('.combo-item-row').remove();
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorEl.textContent = '';
+
+    const nombre = nombreInput.value.trim();
+    const descripcion = descInput.value.trim();
+    const precio = Number(precioInput.value);
+
+    if (!nombre || !descripcion) {
+      errorEl.textContent = 'No se permiten campos vacíos.';
+      return;
+    }
+    if (nombre.length > 100) {
+      errorEl.textContent = 'El nombre no puede superar los 100 caracteres.';
+      return;
+    }
+    if (descripcion.length > 255) {
+      errorEl.textContent = 'La descripción no puede superar los 255 caracteres.';
+      return;
+    }
+    if (!Number.isInteger(precio) || precio <= 0) {
+      errorEl.textContent = 'El precio debe ser un número entero mayor a 0.';
+      return;
+    }
+
+    const filas = [...itemsEl.querySelectorAll('.combo-item-row')];
+    if (!filas.length) {
+      errorEl.textContent = 'El combo necesita al menos un producto.';
+      return;
+    }
+
+    const productos = filas.map(f => ({
+      id: Number(f.querySelector('.combo-item-producto').value),
+      cantidad: Number(f.querySelector('.combo-item-cantidad').value)
+    }));
+
+    if (productos.some(p => !Number.isInteger(p.id) || p.id <= 0 || !Number.isInteger(p.cantidad) || p.cantidad <= 0)) {
+      errorEl.textContent = 'Cada producto necesita una cantidad entera mayor a 0.';
+      return;
+    }
+    if (new Set(productos.map(p => p.id)).size !== productos.length) {
+      errorEl.textContent = 'No repitas el mismo producto: subí la cantidad en una sola fila.';
+      return;
+    }
+
+    const payload = { nombre, precio, descripcion, productos };
+
+    const submitBtn = document.getElementById('combo-modal-submit');
+    submitBtn.disabled = true;
+
+    try {
+      if (idInput.value) {
+        await actualizarComboAPI(idInput.value, payload);
+        showToast('Combo actualizado.');
+      } else {
+        await crearComboAPI(payload);
+        showToast('Combo creado.');
+      }
+      closeModal();
+      renderCombos();
+    } catch (err) {
+      errorEl.textContent = err.message || 'Ocurrió un error al guardar el combo.';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+}
+
 // ---- Página dedicada de Movimientos de stock -------------------------
 async function renderStockMovements() {
   const feed = document.getElementById('stock-movements-feed');
@@ -867,6 +1119,24 @@ function initRowActions() {
       } catch (err) {
         showToast(err.message || 'Error al eliminar la categoría.');
       }
+
+    } else if (action === 'edit-combo') {
+      try {
+        const combo = await fetchCombo(id);
+        window.openComboModal(combo);
+      } catch (err) {
+        showToast(err.message || 'Error al cargar el combo.');
+      }
+
+    } else if (action === 'delete-combo') {
+      if (!confirm('¿Eliminar este combo?')) return;
+      try {
+        await eliminarComboAPI(id);
+        showToast('Combo eliminado.');
+        renderCombos();
+      } catch (err) {
+        showToast(err.message || 'Error al eliminar el combo.');
+      }
     }
   });
 }
@@ -932,8 +1202,9 @@ function initExportButtons() {
 const PAGE_RENDERERS = {
   inventory:   renderInventory,
   categories:  renderCategorias,
+  combos:      renderCombos,
   "stock-movement": renderStockMovements,
-  // settings, whats-new y help son estáticos: no necesitan render de datos.
+  // whats-new y help son estáticos: no necesitan render de datos.
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -954,6 +1225,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initProductModal();
   initStockModal();
   initCategoryModal();
+  initComboModal();
 
   const page = document.body.dataset.page;
   const renderer = PAGE_RENDERERS[page];

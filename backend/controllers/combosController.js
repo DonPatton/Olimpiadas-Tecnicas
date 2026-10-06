@@ -1,17 +1,45 @@
 const con = require("../db")
 
 const obtenerCombos = async (req, res) => {
-    const [combo] = await con.query("SELECT * FROM combos")
-    
-    res.json(combo)
+    try {
+        const [combos] = await con.query("SELECT * FROM combos")
+
+        res.json(combos)
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ mensaje: "Error al obtener los combos" })
+    }
 }
 
 const obtenerCombo = async (req, res) => {
-    const { id } = req.params
+    try {
+        const { id } = req.params
 
-    const [combo] = await con.query("SELECT * FROM combos WHERE id = ?", [id])
+        if (!/^\d+$/.test(id) || Number(id) <= 0) {
+            return res.status(400).json({ mensaje: "El ID debe ser un número entero positivo" })
+        }
 
-    res.json(combo)
+        const [combos] = await con.query("SELECT * FROM combos WHERE id = ?", [id])
+
+        if (combos.length === 0) {
+            return res.status(404).json({ mensaje: "Combo no encontrado" })
+        }
+
+        const [productos] = await con.query(
+            `SELECT cp.id_producto AS id, p.nombre, cp.cantidad
+             FROM combo_producto cp
+             JOIN productos p ON p.id = cp.id_producto
+             WHERE cp.id_combo = ?`,
+            [id]
+        )
+
+        res.json({ ...combos[0], productos })
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ mensaje: "Error al obtener el combo" })
+    }
 }
 
 const crearCombo = async (req, res) => {
