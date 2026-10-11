@@ -16,6 +16,10 @@
     .combo-item-row input { width:90px; flex:none; }
     .combo-item-row .combo-item-remove { flex:none; padding:6px 12px; }
     .combo-items-hint { margin-top:6px; font-size:12px; opacity:.6; }
+    .combo-view-meta { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px; font-size:13px; color:var(--text-secondary); }
+    .combo-view-lines { display:flex; flex-direction:column; border-top:1px solid var(--row-line); }
+    .combo-view-line { display:grid; grid-template-columns:1fr auto; align-items:center; gap:16px; padding:10px 0; border-bottom:1px solid var(--row-line); font-size:13px; }
+    .combo-view-empty { padding:14px 0; font-size:13px; opacity:.7; }
   </style>
 </head>
 <body data-page="combos">
@@ -44,7 +48,6 @@
                 <th>Combo</th>
                 <th>Precio</th>
                 <th>Descripción</th>
-                <th>Productos</th>
                 <th class="col-filter">Acciones</th>
               </tr>
             </thead>
@@ -87,6 +90,19 @@
           <button type="submit" class="btn btn-primary" id="combo-modal-submit">Guardar</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="combo-view-overlay" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="combo-view-title">Combo</h2>
+        <button type="button" class="modal-close" id="combo-view-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <div id="combo-view-body"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="combo-view-cancel">Cerrar</button>
+      </div>
     </div>
   </div>
 

@@ -923,3 +923,89 @@
   .nav-item.upcoming:hover {
       opacity: 0.7;
   }
+
+/* =====================================================================
+   TABLAS ESTABLES + RESPONSIVE + FEED DE MOVIMIENTOS
+   ===================================================================== */
+
+/* --- Feed de movimientos: el texto puede ocupar varias líneas --- */
+.activity-item > div:last-child{ min-width:0; flex:1; }
+.activity-text{ overflow-wrap:anywhere; }
+
+/* --- Tablas: scrollean dentro de su tarjeta en vez de cortarse --- */
+.table-wrap{ overflow-x:auto; }
+
+/* --- Columnas de ancho fijo: un texto largo hace más líneas, no achica nada --- */
+.table-wrap table{ table-layout:fixed; }
+
+.table-wrap thead th{ white-space:normal; overflow-wrap:anywhere; }
+.table-wrap tbody td{ white-space:normal; overflow-wrap:anywhere; }
+.table-wrap tbody td.row-actions{ white-space:nowrap; }
+
+/* Anchos por tabla. La columna sin ancho (descripción, ítem o usuario)
+   absorbe el espacio que sobra. */
+
+/* Inventario (8 columnas; Descripción es la flexible) */
+#inventory-table{ min-width:980px; }
+#inventory-table th:nth-child(1){ width:60px; }
+#inventory-table th:nth-child(2){ width:20%; }
+#inventory-table th:nth-child(3){ width:13%; }
+#inventory-table th:nth-child(4){ width:80px; }
+#inventory-table th:nth-child(5){ width:110px; }
+#inventory-table th:nth-child(7){ width:130px; }
+#inventory-table th:nth-child(8){ width:100px; }
+
+/* Categorías (Descripción es la flexible) */
+#categories-table{ min-width:640px; }
+#categories-table th:nth-child(1){ width:60px; }
+#categories-table th:nth-child(2){ width:25%; }
+#categories-table th:nth-child(4){ width:150px; }
+#categories-table th:nth-child(5){ width:100px; }
+
+/* Combos (Descripción es la flexible) */
+#combos-table{ min-width:700px; }
+#combos-table th:nth-child(1){ width:60px; }
+#combos-table th:nth-child(2){ width:22%; }
+#combos-table th:nth-child(3){ width:110px; }
+#combos-table th:nth-child(5){ width:130px; }
+
+/* Carrito (Ítem es la flexible) */
+#cart-table{ min-width:800px; }
+#cart-table th:nth-child(1){ width:120px; }
+#cart-table th:nth-child(3){ width:130px; }
+#cart-table th:nth-child(4){ width:140px; }
+#cart-table th:nth-child(5){ width:130px; }
+#cart-table th:nth-child(6){ width:90px; }
+
+/* Pedidos (Usuario es la flexible) */
+#orders-table{ min-width:760px; }
+#orders-table th:nth-child(1){ width:70px; }
+#orders-table th:nth-child(3){ width:190px; }
+#orders-table th:nth-child(4){ width:120px; }
+#orders-table th:nth-child(5){ width:130px; }
+#orders-table th:nth-child(6){ width:100px; }
+
+/* --- Pantallas chicas: menos margen --- */
+@media (max-width:600px){
+  .content{ padding:16px 12px 24px; }
+  .topbar{ padding:12px; }
+}
+
+/* =====================================================================
+   SIDEBAR: los nombres largos pasan a 2 líneas en vez de cortarse
+   ===================================================================== */
+.nav-item{
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.3;
+}
+
+/* En pantallas angostas el menú pasa a ser una barra horizontal:
+   ahí cada ítem va en una sola línea y la barra scrollea. */
+@media (max-width:860px){
+  .nav-item{
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+}

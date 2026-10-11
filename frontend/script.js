@@ -24,8 +24,7 @@ class AppSidebar extends HTMLElement {
 
               <a class="nav-item ${currentPage === "inventory" ? "active" : ""}"
                  href="pages/2_inventory.html">
-                  <svg viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="1.8">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                       <path d="M3 7l9-4 9 4-9 4-9-4z"/>
                       <path d="M3 7v10l9 4 9-4V7"/>
                       <path d="M12 11v10"/>
@@ -35,35 +34,54 @@ class AppSidebar extends HTMLElement {
 
               <a class="nav-item ${currentPage === "categories" ? "active" : ""}"
                  href="pages/3_categories.html">
-                  <svg viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="1.8">
-                      <path d="M3 7l9-4 9 4-9 4-9-4z"/>
-                      <path d="M3 7v10l9 4 9-4V7"/>
-                      <path d="M12 11v10"/>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/>
+                      <circle cx="7.5" cy="7.5" r="1.2"/>
                   </svg>
                   Categorias
               </a>
 
               <a class="nav-item ${currentPage === "combos" ? "active" : ""}"
                  href="pages/5_combos.html">
-                  <svg viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="1.8">
-                      <path d="M3 7l9-4 9 4-9 4-9-4z"/>
-                      <path d="M3 7v10l9 4 9-4V7"/>
-                      <path d="M12 11v10"/>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path
+                          d="M12 2.5L14.93 8.44L21.5 9.4L16.75 14.03L17.87 20.5L12 17.44L6.13 20.5L7.25 14.03L2.5 9.4L9.07 8.44L12 2.5Z"
+                          stroke="currentColor"
+                          stroke-width="1.8"
+                          stroke-linejoin="round"
+                      />
                   </svg>
                   Combos
               </a>
 
               <a class="nav-item ${currentPage === "stock-movement" ? "active" : ""}"
                  href="pages/4_stock-movement.html">
-                  <svg viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="1.8">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                       <path d="M12 3v18"/>
                       <path d="M5 8l7-5 7 5"/>
                       <path d="M5 16l7 5 7-5"/>
                   </svg>
                   Movimientos de stock
+              </a>
+
+              <a class="nav-item ${currentPage === "carrito" ? "active" : ""}"
+                 href="pages/6_carrito.html">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <circle cx="9" cy="20" r="1.5"/>
+                      <circle cx="18" cy="20" r="1.5"/>
+                      <path d="M3 4h2.5l2.2 11h10.6l2-8H6.5"/>
+                  </svg>
+                  Carrito
+              </a>
+
+              <a class="nav-item ${currentPage === "pedidos" ? "active" : ""}"
+                 href="pages/7_pedidos.html">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M4 5h16v14H4z"/>
+                      <path d="M8 9h8"/>
+                      <path d="M8 13h5"/>
+                  </svg>
+                  Pedidos
               </a>
 
           </nav>
@@ -74,8 +92,7 @@ class AppSidebar extends HTMLElement {
           <nav class="nav-group upcoming-modules">
 
               <div class="nav-item upcoming">
-                  <svg viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="1.8">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                       <rect x="3" y="3" width="7" height="7" rx="1"/>
                       <rect x="14" y="3" width="7" height="7" rx="1"/>
                       <rect x="3" y="14" width="7" height="7" rx="1"/>
@@ -84,24 +101,13 @@ class AppSidebar extends HTMLElement {
                   Panel de control
               </div>
 
-              <div class="nav-item upcoming">
-                  <svg viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="1.8">
-                      <path d="M4 5h16v14H4z"/>
-                      <path d="M8 9h8"/>
-                      <path d="M8 13h5"/>
-                  </svg>
-                  Pedidos
-              </div>
-
           </nav>
 
           <nav class="nav-group">
 
               <a class="nav-item ${currentPage === "whats-new" ? "active" : ""}"
                  href="pages/9_whats-new.html">
-                  <svg viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="1.8">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                       <path d="M4 21V4"/>
                       <path d="M4 4h13l-2.5 4L17 12H4"/>
                   </svg>
@@ -110,8 +116,7 @@ class AppSidebar extends HTMLElement {
 
               <a class="nav-item ${currentPage === "help" ? "active" : ""}"
                  href="pages/10_help.html">
-                  <svg viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="1.8">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                       <circle cx="12" cy="12" r="9"/>
                       <path d="M9.1 9a3 3 0 1 1 4.6 2.6c-1 .6-1.7 1.1-1.7 2.4"/>
                       <path d="M12 17.5h.01"/>
@@ -354,6 +359,92 @@ async function eliminarComboAPI(id) {
   });
   if (!res.ok) throw await apiError(res, 'No se pudo eliminar el combo.');
   return res.json();
+}
+
+
+// ---------------------------------------------------------------------
+// Carrito y Pedidos
+// ---------------------------------------------------------------------
+let CARRITO_CACHE = [];
+let PEDIDOS_CACHE = [];
+
+async function fetchCarrito() {
+  const res = await fetchAPI(`${API_BASE}/carrito`, { headers: authHeaders() });
+  if (!res.ok) throw await apiError(res, 'No se pudo obtener el carrito.');
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+async function agregarItemCarritoAPI(payload) {
+  const res = await fetchAPI(`${API_BASE}/carrito`, {
+    method: 'POST',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo agregar al carrito.');
+  return res.json();
+}
+
+async function actualizarItemCarritoAPI(id, payload) {
+  const res = await fetchAPI(`${API_BASE}/carrito/${id}`, {
+    method: 'PUT',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo actualizar el ítem.');
+  return res.json();
+}
+
+async function eliminarItemCarritoAPI(id) {
+  const res = await fetchAPI(`${API_BASE}/carrito/${id}`, {
+    method: 'DELETE',
+    headers: authHeaders()
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo quitar el ítem.');
+  return res.json();
+}
+
+async function vaciarCarritoAPI() {
+  const res = await fetchAPI(`${API_BASE}/carrito`, {
+    method: 'DELETE',
+    headers: authHeaders()
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo vaciar el carrito.');
+  return res.json();
+}
+
+async function crearPedidoAPI() {
+  const res = await fetchAPI(`${API_BASE}/pedido`, {
+    method: 'POST',
+    headers: authHeaders()
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo crear el pedido.');
+  return res.json();
+}
+
+async function fetchPedidos() {
+  const res = await fetchAPI(`${API_BASE}/pedido`, { headers: authHeaders() });
+  if (!res.ok) throw await apiError(res, 'No se pudieron obtener los pedidos.');
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+async function fetchPedido(id) {
+  const res = await fetchAPI(`${API_BASE}/pedido/${id}`, { headers: authHeaders() });
+  if (!res.ok) throw await apiError(res, 'No se pudo obtener el pedido.');
+  const data = await res.json().catch(() => null);
+  if (!data) throw new Error('Pedido no encontrado.');
+  return data;
+}
+
+async function terminarPedidoAPI(id) {
+  const res = await fetchAPI(`${API_BASE}/pedido/${id}`, {
+    method: 'PATCH',
+    headers: authHeaders()
+  });
+  if (!res.ok) throw await apiError(res, 'No se pudo actualizar el pedido.');
+  // El backend hoy responde con cuerpo vacío: no se parsea para que no falle.
+  return res.json().catch(() => ({}));
 }
 
 // Id de categoría "real" — el backend no es 100% consistente con el
@@ -850,6 +941,9 @@ function initStockModal() {
 // ---- Combos: botones de fila ----
 function comboActionButtons(id) {
   return `
+    <button class="edit-btn" data-action="view-combo" data-id="${id}" title="Ver productos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+    </button>
     <button class="edit-btn" data-action="edit-combo" data-id="${id}" title="Editar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
     </button>
@@ -858,28 +952,15 @@ function comboActionButtons(id) {
     </button>`;
 }
 
-
-function resumenProductosCombo(combo) {
-  const items = Array.isArray(combo.productos) ? combo.productos : [];
-  if (!items.length) return '—';
-  return items
-    .map(i => `${cantidadInt(i.cantidad)}× ${escapeHtml(i.nombre)}`)
-    .join('<br>');
-}
-
 // ---- Vista de Combos ----
 async function renderCombos() {
   const tbody = document.getElementById('combos-table-body');
   if (!tbody) return;
 
   try {
-    let combos;
-    [combos, PRODUCTOS_CACHE] = await Promise.all([fetchCombos(), fetchProductos()]);
-
-    // La lista básica no trae los productos: se piden al detalle de cada combo.
-    COMBOS_CACHE = await Promise.all(combos.map(c => fetchCombo(c.id)));
+    [COMBOS_CACHE, PRODUCTOS_CACHE] = await Promise.all([fetchCombos(), fetchProductos()]);
   } catch (err) {
-    tbody.innerHTML = `<tr class="no-results"><td colspan="6">No se pudieron cargar los combos. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
+    tbody.innerHTML = `<tr class="no-results"><td colspan="5">No se pudieron cargar los combos. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
     return;
   }
 
@@ -891,9 +972,52 @@ async function renderCombos() {
     <td class="title-cell"><div class="title-main">${escapeHtml(c.nombre)}</div></td>
     <td class="cell-muted">$${Math.round(Number(c.precio)).toLocaleString('es-AR')}</td>
     <td class="cell-muted">${escapeHtml(c.descripcion || '')}</td>
-    <td class="cell-muted">${resumenProductosCombo(c)}</td>
     <td class="row-actions">${comboActionButtons(c.id)}</td>
-</tr>`).join('') || `<tr class="no-results"><td colspan="6">Todavía no hay combos cargados.</td></tr>`;
+</tr>`).join('') || `<tr class="no-results"><td colspan="5">Todavía no hay combos cargados.</td></tr>`;
+}
+
+
+// ---- Modal para ver los productos de un combo ----
+function initComboViewModal() {
+  const overlay = document.getElementById('combo-view-overlay');
+  if (!overlay) return;
+
+  const titleEl = document.getElementById('combo-view-title');
+  const bodyEl = document.getElementById('combo-view-body');
+
+  function closeModal() {
+    overlay.hidden = true;
+  }
+
+  window.openComboViewModal = (combo) => {
+    titleEl.textContent = combo.nombre;
+
+    const items = Array.isArray(combo.productos) ? combo.productos : [];
+    const lineas = items.length
+      ? `<div class="combo-view-lines">${items.map(i => `
+<div class="combo-view-line">
+    <div>
+        <div class="title-main">${escapeHtml(i.nombre || `Producto ${i.id}`)}</div>
+        <div class="title-sub">ID ${i.id}</div>
+    </div>
+    <div class="cell-muted">${cantidadInt(i.cantidad)}×</div>
+</div>`).join('')}</div>`
+      : '<div class="combo-view-empty">Este combo no tiene productos.</div>';
+
+    bodyEl.innerHTML = `
+<div class="combo-view-meta">
+    <span>${formatPrecio(combo.precio)}</span>
+    ${combo.descripcion ? `<span>·</span><span>${escapeHtml(combo.descripcion)}</span>` : ''}
+</div>
+${lineas}`;
+
+    overlay.hidden = false;
+  };
+
+  document.getElementById('combo-view-close').addEventListener('click', closeModal);
+  document.getElementById('combo-view-cancel').addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
 }
 
 // ---- Modal de Agregar/Editar combo ----
@@ -1040,6 +1164,344 @@ function initComboModal() {
   });
 }
 
+
+// ---- Carrito y Pedidos: helpers ----
+function formatPrecio(n) {
+  return `$${Math.round(Number(n) || 0).toLocaleString('es-AR')}`;
+}
+
+function formatFechaHora(value) {
+  if (!value) return '—';
+  const d = new Date(value);
+  if (isNaN(d)) return String(value);
+  return d.toLocaleString('es-AR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+
+// Lee el id del usuario desde el token (payload.id). Si no se puede, devuelve null.
+function usuarioIdDelToken() {
+  try {
+    const base64 = localStorage.getItem('token').split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(atob(base64)).id ?? null;
+  } catch {
+    return null;
+  }
+}
+
+// ---- Carrito ----
+function cartActionButtons(id) {
+  return `
+    <button class="edit-btn" data-action="cart-delete" data-id="${id}" title="Quitar del carrito">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+    </button>`;
+}
+
+// Trae nombre, precio y stock de un ítem del carrito desde las cachés.
+function infoItemCarrito(item) {
+  if (item.id_producto) {
+    const p = PRODUCTOS_CACHE.find(x => String(x.id) === String(item.id_producto));
+    return {
+      tipo: 'Producto',
+      esCombo: false,
+      nombre: p ? p.nombre : `Producto ${item.id_producto}`,
+      precio: p ? Number(p.precio_unitario) : 0,
+      stock: p ? cantidadInt(p.cantidad) : null
+    };
+  }
+  const c = COMBOS_CACHE.find(x => String(x.id) === String(item.id_combo));
+  return {
+    tipo: 'Combo',
+    esCombo: true,
+    nombre: c ? c.nombre : `Combo ${item.id_combo}`,
+    precio: c ? Number(c.precio) : 0,
+    stock: null
+  };
+}
+
+function totalCarrito() {
+  return CARRITO_CACHE.reduce((acc, i) => acc + infoItemCarrito(i).precio * cantidadInt(i.cantidad), 0);
+}
+
+async function renderCarrito() {
+  const tbody = document.getElementById('cart-table-body');
+  if (!tbody) return;
+
+  try {
+    let items;
+    [items, PRODUCTOS_CACHE, COMBOS_CACHE] = await Promise.all([fetchCarrito(), fetchProductos(), fetchCombos()]);
+
+    // Solo se muestran los ítems del usuario logueado.
+    const miId = usuarioIdDelToken();
+    CARRITO_CACHE = miId === null ? items : items.filter(i => String(i.id_usuario) === String(miId));
+  } catch (err) {
+    tbody.innerHTML = `<tr class="no-results"><td colspan="6">No se pudo cargar el carrito. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
+    return;
+  }
+
+  const hayItems = CARRITO_CACHE.length > 0;
+  setText('stat-cart-items', CARRITO_CACHE.length);
+  setText('cart-total', formatPrecio(totalCarrito()));
+
+  const vaciarBtn = document.getElementById('btn-vaciar-carrito');
+  const confirmarBtn = document.getElementById('btn-confirmar-pedido');
+  if (vaciarBtn) vaciarBtn.disabled = !hayItems;
+  if (confirmarBtn) confirmarBtn.disabled = !hayItems;
+
+  tbody.innerHTML = CARRITO_CACHE.map(i => {
+    const info = infoItemCarrito(i);
+    const cant = cantidadInt(i.cantidad);
+    const sinStock = info.stock !== null && cant > info.stock;
+    return `
+<tr>
+    <td><span class="chip ${info.esCombo ? 'chip-info' : 'chip-neutral'}">${info.tipo}</span></td>
+    <td class="title-cell">
+        <div class="title-main">${escapeHtml(info.nombre)}</div>
+        ${sinStock ? `<div class="title-sub"><span class="chip chip-danger">Stock disponible: ${info.stock}</span></div>` : ''}
+    </td>
+    <td class="cell-muted">${formatPrecio(info.precio)}</td>
+    <td>
+        <div class="qty-control">
+            <button class="edit-btn" data-action="cart-minus" data-id="${i.id}" title="Restar" ${cant <= 1 ? 'disabled' : ''}>−</button>
+            <span>${cant}</span>
+            <button class="edit-btn" data-action="cart-plus" data-id="${i.id}" title="Sumar">+</button>
+        </div>
+    </td>
+    <td class="cell-muted">${formatPrecio(info.precio * cant)}</td>
+    <td class="row-actions">${cartActionButtons(i.id)}</td>
+</tr>`;
+  }).join('') || `<tr class="no-results"><td colspan="6">El carrito está vacío.</td></tr>`;
+}
+
+// ---- Carrito: modal para agregar + botones Vaciar y Confirmar pedido ----
+function initCartPage() {
+  const overlay = document.getElementById('cart-modal-overlay');
+  if (!overlay) return;
+
+  const form = document.getElementById('cart-form');
+  const tipoSelect = document.getElementById('cart-tipo');
+  const itemSelect = document.getElementById('cart-item');
+  const cantidadInput = document.getElementById('cart-cantidad');
+  const errorEl = document.getElementById('cart-form-error');
+
+  function fillItems() {
+    if (tipoSelect.value === 'combo') {
+      itemSelect.innerHTML = COMBOS_CACHE
+        .map(c => `<option value="${c.id}">${escapeHtml(c.nombre)} — ${formatPrecio(c.precio)}</option>`)
+        .join('') || '<option value="">Sin combos cargados</option>';
+    } else {
+      itemSelect.innerHTML = PRODUCTOS_CACHE
+        .map(p => `<option value="${p.id}">${escapeHtml(p.nombre)} (ID ${p.id}) — ${formatPrecio(p.precio_unitario)} · stock ${cantidadInt(p.cantidad)}</option>`)
+        .join('') || '<option value="">Sin productos cargados</option>';
+    }
+  }
+
+  function openModal() {
+    errorEl.textContent = '';
+    form.reset();
+    fillItems();
+    overlay.hidden = false;
+    itemSelect.focus();
+  }
+
+  function closeModal() {
+    overlay.hidden = true;
+  }
+
+  document.getElementById('btn-add-cart-item')?.addEventListener('click', openModal);
+  document.getElementById('cart-modal-close').addEventListener('click', closeModal);
+  document.getElementById('cart-modal-cancel').addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
+  tipoSelect.addEventListener('change', fillItems);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorEl.textContent = '';
+
+    const id = Number(itemSelect.value);
+    const cantidad = Number(cantidadInput.value);
+
+    if (!Number.isInteger(id) || id <= 0) {
+      errorEl.textContent = 'Elegí un producto o combo.';
+      return;
+    }
+    if (!Number.isInteger(cantidad) || cantidad <= 0) {
+      errorEl.textContent = 'La cantidad debe ser un número entero mayor a 0.';
+      return;
+    }
+
+    // El backend exige mandar solo uno de los dos: id_producto o id_combo.
+    const payload = tipoSelect.value === 'combo'
+      ? { id_combo: id, cantidad }
+      : { id_producto: id, cantidad };
+
+    const submitBtn = document.getElementById('cart-modal-submit');
+    submitBtn.disabled = true;
+
+    try {
+      await agregarItemCarritoAPI(payload);
+      showToast('Agregado al carrito.');
+      closeModal();
+      renderCarrito();
+    } catch (err) {
+      errorEl.textContent = err.message || 'Ocurrió un error al agregar al carrito.';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+
+  document.getElementById('btn-vaciar-carrito')?.addEventListener('click', async () => {
+    if (!CARRITO_CACHE.length) return;
+    if (!confirm('¿Vaciar el carrito?')) return;
+    try {
+      await vaciarCarritoAPI();
+      showToast('Carrito vaciado.');
+      renderCarrito();
+    } catch (err) {
+      showToast(err.message || 'Error al vaciar el carrito.');
+    }
+  });
+
+  document.getElementById('btn-confirmar-pedido')?.addEventListener('click', async (e) => {
+    if (!CARRITO_CACHE.length) return;
+
+    const sinStock = CARRITO_CACHE.find(i => {
+      const info = infoItemCarrito(i);
+      return info.stock !== null && cantidadInt(i.cantidad) > info.stock;
+    });
+    if (sinStock) {
+      showToast('Hay productos sin stock suficiente. Bajá la cantidad antes de confirmar.');
+      return;
+    }
+
+    if (!confirm(`¿Confirmar el pedido por ${formatPrecio(totalCarrito())}?`)) return;
+
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    try {
+      const r = await crearPedidoAPI();
+      showToast(`Pedido #${r.id_pedido} creado por ${formatPrecio(r.total)}.`);
+      renderCarrito();
+    } catch (err) {
+      showToast(err.message || 'Error al crear el pedido.');
+      btn.disabled = false;
+    }
+  });
+}
+
+// ---- Pedidos ----
+function estadoPedido(estado) {
+  const e = String(estado || '').toLowerCase();
+  if (e === 'pendiente') return { clave: 'pendiente', etiqueta: 'Pendiente', clase: 'chip-warning' };
+  if (e === 'listo' || e === 'terminado') return { clave: 'listo', etiqueta: 'Listo', clase: 'chip-success' };
+  return { clave: e || 'otro', etiqueta: estado || '—', clase: 'chip-neutral' };
+}
+
+function orderActionButtons(id, estadoClave) {
+  return `
+    <button class="edit-btn" data-action="order-detail" data-id="${id}" title="Ver detalle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+    </button>
+    ${estadoClave === 'pendiente' ? `
+    <button class="edit-btn" data-action="order-ready" data-id="${id}" title="Marcar como listo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+    </button>` : ''}`;
+}
+
+async function renderPedidos() {
+  const tbody = document.getElementById('orders-table-body');
+  if (!tbody) return;
+
+  try {
+    PEDIDOS_CACHE = await fetchPedidos();
+  } catch (err) {
+    tbody.innerHTML = `<tr class="no-results"><td colspan="6">No se pudieron cargar los pedidos. ¿Está corriendo el backend en ${API_BASE}?</td></tr>`;
+    return;
+  }
+
+  // Los más nuevos primero
+  PEDIDOS_CACHE.sort((a, b) => b.id - a.id);
+
+  setText('stat-total-pedidos', PEDIDOS_CACHE.length);
+  setText('stat-pedidos-pendientes', PEDIDOS_CACHE.filter(p => estadoPedido(p.estado).clave === 'pendiente').length);
+
+  const filterRow = document.querySelector('.filter-row');
+  if (filterRow) {
+    filterRow.innerHTML = `
+      <div class="filter-chip active" data-filter="all">Todos</div>
+      <div class="filter-chip" data-filter="pendiente">Pendientes</div>
+      <div class="filter-chip" data-filter="listo">Listos</div>`;
+  }
+
+  tbody.innerHTML = PEDIDOS_CACHE.map(p => {
+    const est = estadoPedido(p.estado);
+    return `
+<tr data-category="${est.clave}">
+    <td class="cell-muted">${p.id}</td>
+    <td class="cell-muted">Usuario #${p.id_usuario}</td>
+    <td class="cell-muted">${formatFechaHora(p.fecha)}</td>
+    <td><span class="chip ${est.clase}">${escapeHtml(est.etiqueta)}</span></td>
+    <td class="cell-muted">${formatPrecio(p.total)}</td>
+    <td class="row-actions">${orderActionButtons(p.id, est.clave)}</td>
+</tr>`;
+  }).join('') || `<tr class="no-results"><td colspan="6">Todavía no hay pedidos.</td></tr>`;
+
+  initCategoryFilter(tbody);
+}
+
+// ---- Pedidos: modal de detalle ----
+function initOrderModal() {
+  const overlay = document.getElementById('order-modal-overlay');
+  if (!overlay) return;
+
+  const titleEl = document.getElementById('order-modal-title');
+  const bodyEl = document.getElementById('order-modal-body');
+
+  function closeModal() {
+    overlay.hidden = true;
+  }
+
+  window.openOrderModal = (pedido) => {
+    const est = estadoPedido(pedido.estado);
+    titleEl.textContent = `Pedido #${pedido.id}`;
+
+    const items = Array.isArray(pedido.items) ? pedido.items : null;
+    const lineas = items === null
+      ? '<div class="order-empty">El backend todavía no devuelve el detalle de ítems de este pedido.</div>'
+      : items.length === 0
+        ? '<div class="order-empty">Este pedido no tiene ítems registrados.</div>'
+        : `<div class="order-lines">${items.map(i => {
+            const cant = cantidadInt(i.cantidad);
+            const nombre = i.nombre || (i.id_combo ? `Combo ${i.id_combo}` : `Producto ${i.id_producto}`);
+            return `
+<div class="order-line">
+    <div>
+        <div class="title-main">${escapeHtml(nombre)}</div>
+        <div class="title-sub">${i.id_combo ? 'Combo' : 'Producto'} · ${formatPrecio(i.precio)} c/u</div>
+    </div>
+    <div class="cell-muted">${cant}×</div>
+    <div>${formatPrecio(Number(i.precio) * cant)}</div>
+</div>`;
+          }).join('')}</div>`;
+
+    bodyEl.innerHTML = `
+<div class="order-meta">
+    <span>${formatFechaHora(pedido.fecha)}</span>
+    <span>·</span>
+    <span>Usuario #${pedido.id_usuario}</span>
+    <span class="chip ${est.clase}">${escapeHtml(est.etiqueta)}</span>
+</div>
+${lineas}
+<div class="order-total">Total<strong>${formatPrecio(pedido.total)}</strong></div>`;
+
+    overlay.hidden = false;
+  };
+
+  document.getElementById('order-modal-close').addEventListener('click', closeModal);
+  document.getElementById('order-modal-cancel').addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !overlay.hidden) closeModal(); });
+}
+
 // ---- Página dedicada de Movimientos de stock -------------------------
 async function renderStockMovements() {
   const feed = document.getElementById('stock-movements-feed');
@@ -1120,6 +1582,14 @@ function initRowActions() {
         showToast(err.message || 'Error al eliminar la categoría.');
       }
 
+    } else if (action === 'view-combo') {
+      try {
+        const combo = await fetchCombo(id);
+        window.openComboViewModal(combo);
+      } catch (err) {
+        showToast(err.message || 'Error al cargar el combo.');
+      }
+
     } else if (action === 'edit-combo') {
       try {
         const combo = await fetchCombo(id);
@@ -1136,6 +1606,45 @@ function initRowActions() {
         renderCombos();
       } catch (err) {
         showToast(err.message || 'Error al eliminar el combo.');
+      }
+
+    } else if (action === 'cart-plus' || action === 'cart-minus') {
+      const item = CARRITO_CACHE.find(i => String(i.id) === id);
+      if (!item) return;
+      const nueva = cantidadInt(item.cantidad) + (action === 'cart-plus' ? 1 : -1);
+      if (nueva < 1) return;
+      try {
+        await actualizarItemCarritoAPI(id, { cantidad: nueva });
+        renderCarrito();
+      } catch (err) {
+        showToast(err.message || 'Error al cambiar la cantidad.');
+      }
+
+    } else if (action === 'cart-delete') {
+      try {
+        await eliminarItemCarritoAPI(id);
+        showToast('Ítem quitado del carrito.');
+        renderCarrito();
+      } catch (err) {
+        showToast(err.message || 'Error al quitar el ítem.');
+      }
+
+    } else if (action === 'order-detail') {
+      try {
+        const pedido = await fetchPedido(id);
+        window.openOrderModal(pedido);
+      } catch (err) {
+        showToast(err.message || 'Error al cargar el pedido.');
+      }
+
+    } else if (action === 'order-ready') {
+      if (!confirm('¿Marcar este pedido como listo?')) return;
+      try {
+        await terminarPedidoAPI(id);
+        showToast('Pedido marcado como listo.');
+        renderPedidos();
+      } catch (err) {
+        showToast(err.message || 'Error al actualizar el pedido.');
       }
     }
   });
@@ -1203,6 +1712,8 @@ const PAGE_RENDERERS = {
   inventory:   renderInventory,
   categories:  renderCategorias,
   combos:      renderCombos,
+  carrito:     renderCarrito,
+  pedidos:     renderPedidos,
   "stock-movement": renderStockMovements,
   // whats-new y help son estáticos: no necesitan render de datos.
 };
@@ -1226,6 +1737,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initStockModal();
   initCategoryModal();
   initComboModal();
+  initComboViewModal();
+  initCartPage();
+  initOrderModal();
 
   const page = document.body.dataset.page;
   const renderer = PAGE_RENDERERS[page];
